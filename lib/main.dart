@@ -1,5 +1,7 @@
 import 'package:etikts_app/components/alert/popup_alert_component.dart';
 import 'package:etikts_app/components/buttons/button.dart';
+import 'package:etikts_app/components/cards/card_evento_componente.dart';
+import 'package:etikts_app/features/auth/screens/event_screen.dart';
 import 'package:etikts_app/features/auth/screens/loading_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -35,20 +37,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          children: [
-            Button(onPressed: () {}),
-            PopupAlertComponent(
-                rightSideRounded: false,
-                leftSideRounded: true,
-              icon: Icons.error_outline,
-
-            ),
-          ],
-        ),
-      ),
-    );
+    return EventScreen();
   }
 }
