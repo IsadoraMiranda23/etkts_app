@@ -44,6 +44,10 @@ SizedBox(height: 20,),
             padding: const EdgeInsets.all(8.0),
             child: NotificacaoUsuarioComponent(),
           ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: NotificacaoUsuarioComponent(),
+          ),
         ],
       ),
     );

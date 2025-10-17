@@ -24,11 +24,11 @@ class _EventScreenState extends State<EventoPage> {
     searchController.dispose();
     super.dispose();
   }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: MyColors.preto,
-
         leading: Builder(
           builder: (context) => IconButton(
             icon: const Icon(Icons.menu, color: Colors.white),
@@ -97,7 +97,6 @@ class _EventScreenState extends State<EventoPage> {
                       contentPadding: EdgeInsets.only(bottom: 15),
                     ),
                     onSubmitted: (value) {
-
                       print('Texto pesquisado: $value');
                     },
                   ),
@@ -117,7 +116,6 @@ class _EventScreenState extends State<EventoPage> {
           ),
         ),
         actions: [
-
           if (!searchExpanded)
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -152,107 +150,138 @@ class _EventScreenState extends State<EventoPage> {
       body: Container(
         decoration: BoxDecoration(color: MyColors.preto),
         child: SingleChildScrollView(
-          child: Column(
+          child: Stack(
             children: [
-              CarrosselComponent(),
-              const SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.all(5),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                  Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Container(
-                      width: 50,
-                      height: 50,
-                      decoration: BoxDecoration
-                        (borderRadius: BorderRadius.only(
-                          topRight: Radius.zero,
-                          topLeft:Radius.circular(12),
-                          bottomRight: Radius.circular(12),
-                          bottomLeft: Radius.zero,
-                      ),
-                        color: MyColors.cinza,
-                      ),
-
-                      child: Image.asset("assets/icons/perfilBrancoAdd.png"),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Container(
-                      width: 50,
-                      height: 50,
-                      decoration: BoxDecoration
-                        (borderRadius: BorderRadius.only(
-                        topRight: Radius.zero,
-                        topLeft:Radius.circular(12),
-                        bottomRight: Radius.circular(12),
-                        bottomLeft: Radius.zero,
-                      ),
-                        color: MyColors.cinza,
-                      ),
-
-                      child: Image.asset("assets/icons/chatBalao.png"),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Container(
-                      width: 50,
-                      height: 50,
-                      decoration: BoxDecoration
-                        (borderRadius: BorderRadius.only(
-                        topRight: Radius.zero,
-                        topLeft:Radius.circular(12),
-                        bottomRight: Radius.circular(12),
-                        bottomLeft: Radius.zero,
-                      ),
-                        color: MyColors.cinza,
-                      ),
-
-                      child: Image.asset("assets/icons/cashDivisao.png"),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Container(
-                      width: 50,
-                      height: 50,
-                      decoration: BoxDecoration
-                        (borderRadius: BorderRadius.only(
-                        topRight: Radius.zero,
-                        topLeft:Radius.circular(12),
-                        bottomRight: Radius.circular(12),
-                        bottomLeft: Radius.zero,
-                      ),
-                        color: MyColors.cinza,
-                      ),
-
-                      child: Image.asset("assets/icons/coracaoFavorito.png"),
-                    ),
-                  ),
-                ],),
+              Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                child: CarrosselComponent(),
               ),
-              // Grade de Cards
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: GridView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 12,
-                    mainAxisSpacing: 2,
-                    childAspectRatio: 0.75,
+
+
+              Positioned(
+                top: 345,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                child: Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Colors.black87..withValues(alpha: 0.1),
+                        MyColors.preto.withValues(alpha: 0.1),
+                        MyColors.preto.withValues(alpha: 0.2),
+                        MyColors.preto..withValues(alpha: 0.2),
+                      ],
+                      stops: [0.1, 0.3,0.5, 0.4],
+                    ),
                   ),
-                  itemCount: 10,
-                  itemBuilder: (context, index) {
-                    return const CardEventoComponente();
-                  },
                 ),
+              ),
+
+              Column(
+                children: [
+                  SizedBox(height: 280),
+                  Container(
+                    margin: const EdgeInsets.all(5),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Container(
+                            width: 55,
+                            height: 50,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                topRight: Radius.zero,
+                                topLeft: Radius.circular(12),
+                                bottomRight: Radius.circular(12),
+                                bottomLeft: Radius.zero,
+                              ),
+                              color: MyColors.cinzaEscuro,
+                            ),
+                            child: Image.asset("assets/icons/balaoVerde.png"),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Container(
+                            width: 55,
+                            height: 50,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                topRight: Radius.zero,
+                                topLeft: Radius.circular(12),
+                                bottomRight: Radius.circular(12),
+                                bottomLeft: Radius.zero,
+                              ),
+                              color: MyColors.cinzaEscuro,
+                            ),
+                            child: Image.asset("assets/icons/perfilVerde.png"),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Container(
+                            width: 55,
+                            height: 50,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                topRight: Radius.zero,
+                                topLeft: Radius.circular(12),
+                                bottomRight: Radius.circular(12),
+                                bottomLeft: Radius.zero,
+                              ),
+                              color: MyColors.cinzaEscuro,
+                            ),
+                            child: Image.asset("assets/icons/divisaoVerde.png"),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Container(
+                            width: 55,
+                            height: 50,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                topRight: Radius.zero,
+                                topLeft: Radius.circular(12),
+                                bottomRight: Radius.circular(12),
+                                bottomLeft: Radius.zero,
+                              ),
+                              color: MyColors.cinzaEscuro,
+                            ),
+                            child: Image.asset("assets/icons/sinoVerde.png"),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 30),
+                  // Grade de Cards
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: GridView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 12,
+                        mainAxisSpacing: 2,
+                        childAspectRatio: 0.75,
+                      ),
+                      itemCount: 10,
+                      itemBuilder: (context, index) {
+                        return  CardEventoComponente();
+                      },
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -260,6 +289,4 @@ class _EventScreenState extends State<EventoPage> {
       ),
     );
   }
-
-
 }

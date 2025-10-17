@@ -26,15 +26,16 @@ class _CarrosselComponentState extends State<CarrosselComponent> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Stack(
+      alignment: Alignment.bottomCenter,
       children: [
         CarouselSlider(
           carouselController: carouselController,
           items: listaDeImagens.map((String caminhoDaImagem) {
             return Container(
-              margin: const EdgeInsets.all(6.0),
+              margin: const EdgeInsets.symmetric(horizontal: 2.0),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
+                borderRadius: BorderRadius.circular(8.0),
                 image: DecorationImage(
                   image: AssetImage(caminhoDaImagem),
                   fit: BoxFit.cover,
@@ -43,9 +44,17 @@ class _CarrosselComponentState extends State<CarrosselComponent> {
             );
           }).toList(),
           options: CarouselOptions(
-            height: 180.0,
+            height: 387.0,
             autoPlay: true,
-            enlargeCenterPage: true,
+            viewportFraction: 1.0,
+            enableInfiniteScroll: true,
+            autoPlayInterval: const Duration(seconds: 10),
+            autoPlayAnimationDuration: const Duration(milliseconds: 500),
+            autoPlayCurve: Curves.easeInOut,
+            enlargeCenterPage: false,
+            enlargeFactor: 0.0,
+            scrollPhysics: const PageScrollPhysics(),
+            scrollDirection: Axis.horizontal,
             onPageChanged: (index, reason) {
               setState(() {
                 posicaoAtual = index.toDouble();
@@ -53,21 +62,31 @@ class _CarrosselComponentState extends State<CarrosselComponent> {
             },
           ),
         ),
-        const SizedBox(height: 15),
-        DotsIndicator(
-          dotsCount: listaDeImagens.length,
-          position: posicaoAtual,
-          decorator: DotsDecorator(
-            size: const Size.square(8.0),
-            activeSize: const Size(12.0, 8.0),
-            color: MyColors.cinzaClaroInput,
-            activeColor: MyColors.roxo,
-            activeShape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(0.0),
+
+
+        Positioned(
+          bottom: 102,
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            decoration: BoxDecoration(
+
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: DotsIndicator(
+              dotsCount: listaDeImagens.length,
+              position: posicaoAtual,
+              decorator: DotsDecorator(
+                size: const Size.square(10.0),
+                activeSize: const Size(13.0, 7.0),
+                color: MyColors.cinzaClaroInput,
+                activeColor: MyColors.roxo,
+                activeShape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(3),
+                ),
+              ),
             ),
           ),
         ),
-
       ],
     );
   }
