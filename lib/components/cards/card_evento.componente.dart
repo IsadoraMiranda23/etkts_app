@@ -1,21 +1,28 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
-import '../../shared/design_system/colors.dart';
+import '../../colors.dart';
+import '../../colors.dart';
 
 class CardEventoComponente extends StatefulWidget {
   final bool leftSideRounded;
   final bool rightSideRounded;
-  final Color backGroundColor;
-  final IconData? icon;
-  final Color iconColor;
+  final int numeroComprados;
+
+
+
 
   const CardEventoComponente({
     super.key,
     this.leftSideRounded = true,
     this.rightSideRounded = true,
-    this.backGroundColor = MyColors.cinzaClaro,
-    this.icon,
-    this.iconColor = MyColors.roxo,
+    this.numeroComprados = 0
+
+
+
+
+
   });
 
   @override
@@ -43,7 +50,7 @@ class _CardEventoComponenteState extends State<CardEventoComponente> {
               width: 160,
               height: 133,
               decoration: BoxDecoration(
-                color: widget.backGroundColor,
+                color: Colors.black,
                 borderRadius: getBorderRadius(),
               ),
               child:Image.asset(
@@ -61,7 +68,7 @@ class _CardEventoComponenteState extends State<CardEventoComponente> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                 Container(
-                  width: 155,
+                  width: 120,
                   height: 48,
                   decoration: BoxDecoration(
                     color: MyColors.preto,
@@ -97,14 +104,23 @@ class _CardEventoComponenteState extends State<CardEventoComponente> {
 
                 ),
                  Container(
-                   width: 20,
+                   padding: EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+                   width: 40,
                    height: 20,
                    decoration: BoxDecoration(
                      borderRadius: BorderRadius.only(bottomRight: Radius.circular(0),bottomLeft: Radius.circular(5),topLeft: Radius.circular(5),topRight: Radius.circular(5)),
-                     color: MyColors.cinzaMedio,
+                     color: MyColors.cinza,
                    ),
                    child: Row(
-                     children: [Icon(Icons.person_outline, size: 20,)],
+                     mainAxisAlignment: MainAxisAlignment.center,
+                     children: [Icon(Icons.person_outline, size: 18, color: MyColors.verde,),
+                    Text(widget.numeroComprados.toString(),style: TextStyle(
+                      fontSize: 12,
+                      color: MyColors.verde,
+                    ),),
+
+
+                     ],
                    ),
 
                  )

@@ -20,16 +20,11 @@ class _LoadingScreenState extends State<LoadingScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Image.asset(
-              'assets/logos/logoReduzidoVerde.png',
-              width: 54,
-              height: 126,
-            ),
-            SizedBox(height: 20),
+
             Image.asset(
               'assets/logos/logoCompletoVerde.png',
-              width: 113,
-              height: 108,
+              width: 156,
+              height: 128,
             ),
 
           ],

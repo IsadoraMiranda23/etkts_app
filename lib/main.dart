@@ -1,9 +1,17 @@
-import 'package:etikts_app/components/alert/popup_alert_component.dart';
+import 'package:etikts_app/auth/pages/cadastro.page.dart';
+import 'package:etikts_app/auth/pages/notificacoes.page.dart';
+import 'package:etikts_app/components/alert/popup_alert.component.dart';
 import 'package:etikts_app/components/buttons/button.dart';
-import 'package:etikts_app/components/cards/card_evento_componente.dart';
-import 'package:etikts_app/features/auth/screens/event_screen.dart';
-import 'package:etikts_app/features/auth/screens/loading_screen.dart';
+import 'package:etikts_app/components/cards/card_evento.componente.dart';
+import 'package:etikts_app/auth/pages/efetuar_pagamento.page.dart';
+import 'package:etikts_app/auth/pages/esqueceu_senha.page.dart';
+import 'package:etikts_app/auth/pages/evento.page.dart';
+import 'package:etikts_app/auth/pages/loading.page.dart';
+import 'package:etikts_app/auth/pages/login.page.dart';
+import 'package:etikts_app/auth/pages/termos_e_condicoes.page.dart';
 import 'package:flutter/material.dart';
+
+
 
 void main() {
   runApp(const MyApp());
@@ -37,6 +45,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return EventScreen();
+    return NotificacoesPage() ;
   }
 }

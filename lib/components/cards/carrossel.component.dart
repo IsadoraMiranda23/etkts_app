@@ -1,8 +1,10 @@
-import 'package:etikts_app/components/cards/card_evento_componente.dart';
-import 'package:etikts_app/shared/design_system/colors.dart';
+import 'package:etikts_app/components/cards/card_evento.componente.dart';
+import 'package:etikts_app/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
+
+import '../../colors.dart';
 
 class CarrosselComponent extends StatefulWidget {
   const CarrosselComponent({super.key});
@@ -12,7 +14,7 @@ class CarrosselComponent extends StatefulWidget {
 }
 
 class _CarrosselComponentState extends State<CarrosselComponent> {
-  // MUDE AQUI: CarouselController → CarouselSliderController
+
   final CarouselSliderController carouselController = CarouselSliderController();
   double posicaoAtual = 0;
 
@@ -41,7 +43,7 @@ class _CarrosselComponentState extends State<CarrosselComponent> {
             );
           }).toList(),
           options: CarouselOptions(
-            height: 181.0,
+            height: 180.0,
             autoPlay: true,
             enlargeCenterPage: true,
             onPageChanged: (index, reason) {

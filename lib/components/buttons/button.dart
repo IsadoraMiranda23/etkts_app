@@ -1,5 +1,7 @@
-import 'package:etikts_app/shared/design_system/colors.dart';
+import 'package:etikts_app/colors.dart';
 import 'package:flutter/material.dart';
+
+import '../../colors.dart';
 
 class Button extends StatefulWidget {
   final String text;
