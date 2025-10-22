@@ -1,7 +1,5 @@
-import 'package:etikts_app/colors.dart';
+import 'package:etkts_app/colors.dart';
 import 'package:flutter/material.dart';
-
-import '../colors.dart';
 
 class ItemVendaComponente extends StatefulWidget {
   final Function(double)? onTotalChanged;

@@ -1,12 +1,14 @@
-import 'package:etikts_app/components/buttons/button.dart';
+import 'package:etkts_app/components/buttons/button.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui';
 
-import '../../../colors.dart';
-import '../../colors.dart';
+import 'package:etkts_app/colors.dart';
+import 'package:go_router/go_router.dart';
 
 class EsqueceuSenhaPage extends StatefulWidget {
   const EsqueceuSenhaPage({super.key});
+
+  static const routeName = '/esqueceuSenha';
 
   @override
   State<EsqueceuSenhaPage> createState() => _EsqueceuSenhaPageState();
@@ -50,12 +52,8 @@ class _EsqueceuSenhaPageState extends State<EsqueceuSenhaPage> {
                     ),
                     SizedBox(height: 16),
                     Text(
-
                       "Enviamos um e-mail de instruções para você, confere lá",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                      ),
+                      style: TextStyle(color: Colors.white, fontSize: 14),
                       textAlign: TextAlign.start,
                     ),
                     const SizedBox(height: 20),
@@ -113,7 +111,10 @@ class _EsqueceuSenhaPageState extends State<EsqueceuSenhaPage> {
                   ),
                   child: Padding(
                     padding: const EdgeInsets.only(
-                        top: 43.0, right: 30, left: 30),
+                      top: 43.0,
+                      right: 30,
+                      left: 30,
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -126,37 +127,26 @@ class _EsqueceuSenhaPageState extends State<EsqueceuSenhaPage> {
                           ),
                         ),
                         const SizedBox(height: 5),
-
                         // Descrição
                         Text(
                           "Digite seu e-mail para recuperar",
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.white,
-                          ),
+                          style: TextStyle(fontSize: 16, color: Colors.white),
                         ),
                         const SizedBox(height: 30),
                         const Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Text(
                             "E-mail",
-                            style: TextStyle(
-                              fontSize: 15,
-                              color: Colors.white,
-                            ),
+                            style: TextStyle(fontSize: 15, color: Colors.white),
                           ),
                         ),
-
                         // Campo de e-mail
                         Container(
                           height: 50,
                           decoration: BoxDecoration(
                             color: MyColors.cinzaEscuro,
                             borderRadius: BorderRadius.circular(14),
-                            border: Border.all(
-                              color: Colors.white,
-                              width: 1.0,
-                            ),
+                            border: Border.all(color: Colors.white, width: 1.0),
                           ),
                           child: const Padding(
                             padding: EdgeInsets.symmetric(horizontal: 12),
@@ -168,7 +158,6 @@ class _EsqueceuSenhaPageState extends State<EsqueceuSenhaPage> {
                           ),
                         ),
                         const SizedBox(height: 40),
-
                         Padding(
                           padding: const EdgeInsets.all(1.0),
                           child: Row(
@@ -176,7 +165,7 @@ class _EsqueceuSenhaPageState extends State<EsqueceuSenhaPage> {
                             children: [
                               GestureDetector(
                                 onTap: () {
-                                  Navigator.pop(context);
+                                  context.pop();
                                 },
                                 child: Image.asset(
                                   "assets/icons/seta.png",

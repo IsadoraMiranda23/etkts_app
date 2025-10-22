@@ -1,5 +1,6 @@
-import 'package:etikts_app/colors.dart';
-import 'package:etikts_app/components/buttons/button.dart';
+import 'package:etkts_app/colors.dart';
+import 'package:etkts_app/components/buttons/button.dart';
+import 'package:etkts_app/services/snackbar.service.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui';
 
@@ -214,8 +215,7 @@ class _NotificacaoUsuarioComponentState extends State<NotificacaoUsuarioComponen
             // Botão Negar
             child: GestureDetector(
               onTap: () {
-                // Adicione aqui a lógica para recusar a solicitação
-                print("Solicitação recusada");
+                SnackbarService.showEmConstrucao(context);
               },
               child: Image.asset("assets/icons/negarIcon.png", width: 27, height: 25),
             ),

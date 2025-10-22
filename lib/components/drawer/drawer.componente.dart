@@ -1,7 +1,8 @@
+import 'package:etkts_app/pages/login.page.dart';
+import 'package:etkts_app/services/snackbar.service.dart';
 import 'package:flutter/material.dart';
-import 'package:etikts_app/colors.dart';
-
-import '../../colors.dart';
+import 'package:etkts_app/colors.dart';
+import 'package:go_router/go_router.dart';
 
 class DrawerComponente extends StatefulWidget {
   const DrawerComponente({super.key});
@@ -14,7 +15,7 @@ class _DrawerComponenteState extends State<DrawerComponente> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      width: 410,
+      width: MediaQuery.of(context).size.width * .8,
       backgroundColor: Colors.transparent,
       child: GestureDetector(
         onTap: () {
@@ -22,7 +23,6 @@ class _DrawerComponenteState extends State<DrawerComponente> {
         },
         child: Container(
           decoration: const BoxDecoration(color: MyColors.preto),
-
           child: Align(
             alignment: Alignment.centerLeft,
             child: Container(
@@ -96,7 +96,9 @@ class _DrawerComponenteState extends State<DrawerComponente> {
                                   ),
                                 ),
                               ),
-                              onTap: () {},
+                              onTap: () {
+                                SnackbarService.showEmConstrucao(context);
+                              },
                             ),
                           ),
                           Padding(
@@ -119,7 +121,9 @@ class _DrawerComponenteState extends State<DrawerComponente> {
                                   ),
                                 ),
                               ),
-                              onTap: () {},
+                              onTap: () {
+                                SnackbarService.showEmConstrucao(context);
+                              },
                             ),
                           ),
                           Padding(
@@ -142,7 +146,9 @@ class _DrawerComponenteState extends State<DrawerComponente> {
                                   ),
                                 ),
                               ),
-                              onTap: () {},
+                              onTap: () {
+                                SnackbarService.showEmConstrucao(context);
+                              },
                             ),
                           ),
                           Padding(
@@ -165,7 +171,9 @@ class _DrawerComponenteState extends State<DrawerComponente> {
                                   ),
                                 ),
                               ),
-                              onTap: () {},
+                              onTap: () {
+                                SnackbarService.showEmConstrucao(context);
+                              },
                             ),
                           ),
                           Padding(
@@ -188,7 +196,9 @@ class _DrawerComponenteState extends State<DrawerComponente> {
                                   ),
                                 ),
                               ),
-                              onTap: () {},
+                              onTap: () {
+                                SnackbarService.showEmConstrucao(context);
+                              },
                             ),
                           ),
                           Padding(
@@ -211,7 +221,9 @@ class _DrawerComponenteState extends State<DrawerComponente> {
                                   ),
                                 ),
                               ),
-                              onTap: () {},
+                              onTap: () {
+                                SnackbarService.showEmConstrucao(context);
+                              },
                             ),
                           ),
                           Padding(
@@ -224,8 +236,6 @@ class _DrawerComponenteState extends State<DrawerComponente> {
                                   "assets/icons/configVerde.png",
                                 ),
                               ),
-                            
-
                               title: Padding(
                                 padding: const EdgeInsets.only(top: 10.0),
                                 child: Text(
@@ -236,10 +246,12 @@ class _DrawerComponenteState extends State<DrawerComponente> {
                                   ),
                                 ),
                               ),
-                              onTap: () {},
+                              onTap: () {
+                                SnackbarService.showEmConstrucao(context);
+                              },
                             ),
                           ),
-                          SizedBox(height: 60),
+                          const SizedBox(height: 60),
                           const Divider(
                             color: MyColors.preto,
                             height: 3,
@@ -266,10 +278,7 @@ class _DrawerComponenteState extends State<DrawerComponente> {
                                 ),
                               ),
                               onTap: () {
-                                Navigator.pop(context);
-
-
-
+                                context.pushReplacement(LoginPage.routeName);
                               },
                             ),
                           ),

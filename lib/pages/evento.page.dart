@@ -1,13 +1,18 @@
-import 'package:etikts_app/components/cards/carrossel.component.dart';
-import 'package:etikts_app/colors.dart';
+import 'package:etkts_app/components/cards/carrossel.component.dart';
+import 'package:etkts_app/colors.dart';
+import 'package:etkts_app/services/snackbar.service.dart';
 import 'package:flutter/material.dart';
-import 'package:etikts_app/components/drawer/drawer.componente.dart';
+import 'package:etkts_app/components/drawer/drawer.componente.dart';
 
-import '../../../components/cards/card_evento.componente.dart';
-import '../../colors.dart';
+import 'package:etkts_app/components/cards/card_evento.componente.dart';
+import 'package:go_router/go_router.dart';
+
+import 'notificacoes.page.dart';
 
 class EventoPage extends StatefulWidget {
   const EventoPage({super.key});
+
+  static const routeName = '/evento';
 
   @override
   State<EventoPage> createState() => _EventScreenState();
@@ -60,8 +65,13 @@ class _EventScreenState extends State<EventoPage> {
                       Row(
                         children: [
                           Text(
-                            balanceVisible ? 'R\$${userBalance.toStringAsFixed(2).replaceAll('.', ',')}' : ' ******',
-                            style: const TextStyle(color: Colors.grey, fontSize: 14),
+                            balanceVisible
+                                ? 'R\$${userBalance.toStringAsFixed(2).replaceAll('.', ',')}'
+                                : ' ******',
+                            style: const TextStyle(
+                              color: Colors.grey,
+                              fontSize: 14,
+                            ),
                           ),
                           const SizedBox(width: 8),
                           GestureDetector(
@@ -71,7 +81,9 @@ class _EventScreenState extends State<EventoPage> {
                               });
                             },
                             child: Icon(
-                              balanceVisible ? Icons.visibility : Icons.visibility_off,
+                              balanceVisible
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
                               color: Colors.grey,
                               size: 16,
                             ),
@@ -136,6 +148,9 @@ class _EventScreenState extends State<EventoPage> {
           Padding(
             padding: const EdgeInsets.only(right: 14.0),
             child: InkWell(
+              onTap: () {
+                context.push(NotificacoesPage.routeName);
+              },
               child: Image.asset(
                 'assets/icons/bell2.png',
                 width: 23,
@@ -146,7 +161,7 @@ class _EventScreenState extends State<EventoPage> {
           ),
         ],
       ),
-      drawer:  DrawerComponente(),
+      drawer: DrawerComponente(),
       body: Container(
         decoration: BoxDecoration(color: MyColors.preto),
         child: SingleChildScrollView(
@@ -158,8 +173,6 @@ class _EventScreenState extends State<EventoPage> {
                 right: 0,
                 child: CarrosselComponent(),
               ),
-
-
               Positioned(
                 top: 345,
                 left: 0,
@@ -176,15 +189,14 @@ class _EventScreenState extends State<EventoPage> {
                         MyColors.preto.withValues(alpha: 0.2),
                         MyColors.preto..withValues(alpha: 0.2),
                       ],
-                      stops: [0.1, 0.3,0.5, 0.4],
+                      stops: [0.1, 0.3, 0.5, 0.4],
                     ),
                   ),
                 ),
               ),
-
               Column(
                 children: [
-                  SizedBox(height: 280),
+                  const SizedBox(height: 280),
                   Container(
                     margin: const EdgeInsets.all(5),
                     child: Row(
@@ -193,70 +205,90 @@ class _EventScreenState extends State<EventoPage> {
                       children: [
                         Padding(
                           padding: const EdgeInsets.all(20.0),
-                          child: Container(
-                            width: 55,
-                            height: 50,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                topRight: Radius.zero,
-                                topLeft: Radius.circular(12),
-                                bottomRight: Radius.circular(12),
-                                bottomLeft: Radius.zero,
+                          child: GestureDetector(
+                            onTap: () {
+                              SnackbarService.showEmConstrucao(context);
+                            },
+                            child: Container(
+                              width: 55,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                  topRight: Radius.zero,
+                                  topLeft: Radius.circular(12),
+                                  bottomRight: Radius.circular(12),
+                                  bottomLeft: Radius.zero,
+                                ),
+                                color: MyColors.cinzaEscuro,
                               ),
-                              color: MyColors.cinzaEscuro,
+                              child: Image.asset("assets/icons/balaoVerde.png"),
                             ),
-                            child: Image.asset("assets/icons/balaoVerde.png"),
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(20.0),
-                          child: Container(
-                            width: 55,
-                            height: 50,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                topRight: Radius.zero,
-                                topLeft: Radius.circular(12),
-                                bottomRight: Radius.circular(12),
-                                bottomLeft: Radius.zero,
+                          child: GestureDetector(
+                            onTap: () {
+                              SnackbarService.showEmConstrucao(context);
+                            },
+                            child: Container(
+                              width: 55,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                  topRight: Radius.zero,
+                                  topLeft: Radius.circular(12),
+                                  bottomRight: Radius.circular(12),
+                                  bottomLeft: Radius.zero,
+                                ),
+                                color: MyColors.cinzaEscuro,
                               ),
-                              color: MyColors.cinzaEscuro,
+                              child: Image.asset("assets/icons/perfilVerde.png"),
                             ),
-                            child: Image.asset("assets/icons/perfilVerde.png"),
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(20.0),
-                          child: Container(
-                            width: 55,
-                            height: 50,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                topRight: Radius.zero,
-                                topLeft: Radius.circular(12),
-                                bottomRight: Radius.circular(12),
-                                bottomLeft: Radius.zero,
+                          child: GestureDetector(
+                            onTap: () {
+                              SnackbarService.showEmConstrucao(context);
+                            },
+                            child: Container(
+                              width: 55,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                  topRight: Radius.zero,
+                                  topLeft: Radius.circular(12),
+                                  bottomRight: Radius.circular(12),
+                                  bottomLeft: Radius.zero,
+                                ),
+                                color: MyColors.cinzaEscuro,
                               ),
-                              color: MyColors.cinzaEscuro,
+                              child: Image.asset("assets/icons/divisaoVerde.png"),
                             ),
-                            child: Image.asset("assets/icons/divisaoVerde.png"),
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(20.0),
-                          child: Container(
-                            width: 55,
-                            height: 50,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                topRight: Radius.zero,
-                                topLeft: Radius.circular(12),
-                                bottomRight: Radius.circular(12),
-                                bottomLeft: Radius.zero,
+                          child: GestureDetector(
+                            onTap: () {
+                              SnackbarService.showEmConstrucao(context);
+                            },
+                            child: Container(
+                              width: 55,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                  topRight: Radius.zero,
+                                  topLeft: Radius.circular(12),
+                                  bottomRight: Radius.circular(12),
+                                  bottomLeft: Radius.zero,
+                                ),
+                                color: MyColors.cinzaEscuro,
                               ),
-                              color: MyColors.cinzaEscuro,
+                              child: Image.asset("assets/icons/sinoVerde.png"),
                             ),
-                            child: Image.asset("assets/icons/sinoVerde.png"),
                           ),
                         ),
                       ],
@@ -269,15 +301,16 @@ class _EventScreenState extends State<EventoPage> {
                     child: GridView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 12,
-                        mainAxisSpacing: 2,
-                        childAspectRatio: 0.75,
-                      ),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 12,
+                            mainAxisSpacing: 2,
+                            childAspectRatio: 0.75,
+                          ),
                       itemCount: 10,
                       itemBuilder: (context, index) {
-                        return  CardEventoComponente();
+                        return CardEventoComponente();
                       },
                     ),
                   ),

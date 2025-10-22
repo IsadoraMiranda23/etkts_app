@@ -1,14 +1,15 @@
 import 'dart:ui';
 
-import 'package:etikts_app/components/cards/card_cartao_cliente_cadastro.componente.dart';
-import 'package:etikts_app/components/item_venda.component.dart';
+import 'package:etkts_app/components/cards/card_cartao_cliente_cadastro.componente.dart';
+import 'package:etkts_app/components/item_venda.component.dart';
 import 'package:flutter/material.dart';
-import '../../../components/buttons/button.dart';
-import '../../../colors.dart';
-import '../../colors.dart';
+import 'package:etkts_app/components/buttons/button.dart';
+import 'package:etkts_app/colors.dart';
 
 class EfetuarPagamentoPage extends StatefulWidget {
   const EfetuarPagamentoPage({super.key});
+
+  static const routeName = '/efetuarPagamento';
 
   @override
   State<EfetuarPagamentoPage> createState() => _EfetuarPagamentoPageState();

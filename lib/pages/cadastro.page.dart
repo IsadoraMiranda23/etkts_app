@@ -1,5 +1,5 @@
-import 'package:etikts_app/colors.dart';
-import 'package:etikts_app/components/buttons/button.dart';
+import 'package:etkts_app/colors.dart';
+import 'package:etkts_app/components/buttons/button.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui';
 

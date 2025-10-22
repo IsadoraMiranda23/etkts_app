@@ -1,7 +1,5 @@
-import 'package:etikts_app/colors.dart';
+import 'package:etkts_app/colors.dart';
 import 'package:flutter/material.dart';
-
-import '../../colors.dart';
 
 class Button extends StatefulWidget {
   final String text;
@@ -49,7 +47,6 @@ class _ButtonState extends State<Button> {
       height: widget.height,
       decoration: BoxDecoration(
         color: widget.isEnabled ? widget.backgroundColor : Colors.grey,
-
         borderRadius: BorderRadius.circular(widget.borderRadius),
         border: Border.all(
           color: widget.borderColor,
@@ -68,14 +65,11 @@ class _ButtonState extends State<Button> {
         child: Text(
           widget.text,
           style: TextStyle(
-
             color: widget.textColor,
             fontSize: widget.fontSize,
             fontWeight: widget.fontWeight,
             fontFamily: widget.fontFamily,
-
           ),
-
         ),
       ),
     );
