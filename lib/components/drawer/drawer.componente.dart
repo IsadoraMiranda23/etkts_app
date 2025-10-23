@@ -22,14 +22,14 @@ class _DrawerComponenteState extends State<DrawerComponente> {
           Navigator.pop(context);
         },
         child: Container(
-          decoration: const BoxDecoration(color: MyColors.preto),
+
           child: Align(
             alignment: Alignment.centerLeft,
             child: Container(
               width: 370,
-              height: 780,
+              height: 690,
               decoration: const BoxDecoration(
-                color: MyColors.cinzaMedioEscuro,
+                color: MyColors.cinzaMedioEscuroTransparente,
                 borderRadius: BorderRadius.only(
                   topRight: Radius.circular(42),
                   topLeft: Radius.circular(42),
@@ -38,9 +38,9 @@ class _DrawerComponenteState extends State<DrawerComponente> {
               ),
               child: Column(
                 children: [
-                  // Header com altura reduzida
+
                   Container(
-                    height: 120, // Altura reduzida do header
+                    height: 100, // Altura reduzida do header
                     decoration: const BoxDecoration(
                       borderRadius: BorderRadius.only(
                         topRight: Radius.circular(20),
@@ -57,9 +57,11 @@ class _DrawerComponenteState extends State<DrawerComponente> {
                             child: Image.asset("assets/icons/voltarBranco.png"),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(left: 92.0),
+                            padding: const EdgeInsets.only(left: 85.0),
                             child: Image.asset(
                               "assets/logos/logoCompletoBranco.png",
+                              width: 55,
+                              height: 44,
                               fit: BoxFit.contain,
                             ),
                           ),
@@ -68,7 +70,7 @@ class _DrawerComponenteState extends State<DrawerComponente> {
                     ),
                   ),
                   // Linha divisória
-                  const Divider(color: Colors.white, height: 3, thickness: 3),
+                   Divider(color: Colors.white, height: 3, thickness: 3),
                   // Lista de itens
                   Expanded(
                     child: Padding(
@@ -76,33 +78,9 @@ class _DrawerComponenteState extends State<DrawerComponente> {
                       child: ListView(
                         padding: EdgeInsets.zero,
                         children: [
+
                           Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: ListTile(
-                              leading: Container(
-                                width: 30, // Ícone aumentado
-                                height: 30, // Ícone aumentado
-                                child: Image.asset(
-                                  "assets/icons/homeVerde.png",
-                                ),
-                              ),
-                              title: Padding(
-                                padding: const EdgeInsets.only(top: 10.0),
-                                child: Text(
-                                  "Home",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18, // Texto aumentado
-                                  ),
-                                ),
-                              ),
-                              onTap: () {
-                                SnackbarService.showEmConstrucao(context);
-                              },
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(4.0),
                             child: ListTile(
                               leading: Container(
                                 width: 30,
@@ -113,12 +91,20 @@ class _DrawerComponenteState extends State<DrawerComponente> {
                               ),
                               title: Padding(
                                 padding: const EdgeInsets.only(top: 10.0),
-                                child: Text(
-                                  "Meus Cartões",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                  ),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Adicionar crédito",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                    Spacer(),
+                                    Image.asset(
+                                      "assets/icons/setaDrawer.png",
+                                    ),
+                                  ],
                                 ),
                               ),
                               onTap: () {
@@ -127,23 +113,31 @@ class _DrawerComponenteState extends State<DrawerComponente> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(4.0),
                             child: ListTile(
                               leading: Container(
                                 width: 30,
                                 height: 30,
                                 child: Image.asset(
-                                  "assets/icons/coracaoVerde.png",
+                                  "assets/icons/cartaoCreditoVerde.png",
                                 ),
                               ),
                               title: Padding(
                                 padding: const EdgeInsets.only(top: 10.0),
-                                child: Text(
-                                  "Favoritos",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                  ),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Meus Cartões",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                    Spacer(),
+                                    Image.asset(
+                                      "assets/icons/setaDrawer.png",
+                                    ),
+                                  ],
                                 ),
                               ),
                               onTap: () {
@@ -152,7 +146,7 @@ class _DrawerComponenteState extends State<DrawerComponente> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(4.0),
                             child: ListTile(
                               leading: Container(
                                 width: 30,
@@ -163,12 +157,20 @@ class _DrawerComponenteState extends State<DrawerComponente> {
                               ),
                               title: Padding(
                                 padding: const EdgeInsets.only(top: 10.0),
-                                child: Text(
-                                  "Ingressos",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                  ),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Ingressos",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                    Spacer(),
+                                    Image.asset(
+                                      "assets/icons/setaDrawer.png",
+                                    ),
+                                  ],
                                 ),
                               ),
                               onTap: () {
@@ -177,7 +179,7 @@ class _DrawerComponenteState extends State<DrawerComponente> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(4.0),
                             child: ListTile(
                               leading: Container(
                                 width: 30,
@@ -188,12 +190,20 @@ class _DrawerComponenteState extends State<DrawerComponente> {
                               ),
                               title: Padding(
                                 padding: const EdgeInsets.only(top: 10.0),
-                                child: Text(
-                                  "Transferências",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                  ),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Transferências",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                    Spacer(),
+                                    Image.asset(
+                                      "assets/icons/setaDrawer.png",
+                                    ),
+                                  ],
                                 ),
                               ),
                               onTap: () {
@@ -202,23 +212,31 @@ class _DrawerComponenteState extends State<DrawerComponente> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(4.0),
                             child: ListTile(
                               leading: Container(
                                 width: 30,
                                 height: 30,
                                 child: Image.asset(
-                                  "assets/icons/perfilVerde.png",
+                                  "assets/icons/perfilDrawerVerde.png",
                                 ),
                               ),
                               title: Padding(
                                 padding: const EdgeInsets.only(top: 10.0),
-                                child: Text(
-                                  "Perfil",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                  ),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Perfil",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                    Spacer(),
+                                    Image.asset(
+                                      "assets/icons/setaDrawer.png",
+                                    ),
+                                  ],
                                 ),
                               ),
                               onTap: () {
@@ -227,7 +245,7 @@ class _DrawerComponenteState extends State<DrawerComponente> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(4.0),
                             child: ListTile(
                               leading: Container(
                                 width: 30,
@@ -238,12 +256,20 @@ class _DrawerComponenteState extends State<DrawerComponente> {
                               ),
                               title: Padding(
                                 padding: const EdgeInsets.only(top: 10.0),
-                                child: Text(
-                                  "Configurações",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                  ),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "Configurações",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                    Spacer(),
+                                    Image.asset(
+                                      "assets/icons/setaDrawer.png",
+                                    ),
+                                  ],
                                 ),
                               ),
                               onTap: () {
@@ -251,10 +277,10 @@ class _DrawerComponenteState extends State<DrawerComponente> {
                               },
                             ),
                           ),
-                          const SizedBox(height: 60),
+                          const SizedBox(height: 120),
                           const Divider(
-                            color: MyColors.preto,
-                            height: 3,
+                            color: Colors.white,
+                            height: 2,
                             thickness: 3,
                           ),
                           Padding(
@@ -273,7 +299,7 @@ class _DrawerComponenteState extends State<DrawerComponente> {
                                   "Sair",
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 18,
+                                    fontSize: 16,
                                   ),
                                 ),
                               ),

@@ -42,20 +42,17 @@ class _CardEventoComponenteState extends State<CardEventoComponente> {
       },
       child: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 16.0, left: 4, right: 5),
-            child: Container(
+          Container(
+            width: 155,
+            height: 133,
+            decoration: BoxDecoration(
+              color: Colors.black,
+              borderRadius: getBorderRadius(),
+            ),
+            child: Image.asset(
+              'assets/images/imageEvent.png',
               width: 160,
               height: 133,
-              decoration: BoxDecoration(
-                color: Colors.black,
-                borderRadius: getBorderRadius(),
-              ),
-              child: Image.asset(
-                'assets/images/imageEvent.png',
-                width: 160,
-                height: 133,
-              ),
             ),
           ),
 
@@ -72,86 +69,93 @@ class _CardEventoComponenteState extends State<CardEventoComponente> {
                       color: MyColors.preto,
                       borderRadius: BorderRadius.circular(4),
                     ),
-                    child: Row(
+                    // O Container de 120x48 agora contém uma Column para dispor os itens
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start, // Alinha o texto à esquerda
                       children: [
-                        Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                right: 12.0,
-                                left: 8,
-                                top: 2,
+                        // Nome do Evento (Ocupa a largura total de 120, se necessário, usando ellipsis)
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            right: 12.0,
+                            left: 4,
+                            top: 2,
+                          ),
+                          child: SizedBox(
+                            width: 120 - 12 - 8, // Largura do Container - padding horizontal
+                            child: Text(
+                              "Nome do Evento",
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
                               ),
-                              child: Text(
-                                "Nome do Evento",
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w600,
+                              overflow: TextOverflow.ellipsis, // Evita estouro de texto
+                              maxLines: 1, // Limita a uma linha
+                            ),
+                          ),
+                        ),
+                        // Data do Evento
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            right: 10.0,
+                            bottom: 6,
+                            top: 2,
+                            left: 3,
+                          ),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.calendar_today,
+                                size: 14,
+                                color: MyColors.verde,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                  top: 2.0,
+                                  left: 4,
+                                ),
+                                child: Text(
+                                  "dd/mm/aa",
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                right: 30.0,
-                                bottom: 6,
-                                top: 2,
-                              ),
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.calendar_today,
-                                    weight: 2,
-                                    size: 14,
-                                    color: MyColors.verde,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                      top: 2.0,
-                                      left: 4,
-                                    ),
-                                    child: Text(
-                                      "dd/mm/aa",
-                                      style: TextStyle(
-                                        fontSize: 11,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ],
                     ),
                   ),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-                    width: 40,
-                    height: 20,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        bottomRight: Radius.circular(0),
-                        bottomLeft: Radius.circular(5),
-                        topLeft: Radius.circular(5),
-                        topRight: Radius.circular(5),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 6.0),
+                    child: Container(
+                      width: 40,
+                      height: 20,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          bottomRight: Radius.circular(0),
+                          bottomLeft: Radius.circular(5),
+                          topLeft: Radius.circular(5),
+                          topRight: Radius.circular(5),
+                        ),
+                        color: MyColors.cinza,
                       ),
-                      color: MyColors.cinza,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.person_outline,
-                          size: 18,
-                          color: MyColors.verde,
-                        ),
-                        Text(
-                          widget.numeroComprados.toString(),
-                          style: TextStyle(fontSize: 12, color: MyColors.verde),
-                        ),
-                      ],
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.person_outline,
+                            size: 18,
+                            color: MyColors.verde,
+                          ),
+                          Text(
+                            widget.numeroComprados.toString(),
+                            style: TextStyle(fontSize: 12, color: MyColors.verde),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],

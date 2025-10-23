@@ -62,7 +62,7 @@ class _CarrosselComponentState extends State<CarrosselComponent> {
 
 
         Positioned(
-          bottom: 102,
+          bottom: 52,
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             decoration: BoxDecoration(

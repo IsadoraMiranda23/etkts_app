@@ -38,7 +38,7 @@ class _LoadingPageState extends State<LoadingPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Image.asset(
-              'assets/logos/logoCompletoVerde.png',
+              'assets/logos/logoBrancoCompleto.png',
               width: 156,
               height: 128,
             ),

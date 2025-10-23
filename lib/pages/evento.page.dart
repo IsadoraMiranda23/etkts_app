@@ -3,10 +3,9 @@ import 'package:etkts_app/colors.dart';
 import 'package:etkts_app/services/snackbar.service.dart';
 import 'package:flutter/material.dart';
 import 'package:etkts_app/components/drawer/drawer.componente.dart';
-
 import 'package:etkts_app/components/cards/card_evento.componente.dart';
+import 'package:etkts_app/components/rodape/rodape_navigation.component.dart'; // Importe o rodapé
 import 'package:go_router/go_router.dart';
-
 import 'notificacoes.page.dart';
 
 class EventoPage extends StatefulWidget {
@@ -23,6 +22,39 @@ class _EventScreenState extends State<EventoPage> {
   bool balanceVisible = true;
   double userBalance = 1250.75;
   bool searchExpanded = false;
+  int currentIndex = 1; // Índice inicial (1 para Eventos)
+
+  // Lista de telas/páginas (você pode adicionar outras depois)
+  final List<Widget> screens = [
+    // Tela Início (placeholder - crie uma página específica depois)
+    const Center(
+      child: Text('Tela Início', style: TextStyle(color: Colors.white)),
+    ),
+    // Tela Eventos (sua página atual)
+    const EventoPageContent(), // Extraímos o conteúdo para outro widget
+    // Tela Perfil (placeholder - crie uma página específica depois)
+    const Center(
+      child: Text('Tela Perfil', style: TextStyle(color: Colors.white)),
+    ),
+  ];
+
+  void onItemTapped(int index) {
+    setState(() {
+      currentIndex = index;
+    });
+
+    // Navegação entre telas
+    if (index == 0) {
+      // Navegar para tela inicial
+      context.go('/');
+    } else if (index == 1) {
+      // Já está na tela de eventos
+      context.go(EventoPage.routeName);
+    } else if (index == 2) {
+      // Navegar para tela de perfil
+      context.go('/perfil');
+    }
+  }
 
   @override
   void dispose() {
@@ -30,6 +62,7 @@ class _EventScreenState extends State<EventoPage> {
     super.dispose();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -49,7 +82,7 @@ class _EventScreenState extends State<EventoPage> {
           child: Row(
             children: [
               if (!searchExpanded) ...[
-                CircleAvatar(
+                const CircleAvatar(
                   radius: 15,
                   backgroundImage: AssetImage('assets/images/fotoEvento.png'),
                 ),
@@ -161,59 +194,94 @@ class _EventScreenState extends State<EventoPage> {
           ),
         ],
       ),
-      drawer: DrawerComponente(),
-      body: Container(
-        decoration: BoxDecoration(color: MyColors.preto),
-        child: SingleChildScrollView(
-          child: Stack(
-            children: [
-              Positioned(
-                top: 0,
-                left: 0,
-                right: 0,
-                child: CarrosselComponent(),
-              ),
-              Positioned(
-                top: 345,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                child: Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Colors.black87..withValues(alpha: 0.1),
-                        MyColors.preto.withValues(alpha: 0.1),
-                        MyColors.preto.withValues(alpha: 0.2),
-                        MyColors.preto..withValues(alpha: 0.2),
-                      ],
-                      stops: [0.1, 0.3, 0.5, 0.4],
-                    ),
+      drawer: const DrawerComponente(),
+      body: screens[currentIndex], // Exibe a tela atual baseada no índice
+      bottomNavigationBar: RodapeNavigation(
+        currentIndex: currentIndex,
+        onTap: onItemTapped,
+      ),
+    );
+  }
+}
+
+class EventoPageContent extends StatelessWidget {
+  const EventoPageContent({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(color: MyColors.preto.withValues()),
+      child: SingleChildScrollView(
+        child: Stack(
+          children: [
+            Column(
+              children: [
+                Container(height: 350, child: const CarrosselComponent()),
+                const SizedBox(height: 55),
+                // Grade de Cards
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 22.0),
+                  child: GridView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 12,
+                          mainAxisSpacing: 2,
+                          childAspectRatio: 0.75,
+                        ),
+                    itemCount: 10,
+                    itemBuilder: (context, index) {
+                      return const CardEventoComponente();
+                    },
+                  ),
+                ),
+              ],
+            ),
+            Positioned(
+              top: 330,
+              left: 0,
+              right: 0,
+              height: 40,
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Colors.transparent,
+                      MyColors.preto.withValues(alpha: 0.7),
+                      MyColors.preto.withValues(alpha: 0.8),
+                      MyColors.preto.withValues(alpha: 1.0),
+                    ],
+                    stops: const [0.0, 0.3, 0.7, 1.0],
                   ),
                 ),
               ),
-              Column(
-                children: [
-                  const SizedBox(height: 280),
-                  Container(
-                    margin: const EdgeInsets.all(5),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: GestureDetector(
-                            onTap: () {
-                              SnackbarService.showEmConstrucao(context);
-                            },
-                            child: Container(
+            ),
+            Positioned(
+              top: 290,
+              left: 0,
+              right: 0,
+              child: Container(
+                margin: const EdgeInsets.all(5),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          SnackbarService.showEmConstrucao(context);
+                        },
+                        child: Column(
+                          children: [
+                            Container(
                               width: 55,
-                              height: 50,
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.only(
+                                borderRadius: const BorderRadius.only(
                                   topRight: Radius.zero,
                                   topLeft: Radius.circular(12),
                                   bottomRight: Radius.circular(12),
@@ -221,103 +289,147 @@ class _EventScreenState extends State<EventoPage> {
                                 ),
                                 color: MyColors.cinzaEscuro,
                               ),
-                              child: Image.asset("assets/icons/balaoVerde.png"),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: GestureDetector(
-                            onTap: () {
-                              SnackbarService.showEmConstrucao(context);
-                            },
-                            child: Container(
-                              width: 55,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.only(
-                                  topRight: Radius.zero,
-                                  topLeft: Radius.circular(12),
-                                  bottomRight: Radius.circular(12),
-                                  bottomLeft: Radius.zero,
-                                ),
-                                color: MyColors.cinzaEscuro,
+                              child: Image.asset(
+                                "assets/icons/balaoVerde.png",
+                                height: 50,
                               ),
-                              child: Image.asset("assets/icons/perfilVerde.png"),
                             ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: GestureDetector(
-                            onTap: () {
-                              SnackbarService.showEmConstrucao(context);
-                            },
-                            child: Container(
-                              width: 55,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.only(
-                                  topRight: Radius.zero,
-                                  topLeft: Radius.circular(12),
-                                  bottomRight: Radius.circular(12),
-                                  bottomLeft: Radius.zero,
+                            const Padding(
+                              padding: EdgeInsets.only(top: 5.0),
+                              child: Text(
+                                "Mensagem",
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  color: Colors.white,
                                 ),
-                                color: MyColors.cinzaEscuro,
                               ),
-                              child: Image.asset("assets/icons/divisaoVerde.png"),
                             ),
-                          ),
+                          ],
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: GestureDetector(
-                            onTap: () {
-                              SnackbarService.showEmConstrucao(context);
-                            },
-                            child: Container(
-                              width: 55,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.only(
-                                  topRight: Radius.zero,
-                                  topLeft: Radius.circular(12),
-                                  bottomRight: Radius.circular(12),
-                                  bottomLeft: Radius.zero,
-                                ),
-                                color: MyColors.cinzaEscuro,
-                              ),
-                              child: Image.asset("assets/icons/sinoVerde.png"),
-                            ),
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 30),
-                  // Grade de Cards
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: GridView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 12,
-                            mainAxisSpacing: 2,
-                            childAspectRatio: 0.75,
-                          ),
-                      itemCount: 10,
-                      itemBuilder: (context, index) {
-                        return CardEventoComponente();
-                      },
+
+                    Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          SnackbarService.showEmConstrucao(context);
+                        },
+                        child: Column(
+                          children: [
+                            Container(
+                              width: 55,
+                              decoration: BoxDecoration(
+                                borderRadius: const BorderRadius.only(
+                                  topRight: Radius.zero,
+                                  topLeft: Radius.circular(12),
+                                  bottomRight: Radius.circular(12),
+                                  bottomLeft: Radius.zero,
+                                ),
+                                color: MyColors.cinzaEscuro,
+                              ),
+                              child: Image.asset(
+                                "assets/icons/perfilVerde.png",
+                                height: 50,
+                              ),
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.only(top: 5.0),
+                              child: Text(
+                                "Solicitações",
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                  ),
-                ],
+                    // Ícone Divisão
+                    Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          SnackbarService.showEmConstrucao(context);
+                        },
+                        child: Column(
+                          children: [
+                            Container(
+                              width: 55,
+                              decoration: BoxDecoration(
+                                borderRadius: const BorderRadius.only(
+                                  topRight: Radius.zero,
+                                  topLeft: Radius.circular(12),
+                                  bottomRight: Radius.circular(12),
+                                  bottomLeft: Radius.zero,
+                                ),
+                                color: MyColors.cinzaEscuro,
+                              ),
+                              child: Image.asset(
+                                "assets/icons/divisaoVerde.png",
+                                height: 50,
+                              ),
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.only(top: 5.0),
+                              child: Text(
+                                "Divisão",
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    // Ícone Pedidos
+                    Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          SnackbarService.showEmConstrucao(context);
+                        },
+                        child: Column(
+                          children: [
+                            Container(
+                              width: 55,
+                              decoration: BoxDecoration(
+                                borderRadius: const BorderRadius.only(
+                                  topRight: Radius.zero,
+                                  topLeft: Radius.circular(12),
+                                  bottomRight: Radius.circular(12),
+                                  bottomLeft: Radius.zero,
+                                ),
+                                color: MyColors.cinzaEscuro,
+                              ),
+                              child: Image.asset(
+                                "assets/icons/sinoVerde.png",
+                                height: 50,
+                              ),
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.only(top: 5.0),
+                              child: Text(
+                                "Pedidos",
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

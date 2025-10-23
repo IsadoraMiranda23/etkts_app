@@ -13,7 +13,8 @@ class MyColors{
   static const Color cinzaClaroInput= Color(0xFFD9D9D9);
   static const Color cinzaMedioClaro = Color(0xFF5B5959);// Menu lateral
   static const Color cinzaMedio = Color(0xFF5C5C5C);// balões de envio de chat
-  static const Color cinzaMedioEscuro = Color(0xFF3E3D3D);     // Caixas de texto, chat,
+  static const Color cinzaMedioEscuro = Color(0xFF3E3D3D);
+  static const Color cinzaMedioEscuroTransparente = Color(0xB33E3D3D) ; // Caixas de texto, chat,
   static const Color cinzaEscuro = Color(0xFF212121);    // Texto primário
 
 
