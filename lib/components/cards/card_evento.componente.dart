@@ -1,6 +1,8 @@
 import 'package:etkts_app/services/snackbar.service.dart';
 import 'package:flutter/material.dart';
 import 'package:etkts_app/colors.dart';
+import 'package:etkts_app/pages/detalhe_evento.page.dart'; // Importe a página
+import 'package:go_router/go_router.dart'; // Importe o go_router
 
 class CardEventoComponente extends StatefulWidget {
   final bool leftSideRounded;
@@ -38,7 +40,7 @@ class _CardEventoComponenteState extends State<CardEventoComponente> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        SnackbarService.showEmConstrucao(context);
+        context.go(DetalheEventoPage.routeName);
       },
       child: Column(
         children: [
@@ -55,7 +57,7 @@ class _CardEventoComponenteState extends State<CardEventoComponente> {
               height: 133,
             ),
           ),
-
+          // ... resto do seu código permanece igual
           Center(
             child: Padding(
               padding: const EdgeInsets.only(right: 6.0, top: 8, left: 2),
@@ -69,11 +71,9 @@ class _CardEventoComponenteState extends State<CardEventoComponente> {
                       color: MyColors.preto,
                       borderRadius: BorderRadius.circular(4),
                     ),
-                    // O Container de 120x48 agora contém uma Column para dispor os itens
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start, // Alinha o texto à esquerda
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Nome do Evento (Ocupa a largura total de 120, se necessário, usando ellipsis)
                         Padding(
                           padding: const EdgeInsets.only(
                             right: 12.0,
@@ -81,7 +81,7 @@ class _CardEventoComponenteState extends State<CardEventoComponente> {
                             top: 2,
                           ),
                           child: SizedBox(
-                            width: 120 - 12 - 8, // Largura do Container - padding horizontal
+                            width: 120 - 12 - 8,
                             child: Text(
                               "Nome do Evento",
                               style: TextStyle(
@@ -89,12 +89,11 @@ class _CardEventoComponenteState extends State<CardEventoComponente> {
                                 color: Colors.white,
                                 fontWeight: FontWeight.w600,
                               ),
-                              overflow: TextOverflow.ellipsis, // Evita estouro de texto
-                              maxLines: 1, // Limita a uma linha
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
                             ),
                           ),
                         ),
-                        // Data do Evento
                         Padding(
                           padding: const EdgeInsets.only(
                             right: 10.0,
