@@ -57,7 +57,7 @@ class _CardEventoComponenteState extends State<CardEventoComponente> {
               height: 133,
             ),
           ),
-          // ... resto do seu código permanece igual
+
           Center(
             child: Padding(
               padding: const EdgeInsets.only(right: 6.0, top: 8, left: 2),

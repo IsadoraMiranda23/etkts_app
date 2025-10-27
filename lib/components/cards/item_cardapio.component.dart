@@ -1,0 +1,206 @@
+import 'package:etkts_app/colors.dart';
+import 'package:flutter/material.dart';
+
+class ItemCardapioComponent extends StatefulWidget {
+  final bool leftSideRounded;
+  final bool rightSideRounded;
+  final String nomeComida;
+  final String descricao;
+  final double valor;
+
+  const ItemCardapioComponent({
+    super.key,
+    this.leftSideRounded = true,
+    this.rightSideRounded = true,
+    this.nomeComida = "Nome da comida",
+    this.descricao = "pequena descrição",
+    this.valor = 25.90,
+  });
+
+  @override
+  State<ItemCardapioComponent> createState() => _ItemCardapioComponentState();
+}
+
+class _ItemCardapioComponentState extends State<ItemCardapioComponent> {
+  int _quantidade = 0;
+
+  void _incrementarQuantidade() {
+    setState(() {
+      _quantidade++;
+    });
+  }
+
+  void _decrementarQuantidade() {
+    if (_quantidade > 0) {
+      setState(() {
+        _quantidade--;
+      });
+    }
+  }
+
+  BorderRadius _getBorderRadius() {
+    return BorderRadius.only(
+      topLeft: widget.leftSideRounded ? const Radius.circular(25) : Radius.zero,
+      topRight: widget.rightSideRounded ? const Radius.circular(25) : Radius.zero,
+      bottomLeft: widget.leftSideRounded ? const Radius.circular(25) : Radius.zero,
+      bottomRight: widget.rightSideRounded ? const Radius.circular(25) : Radius.zero,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 160,
+      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // IMAGEM DO ITEM
+          Container(
+            width: 160,
+            height: 120,
+            decoration: BoxDecoration(
+              color: Colors.grey[800],
+              borderRadius: _getBorderRadius(),
+            ),
+            child: ClipRRect(
+              borderRadius: _getBorderRadius(),
+              child: Image.asset(
+                'assets/images/fotoCardapio2.png',
+                width: 160,
+                height: 120,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+
+          const SizedBox(height: 8),
+
+          // INFORMAÇÕES DO ITEM
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 4.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // NOME E PREÇO
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        widget.nomeComida,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      "R\$${widget.valor.toStringAsFixed(2)}",
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
+                ),
+
+                const SizedBox(height: 4),
+
+                // DESCRIÇÃO
+                SizedBox(
+                  width: double.infinity,
+                  child: Text(
+                    widget.descricao,
+                    style: const TextStyle(
+                      color: Colors.white70,
+                      fontSize: 11,
+                      height: 1.2,
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+
+                const SizedBox(height: 8),
+
+                // CONTADOR DE QUANTIDADE
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const SizedBox(width: 4),
+                    Container(
+                      width: 100,
+                      height: 28,
+                      decoration: BoxDecoration(
+                        color: MyColors.cinzaMedioEscuro,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          // BOTÃO DIMINUIR
+                          InkWell(
+                            onTap: _decrementarQuantidade,
+                            borderRadius: BorderRadius.circular(15),
+                            child: Container(
+                              width: 24,
+                              height: 24,
+                              alignment: Alignment.center,
+                              child: Text(
+                                "-",
+                                style: TextStyle(
+                                  color: _quantidade > 0 ? Colors.white : Colors.white54,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ),
+                          ),
+
+                          // QUANTIDADE
+                          Text(
+                            _quantidade.toString(),
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14,
+                            ),
+                          ),
+
+                          // BOTÃO AUMENTAR
+                          InkWell(
+                            onTap: _incrementarQuantidade,
+                            borderRadius: BorderRadius.circular(15),
+                            child: Container(
+                              width: 24,
+                              height: 24,
+                              alignment: Alignment.center,
+                              child: const Text(
+                                "+",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
