@@ -1,7 +1,9 @@
 import 'package:etkts_app/colors.dart';
 import 'package:etkts_app/components/buttons/button.dart';
 import 'package:etkts_app/components/cards/card_detalhe_produto_evento.component.dart';
+import 'package:etkts_app/components/cards/item_amigo.component.dart';
 import 'package:etkts_app/components/cards/item_cardapio.component.dart';
+import 'package:etkts_app/components/cards/status_detalhe_evento.component.dart';
 import 'package:flutter/material.dart';
 
 class DetalheEventoPage extends StatefulWidget {
@@ -181,57 +183,17 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
       padding: const EdgeInsets.symmetric(vertical: 20),
       child: Column(
         children: [
-          const Text(
-            "Amigos Confirmados",
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+           StatusDetalheEvento(),
           const SizedBox(height: 20),
-          // LISTA DE AMIGOS SIMULADA
-          ...List.generate(6, (index) => buildItemAmigo(index)),
-          const SizedBox(height: 30),
+
+          ...List.generate(3, (index) => ItemAmigoComponent()),
+
         ],
       ),
     );
   }
 
-  Widget buildItemAmigo(int index) {
-    List<String> nomes = ["João Silva", "Maria Santos", "Pedro Oliveira", "Ana Costa", "Carlos Lima", "Julia Pereira"];
-    return Container(
-      width: double.infinity,
-      margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: MyColors.cinzaMedioEscuro,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              color: Colors.grey[600],
-              shape: BoxShape.circle,
-            ),
-            child: const Icon(Icons.person, color: Colors.white),
-          ),
-          const SizedBox(width: 12),
-          Text(
-            nomes[index],
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+
 
   Widget buildAbaIngressos() {
     return Column(
@@ -241,7 +203,7 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
             padding: const EdgeInsets.only(bottom: 20),
             child: Column(
               children: [
-                // DESCRIÇÃO DO EVENTO
+               StatusDetalheEvento(),
                 const Padding(
                   padding: EdgeInsets.only(left: 24, top: 16, right: 24),
                   child: Align(

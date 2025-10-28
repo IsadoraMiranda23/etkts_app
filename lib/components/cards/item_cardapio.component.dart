@@ -22,23 +22,23 @@ class ItemCardapioComponent extends StatefulWidget {
 }
 
 class _ItemCardapioComponentState extends State<ItemCardapioComponent> {
-  int _quantidade = 0;
+  int quantidade = 0;
 
   void _incrementarQuantidade() {
     setState(() {
-      _quantidade++;
+      quantidade++;
     });
   }
 
-  void _decrementarQuantidade() {
-    if (_quantidade > 0) {
+  void decrementarQuantidade() {
+    if (quantidade > 0) {
       setState(() {
-        _quantidade--;
+        quantidade--;
       });
     }
   }
 
-  BorderRadius _getBorderRadius() {
+  BorderRadius getBorderRadius() {
     return BorderRadius.only(
       topLeft: widget.leftSideRounded ? const Radius.circular(25) : Radius.zero,
       topRight: widget.rightSideRounded ? const Radius.circular(25) : Radius.zero,
@@ -56,20 +56,22 @@ class _ItemCardapioComponentState extends State<ItemCardapioComponent> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // IMAGEM DO ITEM
-          Container(
-            width: 160,
-            height: 120,
-            decoration: BoxDecoration(
-              color: Colors.grey[800],
-              borderRadius: _getBorderRadius(),
-            ),
-            child: ClipRRect(
-              borderRadius: _getBorderRadius(),
-              child: Image.asset(
-                'assets/images/fotoCardapio2.png',
-                width: 160,
-                height: 120,
-                fit: BoxFit.cover,
+          widget(
+            child: Container(
+              width: 160,
+              height: 120,
+              decoration: BoxDecoration(
+                color: Colors.grey[800],
+                borderRadius: getBorderRadius(),
+              ),
+              child: ClipRRect(
+                borderRadius: getBorderRadius(),
+                child: Image.asset(
+                  'assets/images/fotoCardapio2.png',
+                  width: 160,
+                  height: 120,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),
@@ -146,7 +148,7 @@ class _ItemCardapioComponentState extends State<ItemCardapioComponent> {
                         children: [
                           // BOTÃO DIMINUIR
                           InkWell(
-                            onTap: _decrementarQuantidade,
+                            onTap: decrementarQuantidade,
                             borderRadius: BorderRadius.circular(15),
                             child: Container(
                               width: 24,
@@ -155,7 +157,7 @@ class _ItemCardapioComponentState extends State<ItemCardapioComponent> {
                               child: Text(
                                 "-",
                                 style: TextStyle(
-                                  color: _quantidade > 0 ? Colors.white : Colors.white54,
+                                  color: quantidade > 0 ? Colors.white : Colors.white54,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16,
                                 ),
@@ -165,7 +167,7 @@ class _ItemCardapioComponentState extends State<ItemCardapioComponent> {
 
                           // QUANTIDADE
                           Text(
-                            _quantidade.toString(),
+                            quantidade.toString(),
                             style: const TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w600,
