@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:etkts_app/components/drawer/drawer.componente.dart';
 import 'package:etkts_app/components/cards/card_evento.componente.dart';
 import 'package:etkts_app/components/rodape/rodape_navigation.component.dart'; // Importe o rodapé
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'notificacoes.page.dart';
 
@@ -25,7 +26,7 @@ class _HomePageState extends State<HomePage> {
   bool balanceVisible = true;
   double userBalance = 1250.75;
   bool searchExpanded = false;
-  int currentIndex = 0; // Índice inicial (1 para home)
+  int currentIndex = 0;
   List<EventoHome> eventos = [];
   bool isLoading = false;
 
@@ -260,16 +261,16 @@ class EventoPageContent extends StatelessWidget {
                 const SizedBox(height: 55),
                 // Grade de Cards
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 0.0),
+                  padding:  EdgeInsets.symmetric(horizontal: 10.w),
                   child: GridView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
+                       SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
-                          crossAxisSpacing: 12,
-                          mainAxisSpacing: 2,
-                          childAspectRatio: 0.75,
+                          crossAxisSpacing: 25.w,
+                          mainAxisSpacing: 15.h,
+                         childAspectRatio: .93
                         ),
                     itemCount: eventos.length,
                     itemBuilder: (context, index) {
@@ -321,7 +322,8 @@ class EventoPageContent extends StatelessWidget {
                       child: Column(
                         children: [
                           Container(
-                            width: 55,
+                            width: 50.w,
+                            height: 45.h,
                             decoration: BoxDecoration(
                               borderRadius: const BorderRadius.only(
                                 topRight: Radius.zero,
@@ -356,7 +358,8 @@ class EventoPageContent extends StatelessWidget {
                       child: Column(
                         children: [
                           Container(
-                            width: 55,
+                            width: 50.w,
+                            height: 45.h,
                             decoration: BoxDecoration(
                               borderRadius: const BorderRadius.only(
                                 topRight: Radius.zero,
@@ -392,7 +395,8 @@ class EventoPageContent extends StatelessWidget {
                       child: Column(
                         children: [
                           Container(
-                            width: 55,
+                            width: 50.w,
+                            height: 45.h,
                             decoration: BoxDecoration(
                               borderRadius: const BorderRadius.only(
                                 topRight: Radius.zero,
@@ -428,7 +432,8 @@ class EventoPageContent extends StatelessWidget {
                       child: Column(
                         children: [
                           Container(
-                            width: 55,
+                            width: 50.w,
+                            height: 45.h,
                             decoration: BoxDecoration(
                               borderRadius: const BorderRadius.only(
                                 topRight: Radius.zero,

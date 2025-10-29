@@ -4,6 +4,7 @@ import 'package:etkts_app/types.dart';
 import 'package:flutter/material.dart';
 import 'package:etkts_app/colors.dart';
 import 'package:etkts_app/pages/detalhe_evento.page.dart'; // Importe a página
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart'; // Importe o go_router
 
 class CardEventoComponente extends StatelessWidget {
@@ -22,10 +23,10 @@ class CardEventoComponente extends StatelessWidget {
 
   BorderRadius getBorderRadius() {
     return BorderRadius.only(
-      bottomLeft: leftSideRounded ? const Radius.circular(25) : Radius.zero,
-      bottomRight: rightSideRounded ? const Radius.circular(25) : Radius.zero,
-      topLeft: rightSideRounded ? const Radius.circular(25) : Radius.zero,
-      topRight: leftSideRounded ? const Radius.circular(25) : Radius.zero,
+      bottomLeft: leftSideRounded ? Radius.circular(25.r) : Radius.zero,
+      bottomRight: rightSideRounded ? Radius.circular(25.r) : Radius.zero,
+      topLeft: rightSideRounded ? Radius.circular(25.r) : Radius.zero,
+      topRight: leftSideRounded ? Radius.circular(25.r) : Radius.zero,
     );
   }
 
@@ -39,7 +40,6 @@ class CardEventoComponente extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            width: 160,
             height: 133,
             decoration: BoxDecoration(
               image:
@@ -65,111 +65,60 @@ class CardEventoComponente extends StatelessWidget {
             //   color: MyColors.cinza,
             // ),
           ),
-
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.only(right: 6.0, top: 8, left: 2),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    width: 120,
-                    height: 48,
-                    decoration: BoxDecoration(
-                      color: MyColors.preto,
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            right: 12.0,
-                            left: 4,
-                            top: 2,
-                          ),
-                          child: SizedBox(
-                            width: 120 - 12 - 8,
-                            child: Text(
-                              evento.nome!,
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w600,
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                            ),
-                          ),
+          Padding(
+            padding: EdgeInsets.only(left: 11.w, top: 15.h),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        evento.nome!,
+                        style: TextStyle(
+                          fontSize: 10.sp,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            right: 10.0,
-                            bottom: 6,
-                            top: 2,
-                            left: 3,
-                          ),
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.calendar_today,
-                                size: 14,
-                                color: MyColors.verde,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                  top: 2.0,
-                                  left: 4,
-                                ),
-                                child: Text(
-                                  evento.data!.formatDateString,
-                                  style: TextStyle(
-                                    fontSize: 11,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 6.0),
-                    child: Container(
-                      width: 40,
-                      height: 20,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                          bottomRight: Radius.circular(0),
-                          bottomLeft: Radius.circular(5),
-                          topLeft: Radius.circular(5),
-                          topRight: Radius.circular(5),
-                        ),
-                        color: MyColors.cinza,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.person_outline,
-                            size: 18,
-                            color: MyColors.verde,
-                          ),
-                          Text(
-                            numeroComprados.toString(),
-                            style: TextStyle(
-                              fontSize: 12,
+                      Padding(
+                        padding: const EdgeInsets.only(top: 2),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.calendar_today,
+                              size: 14,
                               color: MyColors.verde,
                             ),
-                          ),
-                        ],
+                            Padding(
+                              padding: const EdgeInsets.only(top: 2.0, left: 4),
+                              child: Text(
+                                evento.data!.formatDateString,
+                                style: TextStyle(
+                                  fontSize: 9.sp,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+                Row(
+                  children: [
+                    Icon(Icons.person_outline, size: 18, color: MyColors.verde),
+                    Text(
+                      numeroComprados.toString(),
+                      style: TextStyle(fontSize: 12, color: MyColors.verde),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
         ],

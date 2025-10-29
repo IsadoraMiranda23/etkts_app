@@ -1,5 +1,6 @@
 import 'package:etkts_app/app_state.dart';
 import 'package:etkts_app/colors.dart';
+import 'package:etkts_app/pages/detalhe_prato.page.dart';
 import 'package:etkts_app/types.dart';
 import 'package:flutter/material.dart';
 
@@ -66,16 +67,24 @@ class _ItemCardapioComponentState extends State<ItemCardapioComponent> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // IMAGEM DO ITEM
-          Container(
-            width: 160,
-            height: 100,
-            decoration: BoxDecoration(
-              color: Colors.grey[800],
-              borderRadius: getBorderRadius(),
-              image: widget.item.imagem != null && widget.item.imagem!.isNotEmpty && widget.item.imagem!.startsWith("http") ? DecorationImage(
-                image: NetworkImage(widget.item.imagem ?? ""),
-                fit: BoxFit.cover,
-              ) : null,
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => DetalhePratoPage()),
+              );
+            },
+            child: Container(
+              width: 160,
+              height: 100,
+              decoration: BoxDecoration(
+                color: Colors.grey[800],
+                borderRadius: getBorderRadius(),
+                image: widget.item.imagem != null && widget.item.imagem!.isNotEmpty && widget.item.imagem!.startsWith("http") ? DecorationImage(
+                  image: NetworkImage(widget.item.imagem ?? ""),
+                  fit: BoxFit.cover,
+                ) : null,
+              ),
             ),
           ),
           const SizedBox(height: 8),

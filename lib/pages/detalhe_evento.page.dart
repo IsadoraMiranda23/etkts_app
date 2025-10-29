@@ -139,7 +139,7 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
                     },
                   ),
                 ),
-                const SizedBox(height: 80), // Espaço para o container fixo
+                const SizedBox(height: 80),
               ],
             ),
           ),

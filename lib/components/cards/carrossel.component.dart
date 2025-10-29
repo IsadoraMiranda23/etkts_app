@@ -85,7 +85,7 @@ class _CarrosselComponentState extends State<CarrosselComponent> {
               borderRadius: BorderRadius.circular(20),
             ),
             child: DotsIndicator(
-              dotsCount: eventos.length,
+              dotsCount: eventos.isEmpty ? 1 : eventos.length,
               position: posicaoAtual,
               decorator: DotsDecorator(
                 size: const Size.square(10.0),

@@ -1,4 +1,6 @@
+
 import 'package:etkts_app/pages/detalhe_evento.page.dart';
+
 import 'package:etkts_app/pages/pages.dart';
 import 'package:go_router/go_router.dart';
 
@@ -53,5 +55,6 @@ final router = GoRouter(
       pageBuilder: (context, state) =>
           NoTransitionPage(child: DetalheEventoPage()),
     ),
+
   ],
 );

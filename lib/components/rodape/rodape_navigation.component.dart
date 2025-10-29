@@ -1,5 +1,6 @@
 // arquivo: components/rodape/rodape_navigation.component.dart
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../colors.dart';
 
 class RodapeNavigation extends StatelessWidget {
@@ -27,7 +28,7 @@ class RodapeNavigation extends StatelessWidget {
   Widget _buildNavigationIcon(int index, String assetPath) {
     return ColorFiltered(
       colorFilter: ColorFilter.mode(getIconColor(index), BlendMode.srcIn),
-      child: Image.asset(assetPath, width: 24, height: 24),
+      child: Image.asset(assetPath, width: 20.w, height: 20.h),
     );
   }
 
@@ -82,6 +83,8 @@ class RodapeNavigation extends StatelessWidget {
               currentIndex: currentIndex,
               onTap: onTap,
               items: buildNavigationItems(),
+              selectedFontSize: 12.sp,
+              unselectedFontSize: 12.sp,
             ),
           ),
         ),
