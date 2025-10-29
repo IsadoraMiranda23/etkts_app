@@ -90,6 +90,8 @@ class _CardDetalheEventoComponentState
                 children: [
                   Text(
                     widget.ingresso.nome ?? "",
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 16,
@@ -101,8 +103,6 @@ class _CardDetalheEventoComponentState
                     "R\$ ${widget.ingresso.valor?.toStringAsFixed(2) ?? 0.00}",
                     style: TextStyle(color: Colors.white, fontSize: 14),
                   ),
-                  SizedBox(height: 4),
-                  Text("", style: TextStyle(color: Colors.white, fontSize: 12)),
                 ],
               ),
             ),
