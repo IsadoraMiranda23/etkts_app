@@ -77,7 +77,7 @@ class CardEventoComponente extends StatelessWidget {
                       Text(
                         evento.nome!,
                         style: TextStyle(
-                          fontSize: 10.sp,
+                          fontSize: 12.sp,
                           color: Colors.white,
                           fontWeight: FontWeight.w600,
                         ),
