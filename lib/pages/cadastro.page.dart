@@ -27,7 +27,7 @@ class _NotificacaoUsuarioComponentState extends State<NotificacaoUsuarioComponen
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
               child: AlertDialog(
-                backgroundColor: MyColors.cinzaEscuro.withOpacity(0.8),
+                backgroundColor: MyColors.cinzaEscuro.withAlpha(204),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.zero,
@@ -117,7 +117,7 @@ class _NotificacaoUsuarioComponentState extends State<NotificacaoUsuarioComponen
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
               child: AlertDialog(
-                backgroundColor: MyColors.cinzaEscuro.withOpacity(0.8),
+                backgroundColor: MyColors.cinzaEscuro.withAlpha(204),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.zero,
@@ -213,7 +213,7 @@ class _NotificacaoUsuarioComponentState extends State<NotificacaoUsuarioComponen
             child: GestureDetector(
               onTap: () {
                 // Adicione aqui a lógica para recusar a solicitação
-                print("Solicitação recusada");
+                debugPrint("Solicitação recusada");
               },
               child: Image.asset("assets/icons/negarIcon.png", width: 27, height: 25),
             ),

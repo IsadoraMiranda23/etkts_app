@@ -1,32 +1,45 @@
+import 'package:etkts_app/app_state.dart';
 import 'package:etkts_app/colors.dart';
+import 'package:etkts_app/types.dart';
 import 'package:flutter/material.dart';
 
 class CardDetalheEventoComponent extends StatefulWidget {
-  const CardDetalheEventoComponent({super.key});
+  const CardDetalheEventoComponent({
+    super.key,
+    required this.ingresso,
+    required this.eventoImagem,
+  });
+
+  final IngressoHome ingresso;
+  final String? eventoImagem;
 
   @override
-  State<CardDetalheEventoComponent> createState() => _CardDetalheEventoComponentState();
+  State<CardDetalheEventoComponent> createState() =>
+      _CardDetalheEventoComponentState();
 }
 
-class _CardDetalheEventoComponentState extends State<CardDetalheEventoComponent> {
-
-  String tipoIngresso = "VIP";
-  double valor = 150.00;
-  String data = "25/12/2023";
-  int quantidade = 1;
+class _CardDetalheEventoComponentState
+    extends State<CardDetalheEventoComponent> {
+  int quantidade = 0;
 
   void aumentarQuantidade() {
     setState(() {
       quantidade++;
     });
+    final ingressos = [...AppState.ingressosSelecionados.value];
+    ingressos.add(widget.ingresso);
+    AppState.ingressosSelecionados.value = ingressos;
   }
 
   void diminuirQuantidade() {
     setState(() {
-      if (quantidade > 1) {
+      if (quantidade > 0) {
         quantidade--;
       }
     });
+    final ingressos = [...AppState.ingressosSelecionados.value];
+    ingressos.remove(widget.ingresso);
+    AppState.ingressosSelecionados.value = ingressos;
   }
 
   @override
@@ -50,11 +63,21 @@ class _CardDetalheEventoComponentState extends State<CardDetalheEventoComponent>
               topLeft: Radius.circular(30),
               bottomLeft: Radius.circular(30),
             ),
-            child: Image.asset(
-              "assets/images/imageEvent2.png",
+            child: Container(
               width: 120,
               height: 85,
-              fit: BoxFit.cover,
+              decoration: BoxDecoration(
+                image:
+                    widget.eventoImagem != null &&
+                        widget.eventoImagem!.isNotEmpty &&
+                        widget.eventoImagem!.startsWith("http")
+                    ? DecorationImage(
+                        image: NetworkImage(widget.eventoImagem!),
+                        fit: BoxFit.cover,
+                      )
+                    : null,
+                color: MyColors.cinza,
+              ),
             ),
           ),
           Expanded(
@@ -62,10 +85,11 @@ class _CardDetalheEventoComponentState extends State<CardDetalheEventoComponent>
               padding: const EdgeInsets.only(left: 12.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start, // Alinha à esquerda
+                crossAxisAlignment: CrossAxisAlignment.start,
+                // Alinha à esquerda
                 children: [
                   Text(
-                    tipoIngresso,
+                    widget.ingresso.nome ?? "",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 16,
@@ -74,20 +98,11 @@ class _CardDetalheEventoComponentState extends State<CardDetalheEventoComponent>
                   ),
                   SizedBox(height: 4),
                   Text(
-                    "R\$ ${valor.toStringAsFixed(2)}",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                    ),
+                    "R\$ ${widget.ingresso.valor?.toStringAsFixed(2) ?? 0.00}",
+                    style: TextStyle(color: Colors.white, fontSize: 14),
                   ),
                   SizedBox(height: 4),
-                  Text(
-                    data,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 12,
-                    ),
-                  ),
+                  Text("", style: TextStyle(color: Colors.white, fontSize: 12)),
                 ],
               ),
             ),
@@ -95,7 +110,7 @@ class _CardDetalheEventoComponentState extends State<CardDetalheEventoComponent>
           Padding(
             padding: const EdgeInsets.only(right: 10.0),
             child: Container(
-              width: 102,
+              width: 110,
               height: 31,
               decoration: BoxDecoration(
                 color: MyColors.cinza,
@@ -104,21 +119,12 @@ class _CardDetalheEventoComponentState extends State<CardDetalheEventoComponent>
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-
                   IconButton(
                     onPressed: diminuirQuantidade,
-                    icon: Icon(
-                      Icons.remove,
-                      color: Colors.white,
-                      size: 16,
-                    ),
+                    icon: Icon(Icons.remove, color: Colors.white, size: 16),
                     padding: EdgeInsets.zero,
-                    constraints: BoxConstraints(
-                      minWidth: 24,
-                      minHeight: 24,
-                    ),
+                    constraints: BoxConstraints(minWidth: 24, minHeight: 24),
                   ),
-
                   Text(
                     quantidade.toString(),
                     style: TextStyle(
@@ -127,19 +133,11 @@ class _CardDetalheEventoComponentState extends State<CardDetalheEventoComponent>
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-
                   IconButton(
                     onPressed: aumentarQuantidade,
-                    icon: Icon(
-                      Icons.add,
-                      color: Colors.white,
-                      size: 16,
-                    ),
+                    icon: Icon(Icons.add, color: Colors.white, size: 16),
                     padding: EdgeInsets.zero,
-                    constraints: BoxConstraints(
-                      minWidth: 24,
-                      minHeight: 24,
-                    ),
+                    constraints: BoxConstraints(minWidth: 24, minHeight: 24),
                   ),
                 ],
               ),

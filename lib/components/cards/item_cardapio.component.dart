@@ -1,20 +1,18 @@
+import 'package:etkts_app/app_state.dart';
 import 'package:etkts_app/colors.dart';
+import 'package:etkts_app/types.dart';
 import 'package:flutter/material.dart';
 
 class ItemCardapioComponent extends StatefulWidget {
   final bool leftSideRounded;
   final bool rightSideRounded;
-  final String nomeComida;
-  final String descricao;
-  final double valor;
+  final CardapioHome item;
 
   const ItemCardapioComponent({
     super.key,
     this.leftSideRounded = true,
     this.rightSideRounded = true,
-    this.nomeComida = "Nome da comida",
-    this.descricao = "pequena descrição",
-    this.valor = 25.90,
+    required this.item,
   });
 
   @override
@@ -28,6 +26,9 @@ class _ItemCardapioComponentState extends State<ItemCardapioComponent> {
     setState(() {
       quantidade++;
     });
+    final cardapios = [...AppState.cardapiosSelecionados.value];
+    cardapios.add(widget.item);
+    AppState.cardapiosSelecionados.value = cardapios;
   }
 
   void decrementarQuantidade() {
@@ -35,15 +36,24 @@ class _ItemCardapioComponentState extends State<ItemCardapioComponent> {
       setState(() {
         quantidade--;
       });
+      final cardapios = [...AppState.cardapiosSelecionados.value];
+      cardapios.remove(widget.item);
+      AppState.cardapiosSelecionados.value = cardapios;
     }
   }
 
   BorderRadius getBorderRadius() {
     return BorderRadius.only(
-      topLeft: widget.leftSideRounded ? const Radius.circular(25) : Radius.zero,
-      topRight: widget.rightSideRounded ? const Radius.circular(25) : Radius.zero,
-      bottomLeft: widget.leftSideRounded ? const Radius.circular(25) : Radius.zero,
-      bottomRight: widget.rightSideRounded ? const Radius.circular(25) : Radius.zero,
+      topLeft: widget.rightSideRounded ? const Radius.circular(25) : Radius.zero,
+      topRight: widget.leftSideRounded
+          ? const Radius.circular(25)
+          : Radius.zero,
+      bottomLeft: widget.leftSideRounded
+          ? const Radius.circular(25)
+          : Radius.zero,
+      bottomRight: widget.rightSideRounded
+          ? const Radius.circular(25)
+          : Radius.zero,
     );
   }
 
@@ -56,28 +66,19 @@ class _ItemCardapioComponentState extends State<ItemCardapioComponent> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // IMAGEM DO ITEM
-          widget(
-            child: Container(
-              width: 160,
-              height: 120,
-              decoration: BoxDecoration(
-                color: Colors.grey[800],
-                borderRadius: getBorderRadius(),
-              ),
-              child: ClipRRect(
-                borderRadius: getBorderRadius(),
-                child: Image.asset(
-                  'assets/images/fotoCardapio2.png',
-                  width: 160,
-                  height: 120,
-                  fit: BoxFit.cover,
-                ),
-              ),
+          Container(
+            width: 160,
+            height: 100,
+            decoration: BoxDecoration(
+              color: Colors.grey[800],
+              borderRadius: getBorderRadius(),
+              image: widget.item.imagem != null && widget.item.imagem!.isNotEmpty && widget.item.imagem!.startsWith("http") ? DecorationImage(
+                image: NetworkImage(widget.item.imagem ?? ""),
+                fit: BoxFit.cover,
+              ) : null,
             ),
           ),
-
           const SizedBox(height: 8),
-
           // INFORMAÇÕES DO ITEM
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 4.0),
@@ -90,7 +91,7 @@ class _ItemCardapioComponentState extends State<ItemCardapioComponent> {
                   children: [
                     Expanded(
                       child: Text(
-                        widget.nomeComida,
+                        widget.item.nome ?? "",
                         style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w600,
@@ -102,7 +103,7 @@ class _ItemCardapioComponentState extends State<ItemCardapioComponent> {
                     ),
                     const SizedBox(width: 8),
                     Text(
-                      "R\$${widget.valor.toStringAsFixed(2)}",
+                      "R\$${(widget.item.valor ?? 0.0).toStringAsFixed(2)}",
                       style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -111,14 +112,12 @@ class _ItemCardapioComponentState extends State<ItemCardapioComponent> {
                     ),
                   ],
                 ),
-
                 const SizedBox(height: 4),
-
                 // DESCRIÇÃO
                 SizedBox(
                   width: double.infinity,
                   child: Text(
-                    widget.descricao,
+                    widget.item.descricao ?? "",
                     style: const TextStyle(
                       color: Colors.white70,
                       fontSize: 11,
@@ -128,9 +127,7 @@ class _ItemCardapioComponentState extends State<ItemCardapioComponent> {
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
-
                 const SizedBox(height: 8),
-
                 // CONTADOR DE QUANTIDADE
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -157,14 +154,15 @@ class _ItemCardapioComponentState extends State<ItemCardapioComponent> {
                               child: Text(
                                 "-",
                                 style: TextStyle(
-                                  color: quantidade > 0 ? Colors.white : Colors.white54,
+                                  color: quantidade > 0
+                                      ? Colors.white
+                                      : Colors.white54,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16,
                                 ),
                               ),
                             ),
                           ),
-
                           // QUANTIDADE
                           Text(
                             quantidade.toString(),
@@ -174,7 +172,6 @@ class _ItemCardapioComponentState extends State<ItemCardapioComponent> {
                               fontSize: 14,
                             ),
                           ),
-
                           // BOTÃO AUMENTAR
                           InkWell(
                             onTap: _incrementarQuantidade,

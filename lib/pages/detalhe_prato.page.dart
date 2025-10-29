@@ -11,7 +11,7 @@ class _DetalhePratoPageState extends State<DetalhePratoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.black,
+      backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.black,
         leading: Padding(
@@ -32,14 +32,16 @@ class _DetalhePratoPageState extends State<DetalhePratoPage> {
             ),
           ),
         ],
-
       ),
-      body: Stack(children: [
-        Container(
-          width: double.infinity,
-          height: 320,
-          child: Image.asset("assets/images/fotoCardapio2.png"),),
-      ],),
+      body: Stack(
+        children: [
+          SizedBox(
+            width: double.infinity,
+            height: 320,
+            child: Image.asset("assets/images/fotoCardapio2.png"),
+          ),
+        ],
+      ),
     );
   }
 }

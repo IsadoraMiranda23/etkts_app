@@ -1,0 +1,59 @@
+query MobileGetHome(
+    $limit:Int,
+    $offset:Int
+) {
+    mobileGetHome(
+        limit:$limit,
+        offset: $offset
+    ) {
+        id,
+        nome,
+        descricao,
+        data,
+        local,
+        cep,
+        logradouro,
+        numero,
+        bairro,
+        complemento,
+        estadoDetalhes {
+            nome,
+            sigla
+        },
+        cidadeDetalhes {
+            nome
+        },
+        latitude,
+        longitude,
+        inativo,
+        imagem,
+        horario,
+        ingressoDetalhes {
+            id,
+            nome,
+            inativo,
+            valor,
+            limitePorPessoa,
+            data,
+            loteDetalhes {
+                id,
+                nome,
+                dataInicio,
+                dataFim,
+                inativo
+            }
+        },
+        cardapioDetalhes {
+            id,
+            nome,
+            descricao,
+            inativo,
+            valor,
+            imagem,
+            categoriaCardapioDetalhes {
+                id,
+                nome
+            }
+        }
+    }
+}

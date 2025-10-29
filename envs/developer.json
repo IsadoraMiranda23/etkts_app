@@ -1,0 +1,6 @@
+{
+  "name": "developer",
+  "baseUrl": "https://backend-nestjs-dev.redcoast-df8052c2.brazilsouth.azurecontainerapps.io",
+  "baseUrlGraphQl": "https://backend-nestjs-dev.redcoast-df8052c2.brazilsouth.azurecontainerapps.io/graphql",
+  "isPos": false
+}

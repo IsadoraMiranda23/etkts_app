@@ -1,0 +1,2962 @@
+# This file was generated. Do not edit manually.
+
+schema {
+    query: Query
+    mutation: Mutation
+}
+
+"Indicates exactly one field must be supplied and this field must not be `null`."
+directive @oneOf on INPUT_OBJECT
+
+type AnaliseCategoriaDto {
+    id: Int!
+    itens: Int!
+    itensVendidos: Int!
+    nome: String!
+    receita: Float!
+}
+
+type BancoDto {
+    createdBy: Int
+    createdOn: DateTime
+    id: Int
+    lastEditBy: Int
+    lastEditOn: DateTime
+    nome: String
+    numBanco: Int
+    site: String
+}
+
+type BatchDto {
+    id: Int!
+    ingressos: Int!
+    maximo: Int!
+    nome: String!
+    periodo: String!
+    porcentagemVendida: Int!
+    quantidadeDisponivel: Int!
+    quantidadeVendida: Int!
+    status: String!
+}
+
+type BuscaPessoaOutput {
+    backgroundImage: String
+    cidade: String
+    descricao: String
+    estaSeguindo: Boolean
+    estado: String
+    eventosEmComum: Int
+    foto: String
+    id: Float
+    nickname: String
+    nome: String
+}
+
+type CalendarEventDto {
+    data: DateTime!
+    id: Int!
+    nome: String!
+}
+
+type Cardapio {
+    categoriaCardapio: CategoriaCardapio
+    categoriaCardapioId: ID
+    createdBy: Float
+    createdIp: String
+    createdOn: DateTime
+    descricao: String
+    eventoDetalhe: Evento
+    eventoId: ID
+    id: ID!
+    imagem: String
+    inativo: Float
+    lastEditBy: Float
+    lastEditOn: DateTime
+    nome: String
+    valor: Float
+}
+
+type CardapioDto {
+    categoriaCardapio: Int
+    categoriaCardapioDetalhes: CategoriaCardapioDto
+    createdBy: Int
+    createdIp: String
+    createdOn: DateTime
+    descricao: String
+    evento: Int
+    id: Float!
+    imagem: String
+    inativo: Int
+    lastEditBy: Int
+    lastEditOn: DateTime
+    nome: String
+    quantidade: Int
+    valor: Float
+}
+
+type CategoriaCardapio {
+    createdBy: Float
+    createdIp: String
+    createdOn: DateTime!
+    id: ID!
+    inativo: Float
+    lastEditBy: Float
+    lastEditOn: DateTime
+    nome: String
+}
+
+type CategoriaCardapioDto {
+    createdBy: Int
+    createdIp: String
+    createdOn: DateTime!
+    evento: Int
+    eventoDetalhes: EventoDto
+    id: Int!
+    inativo: Int
+    lastEditBy: Int
+    lastEditOn: DateTime
+    nome: String
+}
+
+type CategoriaEvento {
+    createdBy: Float
+    createdIp: String
+    createdOn: DateTime
+    id: ID!
+    inativo: Float
+    lastEditBy: Float
+    lastEditOn: DateTime
+    nome: String
+}
+
+type CategoriaEventoDto {
+    createdBy: Float
+    createdIp: String
+    createdOn: DateTime
+    eventoDetalhes: [EventoDto!]
+    id: Float!
+    inativo: Float
+    lastEditBy: Float
+    lastEditOn: DateTime
+    nome: String
+}
+
+type CidadeDto {
+    createdBy: Int
+    createdOn: DateTime
+    estado: Int
+    id: Int
+    lastEditBy: Int
+    lastEditOn: DateTime
+    nome: String
+    nomeSem: String
+}
+
+type Cortesia {
+    createdBy: Float
+    createdIp: String
+    createdOn: DateTime!
+    eventoDetalhe: Evento
+    eventoId: ID
+    id: ID!
+    ingressoDetalhe: Ingresso
+    ingressoId: ID
+    lastEditBy: Float
+    lastEditOn: DateTime
+    pessoaDetalhe: Pessoa
+    pessoaRecebe: ID
+    quantidade: String
+    status: Float
+}
+
+type CortesiaDto {
+    createdBy: Int
+    createdIp: String
+    createdOn: DateTime!
+    evento: Int
+    eventoDetalhes: EventoDto
+    id: Int
+    ingresso: Int
+    ingressoDetalhes: IngressoDto
+    lastEditBy: Int
+    lastEditOn: DateTime
+    pessoaRecebe: Int
+    pessoaRecebeDetalhes: PessoaDto
+    quantidade: String
+    status: Int
+}
+
+type CupomDescontoDto {
+    createdBy: Int
+    createdIp: String
+    createdOn: DateTime
+    cupom: String
+    evento: Int
+    eventoDetalhes: EventoDto
+    id: Int
+    inativo: Int
+    lastEditBy: Int
+    lastEditOn: DateTime
+    limite: Int
+    tipo: Int
+    valor: Float
+}
+
+type CupomDto {
+    desconto: String!
+    id: Int!
+    nome: String!
+    status: String!
+    tipo: Int!
+    usos: String!
+}
+
+type CurtiuEventoDto {
+    createdBy: Int
+    createdIp: String
+    createdOn: DateTime!
+    evento: Int
+    eventoDetalhes: EventoDto
+    id: Int
+    lastEditBy: Int
+    lastEditOn: DateTime
+    pessoa: Int
+    pessoaDetalhes: PessoaDto
+}
+
+type CurtiuStorieDto {
+    createdBy: Int
+    createdIp: String
+    createdOn: DateTime
+    id: Int
+    lastEditBy: Int
+    lastEditOn: DateTime
+    pessoa: Int
+    pessoaDetalhes: PessoaDto
+    stories: Int
+    storiesDetalhes: StorieDto
+}
+
+type DashBatchesPageReportOutput {
+    disponiveis: Int!
+    lotes: [BatchDto!]!
+    topVendas: [BatchDto!]!
+    totalLotes: Int!
+    vendidos: Int!
+}
+
+type DashCalendarPageOutput {
+    eventos: [CalendarEventDto!]!
+}
+
+type DashCardapiosPageReportOutput {
+    cardapiosDisponiveis: Int!
+    itens: [ItemDto!]!
+    receitaTotal: Float!
+    totalCardapios: Int!
+    totalVendidos: Int!
+}
+
+type DashCuponsPageReportOutput {
+    cupons: [CupomDto!]!
+    cuponsAtivos: Int!
+    totalCupons: Int!
+    totalDesconto: Int!
+    totalUsos: Int!
+}
+
+type DashDashboardPageReportOutput {
+    eventos: [EventDto!]!
+    eventosAtivos: Int!
+    participantesMesAtual: Int!
+    participantesMesPassado: String!
+    receitaMesAtual: Float!
+    receitaMesPassado: String!
+    taxaConversaoMesAtual: Float!
+    taxaConversaoMesPassado: String!
+}
+
+type DashEntriesPageReportOutput {
+    entradas: [EntradaDto!]!
+    totalEntradas: Int!
+}
+
+type DashEventHomePageReportOutput {
+    detalhesCardapios: [EventHomeItemDto!]!
+    detalhesIngressos: [EventHomeItemDto!]!
+    eventoCapacidade: String!
+    eventoData: DateTime!
+    eventoHorario: String!
+    eventoLocal: String!
+    eventoOcupacao: Int!
+    geralCardapiosVendidos: Int!
+    geralCortesiasEnviadas: Int!
+    geralIngressosVendidos: Int!
+    geralValorCardapio: Float!
+    geralValorIngresso: Float!
+    geralValorTaxa: Float!
+    geralValorTotal: Float!
+    geralVendasPorDia: [EventHomeTipoPagamentoDto!]!
+    pagamentoTiposPagamento: [EventHomeTipoPagamentoDto!]!
+    pagamentoTotalAguardando: Int!
+    pagamentoTotalAprovado: Int!
+    pagamentoTotalCancelado: Int!
+    pagamentoTotalPendente: Int!
+}
+
+type DashEventPageReportOutput {
+    aguardandoPagamento: Int!
+    ingressosVendidos: Int!
+    pagamentoAprovado: Int!
+    pagamentoCancelado: Int!
+    totalCortesias: Int!
+    totalIngressos: Int!
+    totalReceita: Float!
+    totalValorCortesias: Float!
+}
+
+type DashGiftsPageReportOutput {
+    cortesias: [GiftDto!]!
+    envios: Int!
+    totalCortesias: Int!
+    totalIngressos: Int!
+    utilizados: Int!
+}
+
+type DashHelpPageOutput {
+    contatoEmail: String!
+    perguntasFrequentes: [PerguntaFrequenteDto!]!
+}
+
+type DashHistoryPageReportOutput {
+    eventos: [HistoryEventDto!]!
+    eventosConcluidos: Int!
+    totalEventos: Int!
+    totalParticipantes: Int!
+    totalReceita: Float!
+}
+
+type DashItemSalesPageReportOutput {
+    cardapios: [ItemSalesDto!]!
+    ticketMedio: Float!
+    totalItensVendidos: Int!
+    totalReceita: Float!
+    totalVendas: Int!
+}
+
+type DashItensReportPageReportOutput {
+    analiseCategorias: [AnaliseCategoriaDto!]!
+    itens: [ItemVendaDto!]!
+    itensCardapio: Int!
+    receita: Float!
+    ticketMedio: Float!
+    totalVendas: Int!
+}
+
+type DashSpecialCodesPageReportOutput {
+    codigos: [SpecialCodeDto!]!
+    codigosAtivos: Int!
+    codigosInativos: Int!
+    totalCodigos: Int!
+    totalUsos: Int!
+}
+
+type DashTeamsPageReportOutput {
+    departamentoDetalhes: [DepartamentoDto!]!
+    departamentos: Int!
+    equipes: [TeamDto!]!
+    eventosAtivos: Int!
+    membrosAtivos: Int!
+    totalMembros: Int!
+}
+
+type DashTicketSalesPageReportOutput {
+    totalDescontos: Float!
+    totalParticipantes: Int!
+    totalReceita: Float!
+    totalVendas: Int!
+    vendas: [TicketSaleDto!]!
+}
+
+type DashTicketsPageReportOutput {
+    disponiveis: Int!
+    ingressos: [TicketDto!]!
+    topVendas: [TicketDto!]!
+    totalIngressos: Int!
+    totalValorIngressos: Int!
+    vendidos: Int!
+}
+
+type DashTicketsReportPageReportOutput {
+    cortesias: Int!
+    ingressosVendidos: Int!
+    receita: Float!
+    taxaCancelamento: Float!
+    taxaConversao: Float!
+    ticketMedio: Float!
+    totalCortesias: Float!
+    totalIngressos: Int!
+    totalPagamentoAguardando: Int!
+    totalPagamentoAprovado: Int!
+    totalPagamentoCancelado: Int!
+    totalTaxa: Float!
+    totalValorPagamentoAguardando: Float!
+    totalValorPagamentoAprovado: Float!
+    totalValorPagamentoCancelado: Float!
+    vendasPorDia: [VendaPorDiaDto!]!
+    vendasPorTipoPagamento: [VendaTipoPagamentoDto!]!
+}
+
+type DashViewsPageReportOutput {
+    horariosPico: [Int!]!
+    taxaConversao: Float!
+    totalHoje: Int!
+    totalSemana: Int!
+    totalVisualizacoes: Int!
+}
+
+type DepartamentoDto {
+    id: Int!
+    membros: Int!
+    nome: String!
+}
+
+type EntradaDto {
+    entradaHorario: String!
+    id: Int!
+    ingressoNome: String!
+    pessoaEmail: String!
+    pessoaNome: String!
+    validadorNome: String!
+}
+
+type EquipeEvento {
+    createdBy: Float!
+    createdIp: String
+    createdOn: DateTime
+    eventoDetalhe: Evento
+    eventoId: ID
+    id: ID!
+    lastEditBy: Float
+    lastEditOn: DateTime
+    pessoaDetalhe: Pessoa
+    pessoaId: ID
+    tipo: Float
+}
+
+type EquipeEventoDto {
+    createdBy: Float!
+    createdIp: String
+    createdOn: DateTime
+    evento: Float
+    eventoDetalhes: EventoDto
+    id: Float!
+    lastEditBy: Float
+    lastEditOn: DateTime
+    pessoa: Float
+    pessoaDetalhes: PessoaDto
+    tipo: Float
+}
+
+type EstadoDto {
+    createdBy: Int
+    createdOn: DateTime
+    id: Int
+    lastEditBy: Int
+    lastEditOn: DateTime
+    nome: String
+    pais: String
+    sigla: String
+}
+
+type EventDto {
+    data: String
+    id: Int!
+    nome: String
+    participantes: Int!
+    status: String
+}
+
+type EventHomeItemDto {
+    id: Int!
+    nome: String!
+    valor: Float!
+    vendas: Int!
+}
+
+type EventHomeTipoPagamentoDto {
+    key: String!
+    value: Int!
+}
+
+type Evento {
+    bairro: String
+    cardapios: [Cardapio!]
+    categoriaEvento: CategoriaEvento
+    categoriaEventoId: ID
+    cep: String
+    comissaoCardapio: Float
+    comissaoIngresso: Float
+    complemento: String
+    createdBy: Float
+    createdIp: String
+    createdOn: DateTime!
+    data: String
+    dataFim: DateTime
+    descricao: String
+    equipeEvento: [EquipeEvento!]
+    horario: String
+    id: Float!
+    imagem: String
+    inativo: Float
+    ingressos: [Ingresso!]
+    lastEditBy: Float
+    lastEditOn: DateTime!
+    latitude: String
+    local: String
+    logradouro: String
+    longitude: String
+    mapa: String
+    mapaEvento: String
+    nome: String
+    numero: String
+    pessoaEvento: String
+    quantidadeCurtidas: Int!
+    status: Float
+    totalVisualizacao: Float
+    vendaIngresso: Boolean
+}
+
+type EventoDto {
+    bairro: String
+    cardapioDetalhes: [CardapioDto!]
+    categoriaEvento: Int
+    categoriaEventoDetalhes: CategoriaEventoDto
+    cep: String
+    cidade: Int
+    cidadeDetalhes: CidadeDto
+    comissaoCardapio: Float
+    comissaoIngresso: Float
+    complemento: String
+    createdBy: Int
+    createdIp: String
+    createdOn: DateTime!
+    data: String
+    dataFim: DateTime
+    descricao: String
+    estado: Int
+    estadoDetalhes: EstadoDto
+    horario: String
+    id: Int
+    imagem: String
+    inativo: Int
+    ingressoDetalhes: [IngressoDto!]
+    itemCardapioVendaDetalhes: [ItemCardapioVendaDto!]
+    lastEditBy: Int
+    lastEditOn: DateTime!
+    latitude: String
+    local: String
+    logradouro: String
+    longitude: String
+    mapa: String
+    mapaEvento: String
+    nome: String
+    numero: String
+    pessoaEvento: String
+    status: Int
+    totalVisualizacao: Int
+    vendaIngresso: Int
+}
+
+type EventoVisualizacaoDto {
+    createdBy: Int
+    createdIp: String
+    createdOn: DateTime
+    evento: Int
+    eventoDetalhes: EventoDto
+    id: Int
+    lastEditBy: Int
+    lastEditOn: DateTime
+    pessoa: Int
+    pessoaDetalhes: PessoaDto
+}
+
+type GiftDto {
+    enviadoEm: String!
+    id: Int!
+    ingressoNome: String!
+    pessoaEmail: String!
+    pessoaNome: String!
+    pessoaTelefone: String!
+    quantidade: Int!
+}
+
+type GraficoIngressoCortesiaPorEventoType {
+    total: Float!
+    validado: Float!
+}
+
+type GraficoIngressoPorEventoType {
+    feminino: GraficoIngressoPorSexoType!
+    indefinido: GraficoIngressoPorSexoType!
+    masculino: GraficoIngressoPorSexoType!
+    nome: String!
+}
+
+type GraficoIngressoPorSexoType {
+    quantidadeAcumulada: Float
+    valorAcumulado: Float
+}
+
+type HistoryEventDto {
+    data: String
+    id: Int!
+    local: String!
+    nome: String!
+    participantes: Int!
+    receita: Float!
+    status: String!
+}
+
+type Ingresso {
+    calendario: IngressoCalendarioType
+    codigo: String
+    createdBy: Float
+    createdIp: String
+    createdOn: DateTime!
+    data: DateTime
+    descricao: String
+    eventoDetalhe: Evento
+    eventoId: ID
+    id: ID!
+    inativo: Float
+    lastEditBy: Float
+    lastEditOn: DateTime
+    limite: Float
+    limitePorPessoa: Float
+    nome: String
+    quantidadeComprada: Float!
+    quantidadeCortesia: Float!
+    quantidadeValidados: Float!
+    transferencia: Float
+    valor: Float
+    valorUnitarioAcumulado: Float!
+}
+
+type IngressoCalendarioType {
+    dataFim: DateTime
+    dataInicio: DateTime
+}
+
+type IngressoCodigoDto {
+    createdBy: Int
+    createdIp: String
+    createdOn: DateTime!
+    evento: Int
+    eventoDetalhes: EventoDto
+    id: Int
+    inativo: Int
+    ingresso: Int
+    ingressoDetalhes: IngressoDto
+    lastEditBy: Int
+    lastEditOn: DateTime
+    nome: String
+}
+
+type IngressoDto {
+    codigo: String
+    createdBy: Float
+    createdIp: String
+    createdOn: DateTime!
+    data: DateTime
+    descricao: String
+    evento: Float
+    eventoDetalhes: EventoDto
+    id: Float!
+    inativo: Float
+    lastEditBy: Float
+    lastEditOn: DateTime
+    limite: Float
+    limitePorPessoa: Float
+    loteDetalhes: LoteDto
+    loteId: Float
+    nome: String
+    status: String
+    transferencia: Float
+    valor: Float
+}
+
+type IngressoMetricaOutput {
+    data: String!
+    ingresso: Float!
+    nome: String!
+    total: Float!
+}
+
+type IngressoPessoaEvento {
+    codigo: String
+    cortesia: Float
+    createdBy: Float
+    createdIp: String
+    createdOn: DateTime!
+    eventoDetalhes: Evento
+    eventoId: ID
+    id: ID!
+    idCortesia: Float
+    ingressoDetalhes: Ingresso
+    ingressoId: ID
+    lastEditBy: Float
+    lastEditOn: DateTime
+    membroEquipeEvento: EquipeEvento
+    pessoaDetalhes: Pessoa
+    pessoaId: ID
+    solicitacaoTransferenciaIngresso: Float
+    transferencia: Float
+    transferidoEm: DateTime
+    transferidoPara: Float
+    utilizado: Float
+    validadoEm: DateTime
+    validadoPor: ID
+    validadoPorDetalhes: Pessoa
+    valor: Float
+    valorEvento: Float
+    valorFastPay: Float
+    valorUnitario: Float
+    vendaDetalhes: Venda
+    vendaId: Float
+}
+
+type IngressoPessoaEventoDto {
+    codigo: String
+    cortesia: Int
+    createdBy: Int
+    createdIp: String
+    createdOn: DateTime
+    evento: Int
+    eventoDetalhes: EventoDto
+    id: Int
+    idCortesia: Int
+    idCortesiaDetalhes: CortesiaDto
+    ingresso: Int
+    ingressoDetalhes: IngressoDto
+    lastEditBy: Int
+    lastEditOn: DateTime
+    pessoa: Int
+    pessoaDetalhes: PessoaDto
+    pessoaValidaDetalhes: PessoaDto
+    solicitacaoTransferenciaIngresso: Int
+    solicitacaoTransferenciaIngressoDetalhes: SolicitacaoTransferenciaIngressoDto
+    transferencia: Int
+    transferidoEm: DateTime
+    transferidoPara: Int
+    transferidoParaDetalhes: PessoaDto
+    utilizado: Int
+    validadoEm: DateTime
+    validadoPor: Int
+    valor: Float
+    valorEvento: Float
+    valorFastPay: Float
+    valorUnitario: Float
+    venda: Int
+    vendaDetalhes: VendaDto
+}
+
+type ItemCardapioVendaDto {
+    cardapio: Int
+    cardapioDetalhes: CardapioDto
+    codigo: String
+    createdBy: Int
+    createdIp: String
+    createdOn: DateTime
+    evento: Int
+    eventoDetalhes: EventoDto
+    id: Int
+    lastEditBy: Int
+    lastEditOn: DateTime
+    pessoa: Int
+    pessoaDetalhes: PessoaDto
+    pessoaValidaDetalhes: PessoaDto
+    utilizado: Int
+    validadoEm: DateTime
+    validadoPor: Int
+    valorEvento: Float
+    valorFastPay: Float
+    valorTotal: Float
+    valorUnitario: Float
+    venda: Int
+    vendaCardapio: Int
+    vendaDetalhes: VendaDto
+}
+
+type ItemDto {
+    categoria: String!
+    descricao: String!
+    estoque: Int!
+    id: Int!
+    image: String!
+    inativo: Int!
+    nome: String!
+    status: String!
+    valor: Float!
+    vendidos: Int!
+}
+
+type ItemSalesDto {
+    data: String!
+    desconto: Float!
+    hora: String!
+    id: Int!
+    itens: [String!]!
+    pessoaNome: String!
+    status: String!
+    tipoPagamento: String!
+    valor: Float!
+    valorSemDesconto: Float!
+}
+
+type ItemVendaDto {
+    categoria: String!
+    id: Int!
+    nome: String!
+    preco: Float!
+    receita: Float!
+    status: String!
+    vendidos: Int!
+}
+
+type ListaEventosCompletosOutput {
+    bairro: String!
+    cardapio: [ListaEventosCompletosOutput_Cardapio!]
+    categoria: String!
+    categoria_id: String!
+    cep: String!
+    cidade: String!
+    complemento: String!
+    comprou_ingresso: Boolean!
+    curtiu_evento: Boolean!
+    data: String
+    descricao: String!
+    estado: String!
+    horario: String
+    id: String!
+    imagem: String
+    ingresso: [ListaEventosCompletosOutput_Ingresso!]
+    km: Float
+    latitude: String!
+    local: String!
+    logradouro: String!
+    longitude: String!
+    nome: String!
+    numero: String!
+    qtd_amigo_curtiu: Float
+    venda_ingresso: String!
+}
+
+type ListaEventosCompletosOutput_Cardapio {
+    id: String!
+    items: [ListaEventosCompletosOutput_CardapioItem!]!
+    nome: String!
+}
+
+type ListaEventosCompletosOutput_CardapioItem {
+    descricao: String!
+    evento_id: String
+    id: String!
+    imagem: String
+    nome: String!
+    quantidade_disponivel: Float
+    quantidade_total: Float
+    quantidade_vendida: Float
+    valor: String!
+}
+
+type ListaEventosCompletosOutput_Ingresso {
+    compraMaxima: String
+    descricao: String!
+    disponivel: Boolean!
+    evento: String!
+    evento_id: String!
+    fim: String
+    id: String!
+    id_lote: String
+    inicio: String
+    limite_total: String!
+    nome: String!
+    qtd_disponivel: Float!
+    tipo: String!
+    transferencia_id: String
+    transferencia_nome: String
+    valor: String!
+    valor_rs: String!
+}
+
+type LoginDashOutput {
+    perfis: [Float!]!
+    token: String!
+    uuid: String!
+}
+
+type LoteDto {
+    createdBy: Int
+    createdIp: String
+    createdOn: DateTime
+    dataFim: DateTime
+    dataInicio: DateTime
+    disponiveis: Int
+    evento: Int
+    eventoDetalhes: EventoDto
+    id: Int
+    inativo: Int
+    lastEditBy: Int
+    lastEditOn: DateTime
+    nome: String
+    status: String
+    vendidos: Int
+}
+
+type Mutation {
+    addEquipeEvento(input: AddEquipeEventoInput!): EquipeEventoDto!
+    adicionarEquipeEvento(evento: Float!, pessoa: Float!, tipo: Float!): EquipeEvento!
+    alterarSenha(novaSenha: String!, senhaAtual: String!): Boolean!
+    ativarEvento(ativar: Boolean!, evento: Float!): Boolean!
+    ativarIngresso(ativar: Boolean!, ingresso: Float!): Boolean!
+    atualizarCardapio(input: CriarCardapioInput!): CategoriaCardapio!
+    buscarOuCriarPessoa(cpf: String!): PessoaDto!
+    cancelaPagamento(idPedido: String!): Boolean!
+    criarCardapio(input: CriarCardapioInput!): CategoriaCardapio!
+    criarCategoriaCardapio(input: String!): CategoriaCardapio!
+    criarEvento(input: CriarEventoInput!): Evento!
+    criarIngresso(input: CriarIngressoInput!): Ingresso!
+    criarNotification(input: CriarNotificationInput!): Notification!
+    criarPessoa(input: CriarPessoaInput!): Pessoa!
+    criarRecebedor(input: CriarRecebedorInput!): PessoaPagamento!
+    criarVendaCardapioPos(input: CriarVendaPosInput!): [ItemCardapioVendaDto!]!
+    criarVendaIngressoPos(input: CriarVendaPosInput!): [IngressoPessoaEventoDto!]!
+    curtirEvento(eventoId: Int!): CurtiuEventoDto!
+    deleteBanco(input: Int!): BancoDto!
+    deleteCardapio(input: Int!): CardapioDto!
+    deleteCategoriaCardapio(input: Float!): CategoriaCardapioDto!
+    deleteCategoriaEvento(input: Float!): CategoriaEventoDto!
+    deleteCidade(input: Int!): CidadeDto!
+    deleteCortesia(input: Float!): CortesiaDto!
+    deleteCupomDesconto(input: Int!): CupomDescontoDto!
+    deleteCurtiuEvento(input: Float!): CurtiuEventoDto!
+    deleteCurtiuStorie(input: Int!): CurtiuStorieDto!
+    deleteEquipeEvento(input: Float!): EquipeEventoDto!
+    deleteEstado(input: Int!): EstadoDto!
+    deleteEvento(input: Float!): EventoDto!
+    deleteEventoVisualizacao(input: Int!): EventoVisualizacaoDto!
+    deleteIngresso(input: Float!): IngressoDto!
+    deleteIngressoCodigo(input: Int!): IngressoCodigoDto!
+    deleteIngressoPessoaEvento(input: Float!): IngressoPessoaEventoDto!
+    deleteItemCardapioVenda(input: Int!): ItemCardapioVendaDto!
+    deleteLote(input: Int!): LoteDto!
+    deletePessoa(input: Float!): PessoaDto!
+    deletePessoaCartao(input: Int!, userId: Float!): PessoaCartaoDto!
+    deletePessoaPagamento(input: Float!): PessoaPagamentoDto!
+    deletePreVenda(input: Int!): PreVendaDto!
+    deletePreVendaCardapio(input: Int!): PreVendaCardapioDto!
+    deletePreVendaIngresso(input: Int!): PreVendaIngressoDto!
+    deletePreVendaPessoa(input: Int!): PreVendaPessoaDto!
+    deleteSeguindo(input: Int!, userId: Float!): SeguindoDto!
+    deleteSolicitacaoTransferenciaIngresso(input: Int!): SolicitacaoTransferenciaIngressoDto!
+    deleteStorie(input: Int!): StorieDto!
+    deleteVenda(input: Float!): VendaDto!
+    deleteVendaCardapio(input: Int!): VendaCardapioDto!
+    deleteVisualizacaoStorie(input: Int!): VisualizouStorieDto!
+    duplicarEvento(input: DuplicarEventoInput!): Evento!
+    editarEquipeEvento(equipeEvento: Float!, tipo: Float!): Boolean!
+    editarEvento(input: EditarEventoInput!): Boolean!
+    editarIngresso(ingresso: Float!, input: EditarIngressoInput!): Boolean!
+    editarPessoa(input: EditarPessoaInput!): Boolean!
+    enviarIngressoCortesia(input: EnviarIngressoCortesiaInput!): Boolean!
+    enviarIngressoCortesiaEmails(input: EnviarIngressoCortesiaEmailsInput!): Boolean!
+    excluirEquipeEvento(equipeEvento: Float!): Boolean!
+    loginDash(input: LoginDashInput!): LoginDashOutput!
+    postBanco(input: PostBancoInput!): BancoDto!
+    postCardapio(input: PostCardapioInput!): CardapioDto!
+    postCategoriaCardapio(input: PostCategoriaCardapioInput!): CategoriaCardapioDto!
+    postCategoriaEvento(input: PostCategoriaEventoInput!): CategoriaEventoDto!
+    postCidade(input: PostCidadeInput!): CidadeDto!
+    postCortesia(input: PostCortesiaInput!): CortesiaDto!
+    postCupomDesconto(input: PostCupomDescontoInput!): CupomDescontoDto!
+    postCurtiuEvento(input: PostCurtiuEventoInput!): CurtiuEventoDto!
+    postCurtiuStorie(input: PostCurtiuStorieInput!): CurtiuStorieDto!
+    postEquipeEvento(input: PostEquipeEventoInput!): EquipeEventoDto!
+    postEstado(input: PostEstadoInput!): EstadoDto!
+    postEvento(input: PostEventoInput!): EventoDto!
+    postEventoVisualizacao(input: PostEventoVisualizacaoInput!): EventoVisualizacaoDto!
+    postIngresso(input: PostIngressoInput!): IngressoDto!
+    postIngressoCodigo(input: PostIngressoCodigoInput!): IngressoCodigoDto!
+    postIngressoPessoaEvento(input: PostIngressoPessoaEventoInput!): IngressoPessoaEventoDto!
+    postItemCardapioVenda(input: PostItemCardapioVendaInput!): ItemCardapioVendaDto!
+    postLote(input: PostLoteInput!): LoteDto!
+    postPessoa(input: PostPessoaInput!): PessoaDto!
+    postPessoaCartao(input: PostPessoaCartaoInput!, userId: Float!): PessoaCartaoDto!
+    postPessoaPagamento(input: PostPessoaPagamentoInput!): PessoaPagamentoDto!
+    postPreVenda(input: PostPreVendaInput!): PreVendaDto!
+    postPreVendaCardapio(input: PostPreVendaCardapioInput!): PreVendaCardapioDto!
+    postPreVendaIngresso(input: PostPreVendaIngressoInput!): PreVendaIngressoDto!
+    postPreVendaPessoa(input: PostPreVendaPessoaInput!): PreVendaPessoaDto!
+    postSeguindo(input: PostSeguindoInput!, userId: Float!): SeguindoDto!
+    postSolicitacaoTransferenciaIngresso(input: PostSolicitacaoTransferenciaIngressoInput!): SolicitacaoTransferenciaIngressoDto!
+    postStorie(input: PostStorieInput!): StorieDto!
+    postVenda(input: PostVendaInput!): VendaDto!
+    postVendaCardapio(input: PostVendaCardapioInput!): VendaCardapioDto!
+    postVisualizacaoStorie(input: PostVisualizouStorieInput!): VisualizouStorieDto!
+    putBanco(input: PutBancoInput!): BancoDto!
+    putCardapio(input: PutCardapioInput!): CardapioDto!
+    putCategoriaCardapio(input: PutCategoriaCardapioInput!): CategoriaCardapioDto!
+    putCategoriaEvento(input: PutCategoriaEventoInput!): CategoriaEventoDto!
+    putCidade(input: PutCidadeInput!): CidadeDto!
+    putCortesia(input: PutCortesiaInput!): CortesiaDto!
+    putCupomDesconto(input: PutCupomDescontoInput!): CupomDescontoDto!
+    putCurtiuEvento(input: PutCurtiuEventoInput!): CurtiuEventoDto!
+    putCurtiuStorie(input: PutCurtiuStorieInput!): CurtiuStorieDto!
+    putEquipeEvento(input: PutEquipeEventoInput!): EquipeEventoDto!
+    putEstado(input: PutEstadoInput!): EstadoDto!
+    putEvento(input: PutEventoInput!): EventoDto!
+    putEventoVisualizacao(input: PutEventoVisualizacaoInput!): EventoVisualizacaoDto!
+    putIngresso(input: PutIngressoInput!): IngressoDto!
+    putIngressoCodigo(input: PutIngressoCodigoInput!): IngressoCodigoDto!
+    putIngressoPessoaEvento(input: PutIngressoPessoaEventoInput!): IngressoPessoaEventoDto!
+    putItemCardapioVenda(input: PutItemCardapioVendaInput!): ItemCardapioVendaDto!
+    putLote(input: PutLoteInput!): LoteDto!
+    putPessoa(input: PutPessoaInput!): PessoaDto!
+    putPessoaCartao(input: PutPessoaCartaoInput!, userId: Float!): PessoaCartaoDto!
+    putPessoaPagamento(input: PutPessoaPagamentoInput!): PessoaPagamentoDto!
+    putPreVenda(input: PutPreVendaInput!): PreVendaDto!
+    putPreVendaCardapio(input: PutPreVendaCardapioInput!): PreVendaCardapioDto!
+    putPreVendaIngresso(input: PutPreVendaIngressoInput!): PreVendaIngressoDto!
+    putPreVendaPessoa(input: PutPreVendaPessoaInput!): PreVendaPessoaDto!
+    putSeguindo(input: PutSeguindoInput!, userId: Float!): SeguindoDto!
+    putSolicitacaoTransferenciaIngresso(input: PutSolicitacaoTransferenciaIngressoInput!): SolicitacaoTransferenciaIngressoDto!
+    putStorie(input: PutStorieInput!): StorieDto!
+    putVenda(input: PutVendaInput!): VendaDto!
+    putVendaCardapio(input: PutVendaCardapioInput!): VendaCardapioDto!
+    putVisualizacaoStorie(input: PutVisualizouStorieInput!): VisualizouStorieDto!
+    redefinirSenha(email: String!): Boolean!
+    retentarPagamento(idPedido: String!): Boolean!
+    updatePasswordEquipeEvento(input: UpdatePasswordEquipeEventoInput!): Boolean!
+    validaQrCode(qrCode: String!): Boolean!
+    validaQrCodeIngresso(qrCode: String!): Boolean!
+    validarCardapio(input: ValidarIngressoInputDto!): ItemCardapioVendaDto!
+    validarIngresso(input: ValidarIngressoInputDto!): IngressoPessoaEventoDto!
+}
+
+type Notification {
+    createdBy: Float
+    createdOn: DateTime
+    id: ID!
+    inativo: Float
+    lastEditBy: Float
+    lastEditOn: DateTime
+    texto: String
+    titulo: String
+}
+
+type PerguntaFrequenteDto {
+    answer: String!
+    question: String!
+}
+
+type Pessoa {
+    backgroundImage: String
+    bairro: String
+    cep: String
+    cidadeId: ID
+    complemento: String
+    cpf: String
+    createdBy: Float
+    createdIp: String
+    createdOn: DateTime!
+    descricao: String
+    email: String
+    equipeEventoDetalhes: [EquipeEvento!]
+    fotoPerfil: String
+    idClientePagarme: String
+    inativo: Float
+    lastEditBy: Float
+    lastEditOn: DateTime!
+    logradouro: String
+    nickname: String
+    numero: String
+    perfilAberto: Float
+    pesId: ID!
+    pesLogin: String!
+    pesNome: String
+    provider: String
+    telefone: String
+    validado: Float
+}
+
+type PessoaCartaoDto {
+    brand: String
+    createdBy: Int
+    createdIp: String
+    createdOn: DateTime
+    id: Int
+    idPagarme: String
+    inativo: Int
+    lastEditBy: Int
+    lastEditOn: DateTime
+    lastFourDigits: String!
+    pessoa: Int
+    pessoaDetalhes: PessoaDto
+}
+
+type PessoaDto {
+    backgroundImage: String
+    bairro: String
+    cep: String
+    cidade: Int
+    cidadeDetalhes: CidadeDto
+    complemento: String
+    cpf: String
+    createdBy: Int
+    createdIp: String
+    createdOn: DateTime
+    descricao: String
+    email: String
+    estado: Int
+    estadoDetalhes: EstadoDto
+    fotoPerfil: String
+    idClientePagarme: String
+    inativo: Int
+    itemCardapioVendaDetalhes: [ItemCardapioVendaDto!]
+    lastEditBy: Int
+    lastEditOn: DateTime
+    logradouro: String
+    nickname: String
+    numero: String
+    perfilAberto: Int
+    pesId: Int
+    pesLogin: String
+    pesNome: String
+    provider: String
+    telefone: String
+    validado: Int
+}
+
+type PessoaPagamento {
+    accountCheckDigit: String
+    accountNumber: String
+    annualRevenue: Float
+    bairro: String
+    bairroRepresentante: String
+    bank: Float
+    birthdate: DateTime
+    birthdateRepresentante: DateTime
+    branchCheckDigit: String
+    branchNumber: String
+    cep: String
+    cepRepresentante: String
+    cidade: Float
+    cidadeRepresentante: Float
+    companyName: String
+    complemento: String
+    complementoRepresentante: String
+    createdBy: Float
+    createdIp: String
+    createdOn: DateTime
+    descricao: String
+    document: String
+    documentRepresentante: String
+    email: String
+    emailRepresentante: String
+    estado: Float
+    estadoRepresentante: Float
+    evento: Float
+    holderDocument: String
+    holderName: String
+    holderType: Float
+    id: ID!
+    idPagarme: String
+    idPagarmeConta: String
+    lastEditBy: Float
+    lastEditOn: DateTime
+    logradouro: String
+    logradouroRepresentante: String
+    monthlyIncome: Float
+    monthlyIncomeRepresentante: Float
+    name: String
+    nameRepresentante: String
+    numero: String
+    numeroRepresentante: String
+    professionalOccupation: String
+    professionalOccupationRepresentante: String
+    telefone: String
+    tipo: Float
+    tradingName: String
+    transferEnabled: Float
+    transferInterval: Float
+    type: Float
+}
+
+type PessoaPagamentoDto {
+    accountCheckDigit: String
+    accountNumber: String
+    annualRevenue: Float
+    bairro: String
+    bairroRepresentante: String
+    bank: Int
+    birthdate: DateTime
+    birthdateRepresentante: DateTime
+    branchCheckDigit: String
+    branchNumber: String
+    cep: String
+    cepRepresentante: String
+    cidade: Int
+    cidadeDetalhes: CidadeDto
+    cidadeRepresentante: Int
+    cidadeRepresentanteDetalhes: CidadeDto
+    companyName: String
+    complemento: String
+    complementoRepresentante: String
+    createdBy: Int
+    createdIp: String
+    createdOn: DateTime
+    descricao: String
+    document: String
+    documentRepresentante: String
+    email: String
+    emailRepresentante: String
+    estado: Int
+    estadoDetalhes: EstadoDto
+    estadoRepresentante: Int
+    estadoRepresentanteDetalhes: EstadoDto
+    evento: Int
+    eventoDetalhes: EventoDto
+    holderDocument: String
+    holderName: String
+    holderType: Int
+    id: Int
+    idPagarme: String
+    idPagarmeConta: String
+    lastEditBy: Int
+    lastEditOn: DateTime
+    logradouro: String
+    logradouroRepresentante: String
+    monthlyIncome: Float
+    monthlyIncomeRepresentante: Float
+    name: String
+    nameRepresentante: String
+    numero: String
+    numeroRepresentante: String
+    professionalOccupation: String
+    professionalOccupationRepresentante: String
+    telefone: String
+    tipo: Float
+    tradingName: String
+    transferEnabled: Int
+    transferInterval: Int
+    type: Int
+}
+
+type PreVendaCardapioDto {
+    cardapio: Int
+    cardapioDetalhes: CardapioDto
+    createdBy: Int
+    createdIp: String
+    createdOn: DateTime
+    evento: Int
+    eventoDetalhes: EventoDto
+    id: Int
+    lastEditBy: Int
+    lastEditOn: DateTime
+    preVenda: Int
+    preVendaDetalhes: PreVendaDto
+    quantidade: Int
+    valorTotal: Float
+    valorUnitario: Float
+}
+
+type PreVendaDto {
+    createdBy: Int
+    createdIp: String
+    createdOn: DateTime
+    evento: Int
+    eventoDetalhes: EventoDto
+    id: Int
+    inativo: Int
+    lastEditBy: Int
+    lastEditOn: DateTime
+    pessoa: Int
+    pessoaDetalhes: PessoaDto
+    status: Int
+    tipo: Int
+    valor: Float
+}
+
+type PreVendaIngressoDto {
+    createdBy: Int
+    createdIp: String
+    createdOn: DateTime
+    evento: Int
+    eventoDetalhes: EventoDto
+    id: Int
+    ingresso: Int
+    ingressoDetalhes: IngressoDto
+    lastEditBy: Int
+    lastEditOn: DateTime
+    preVenda: Int
+    preVendaDetalhes: PreVendaDto
+    quantidade: Int
+    valorTotal: Float
+    valorUnitario: Float
+}
+
+type PreVendaPessoaDto {
+    createdBy: Int
+    createdIp: String
+    createdOn: DateTime
+    id: Int
+    lastEditBy: Int
+    lastEditOn: DateTime
+    pessoaCartao: Int
+    pessoaCartaoDetalhes: PessoaCartaoDto
+    pessoaEnvia: Int
+    pessoaEnviaDetalhes: PessoaDto
+    pessoaRecebe: Int
+    pessoaRecebeDetalhes: PessoaDto
+    preVenda: Int
+    preVendaDetalhes: PreVendaDto
+    status: Int
+    tipo: Int
+}
+
+type Query {
+    buscarEventosDaEquipe: [EventoDto!]!
+    buscarPessoa(input: BuscaPessoaInput!): [BuscaPessoaOutput!]!
+    cardapioPorId(cardapioId: Float!): Cardapio
+    cardapiosPorEmpresa: [Cardapio!]
+    cardapiosPorEvento(evento: Float!): [Cardapio!]
+    categoriasEvento: [CategoriaEvento!]
+    currentUser: PessoaDto!
+    curtidasPorEvento(eventoId: Int!): Int!
+    dashBatchesPageReport(input: Int!): DashBatchesPageReportOutput!
+    dashCalendarPage: DashCalendarPageOutput!
+    dashCardapiosPageReport(input: Int!): DashCardapiosPageReportOutput!
+    dashCuponsPageReport(input: Int!): DashCuponsPageReportOutput!
+    dashDashboardPageReport: DashDashboardPageReportOutput!
+    dashEntriesPageReport(input: Int!): DashEntriesPageReportOutput!
+    dashEventHomePageReport(input: Int!): DashEventHomePageReportOutput!
+    dashEventPageReport(input: Int!): DashEventPageReportOutput!
+    dashGiftsPageReport(input: Int!): DashGiftsPageReportOutput!
+    dashHelpPage: DashHelpPageOutput!
+    dashHistoryPageReport: DashHistoryPageReportOutput!
+    dashHome(input: DashHomeInputDto!): [EventoDto!]!
+    dashItemSalesPageReport(input: Int!): DashItemSalesPageReportOutput!
+    dashItensReportPageReport(input: Int!): DashItensReportPageReportOutput!
+    dashSpecialCodesPageReport(input: Int!): DashSpecialCodesPageReportOutput!
+    dashTeamsPageReport: DashTeamsPageReportOutput!
+    dashTicketSalesPageReport(input: Int!): DashTicketSalesPageReportOutput!
+    dashTicketsPageReport(input: Int!): DashTicketsPageReportOutput!
+    dashTicketsReportPageReport(input: Int!): DashTicketsReportPageReportOutput!
+    dashViewsPageReport(input: Int!): DashViewsPageReportOutput!
+    equipeEvento(evento: Float!, nome: String, tipo: Float): [EquipeEvento!]!
+    equipeEventoPessoa(evento: Float!, pessoa: Float!): EquipeEvento!
+    evento(input: ListaEventosCompletosInput!): [ListaEventosCompletosOutput!]!
+    getBanco(input: GetBancoInput!): [BancoDto!]!
+    getCardapio(input: GetCardapioInput!): [CardapioDto!]!
+    getCategoriaCardapio(input: GetCategoriaCardapioInput!): CategoriaCardapioDto!
+    getCategoriaCardapioPorId(categoriaCardapioId: Float!): CategoriaCardapio
+    getCategoriaEvento(input: GetCategoriaEventoInput!): [CategoriaEventoDto!]!
+    getCategoriasCardapio: [CategoriaCardapio!]
+    getCidade(input: GetCidadeInput!): [CidadeDto!]!
+    getCortesia(input: GetCortesiaInput!): [CortesiaDto!]!
+    getCupomDesconto(input: GetCupomDescontoInput!): [CupomDescontoDto!]!
+    getCurtiuEvento(input: GetCurtiuEventoInput!): [CurtiuEventoDto!]!
+    getCurtiuStorie(input: GetCurtiuStorieInput!): [CurtiuStorieDto!]!
+    getEquipeEvento(input: GetEquipeEventoInput!): [EquipeEventoDto!]!
+    getEstado(input: GetEstadoInput!): [EstadoDto!]!
+    getEvento(input: GetEventoInput!): [EventoDto!]!
+    getEventoById(input: GetEventoInput!): EventoDto!
+    getEventoPorId(eventoId: Float!): Evento!
+    getEventoVisualizacao(input: GetEventoVisualizacaoInput!): [EventoVisualizacaoDto!]!
+    getHistoricoCardapioValidados(input: Int!): [ItemCardapioVendaDto!]!
+    getHistoricoIngressoValidados(input: Int!): [IngressoPessoaEventoDto!]!
+    getIngresso(input: GetIngressoInput!): [IngressoDto!]!
+    getIngressoCodigo(input: GetIngressoCodigoInput!): [IngressoCodigoDto!]!
+    getIngressoPessoaEvento(input: GetIngressoPessoaEventoInput!): [IngressoPessoaEventoDto!]!
+    getItemCardapioVenda(input: GetItemCardapioVendaInput!): [ItemCardapioVendaDto!]!
+    getLote(input: GetLoteInput!): [LoteDto!]!
+    getPessoa(input: GetPessoaInput!): [PessoaDto!]!
+    getPessoaCartao(input: GetPessoaCartaoInput!): [PessoaCartaoDto!]!
+    getPessoaPagamento(input: GetPessoaPagamentoInput!): [PessoaPagamentoDto!]!
+    getPreVenda(input: GetPreVendaInput!): [PreVendaDto!]!
+    getPreVendaCardapio(input: GetPreVendaCardapioInput!): [PreVendaCardapioDto!]!
+    getPreVendaIngresso(input: GetPreVendaIngressoInput!): [PreVendaIngressoDto!]!
+    getPreVendaPessoa(input: GetPreVendaPessoaInput!): [PreVendaPessoaDto!]!
+    getQrCode(input: Int!): String!
+    getQrCodeCardapio(input: Int!): String!
+    getSeguindo(input: GetSeguindoInput!): [SeguindoDto!]!
+    getSolicitacaoTransferenciaIngresso(input: GetSolicitacaoTransferenciaIngressoInput!): [SolicitacaoTransferenciaIngressoDto!]!
+    getStorie(input: GetStorieInput!): [StorieDto!]!
+    getVenda(input: GetVendaInput!): [VendaDto!]!
+    getVendaById(id: Float!): Venda!
+    getVendaCardapio(input: GetVendaCardapioInput!): [VendaCardapioDto!]!
+    getVisualizacaoStorie(input: GetVisualizouStorieInput!): [VisualizouStorieDto!]!
+    graficoIngressosCompradosPorEvento(evento: Float!): [GraficoIngressoPorEventoType!]
+    graficoIngressosCortesiaPorEvento(evento: Float!): GraficoIngressoCortesiaPorEventoType
+    graficoIngressosValidadosPorEvento(evento: Float!): [GraficoIngressoPorEventoType!]
+    ingressoMetrica(evento: Float!): [IngressoMetricaOutput!]!
+    ingressoPorId(ingresso: Float!): Ingresso
+    ingressosCompradosPorEmpresa: [IngressoPessoaEvento!]
+    ingressosCompradosPorEvento(evento: Float!, nomeValidador: String, tipoValidador: Float, utilizado: Float): [IngressoPessoaEvento!]
+    ingressosCompradosPorVenda(vendaId: Float!): [IngressoPessoaEvento!]
+    ingressosPorEmpresa: [Ingresso!]
+    ingressosPorEvento(evento: Float!): [Ingresso!]
+    listaEventosCompletos(input: ListaEventosCompletosInput!): [ListaEventosCompletosOutput!]!
+    listaEventosEmComum(amigoId: Int!, userId: Int!): [ListaEventosCompletosOutput!]!
+    listaPessoaPagamentoPorEventoId(eventoId: Float!): PessoaPagamento
+    listarNotifications: [Notification!]!
+    listarUsuariosPorEmail(input: ListarUsuariosPorEmailInput!): [Pessoa!]!
+    meusEventos(filters: MeusEventosFilterInput): [Evento!]
+    mobileGetHome(limit: Int, offset: Int): [EventoDto!]!
+    relatorioTransacoes(evento: Float!, periodo: String!): RelatorioTransacoesType
+    runScheduler: Boolean!
+    usuarios(nome: String): [Pessoa!]!
+    vendasPorHora(dataFim: String!, dataInicio: String!, evento: Float!): [VendasPorHoraType!]
+}
+
+type RelatorioTransacoesHistoricoType {
+    data: String!
+    totalCortesias: Float!
+    totalVendas: Float!
+}
+
+type RelatorioTransacoesType {
+    clientesUnicos: Float!
+    cortesia: Float!
+    historico: [RelatorioTransacoesHistoricoType!]!
+    pagos: Float!
+}
+
+type SeguindoDto {
+    createdBy: Int
+    createdIp: String
+    createdOn: DateTime
+    id: Int
+    lastEditBy: Int
+    lastEditOn: DateTime
+    pessoa: Int
+    pessoaDetalhes: PessoaDto
+    pessoaSeguida: Int
+    pessoaSeguidaDetalhes: PessoaDto
+    status: Int
+}
+
+type SolicitacaoTransferenciaIngressoDto {
+    createdBy: Int
+    createdIp: String
+    createdOn: DateTime
+    evento: Int
+    eventoDetalhes: EventoDto
+    id: Int
+    ingresso: Int
+    ingressoDetalhes: IngressoDto
+    ingressoPessoaEvento: Int
+    ingressoPessoaEventoDetalhes: IngressoPessoaEventoDto
+    lastEditBy: Int
+    lastEditOn: DateTime
+    pessoaEnvia: Int
+    pessoaEnviaDetalhes: PessoaDto
+    pessoaRecebe: Int
+    pessoaRecebeDetalhes: PessoaDto
+    status: Int
+}
+
+type SpecialCodeDto {
+    id: Int!
+    nome: String!
+    usos: Int!
+}
+
+type StorieDto {
+    arquivo: String
+    createdBy: Int
+    createdIp: String
+    createdOn: DateTime
+    id: Int
+    inativo: Int
+    lastEditBy: Int
+    lastEditOn: DateTime
+    tempo: Int
+    tipo: Int
+}
+
+type TeamDto {
+    cargo: String!
+    contatoEmail: String!
+    contatoTelefone: String!
+    desde: DateTime!
+    evento: String!
+    id: Int!
+    nome: String!
+    status: String!
+}
+
+type TicketDto {
+    id: Int!
+    lote: String!
+    maximo: Int!
+    nome: String!
+    porcentagemVendida: Int!
+    quantidadeDisponivel: Int!
+    quantidadeVendida: Int!
+    status: String!
+    valor: Float!
+    valorTotalVendido: Float!
+}
+
+type TicketSaleDto {
+    data: String!
+    desconto: Float!
+    hora: String!
+    id: Int!
+    itens: [String!]!
+    pessoaEmail: String!
+    pessoaNome: String!
+    pessoaTelefone: String!
+    status: String!
+    tipoPagamento: String!
+    valor: Float!
+    valorSemDesconto: Float!
+}
+
+type Venda {
+    cortesia: Float
+    cortesiaDetalhe: Cortesia
+    createdBy: Float!
+    createdIp: String
+    createdOn: DateTime!
+    cupomDesconto: Float
+    eventoDetalhe: Evento
+    eventoId: ID
+    id: ID!
+    idCortesia: ID
+    idPagarme: String
+    inativo: Float
+    lastEditBy: Float
+    lastEditOn: DateTime
+    pessoaDetalhe: Pessoa
+    pessoaId: ID
+    preVenda: Float
+    qrcode: String
+    qrcodeUrl: String
+    solicitacaoTransferenciaIngresso: Float
+    status: Float
+    tipo: Float
+    tipoPagamento: Float
+    valor: Float
+}
+
+type VendaCardapioDto {
+    cardapio: Int
+    cardapioDetalhes: CardapioDto
+    createdBy: Int
+    createdIp: String
+    createdOn: DateTime
+    evento: Int
+    eventoDetalhes: EventoDto
+    id: Int
+    lastEditBy: Int
+    lastEditOn: DateTime
+    pessoa: Int
+    pessoaDetalhes: PessoaDto
+    quantidade: Int
+    valorEvento: Float
+    valorFastPay: Float
+    valorTotal: Float
+    valorUnitario: Float
+    venda: Int
+    vendaDetalhes: VendaDto
+}
+
+type VendaDto {
+    cortesia: Int
+    createdBy: Int!
+    createdIp: String
+    createdOn: DateTime!
+    cupomDesconto: Int
+    cupomDescontoDetalhes: CupomDescontoDto
+    evento: Int
+    eventoDetalhes: EventoDto
+    id: Int
+    idCortesia: Int
+    idCortesiaDetalhes: CortesiaDto
+    idPagarme: String
+    inativo: Int
+    lastEditBy: Int
+    lastEditOn: DateTime
+    pessoa: Int
+    pessoaDetalhes: PessoaDto
+    preVenda: Int
+    preVendaDetalhes: PreVendaDto
+    qrcode: String
+    qrcodeUrl: String
+    solicitacaoTransferenciaIngresso: Int
+    solicitacaoTransferenciaIngressoDetalhes: SolicitacaoTransferenciaIngressoDto
+    status: Int
+    tipo: Int
+    tipoPagamento: Int
+    valor: Float
+    valorDesconto: Float
+    valorSemDesconto: Float
+}
+
+type VendaPorDiaDto {
+    key: String!
+    value: Int!
+}
+
+type VendaTipoPagamentoDto {
+    key: String!
+    value: Int!
+}
+
+type VendasPorHoraType {
+    hora: String!
+    totalVendas: Float!
+}
+
+type VisualizouStorieDto {
+    createdBy: Int
+    createdIp: String
+    createdOn: DateTime!
+    id: Int
+    lastEditBy: Int
+    lastEditOn: DateTime
+    pessoa: Int
+    pessoaDetalhes: PessoaDto
+    stories: Int
+    storiesDetalhes: StorieDto
+}
+
+"DateTime custom scalar type"
+scalar DateTime
+
+input AddEquipeEventoInput {
+    email: String!
+    evento: Int!
+    nome: String!
+    senha: String!
+    tipo: Int!
+}
+
+input BuscaPessoaInput {
+    backgroundImage: String
+    cidade: String
+    descricao: String
+    estaSeguindo: Boolean
+    estado: String
+    eventosEmComum: Int
+    foto: String
+    id: String
+    nickname: String
+    pesNome: String
+}
+
+input CriarCardapioInput {
+    categoriaCardapioId: ID
+    createdBy: Float
+    createdIp: String
+    createdOn: DateTime
+    descricao: String
+    eventoId: ID
+    id: ID
+    imagem: String
+    inativo: Float
+    lastEditBy: Float
+    lastEditOn: DateTime
+    nome: String
+    valor: Float
+}
+
+input CriarEventoInput {
+    bairro: String
+    categoriaEventoId: ID
+    cep: String
+    cidadeId: ID
+    comissaoCardapio: Float
+    comissaoIngresso: Float
+    complemento: String
+    data: String
+    dataFim: DateTime
+    descricao: String
+    estadoId: ID
+    horario: String
+    imagem: String
+    inativo: Float
+    latitude: String
+    local: String
+    logradouro: String
+    longitude: String
+    mapaEvento: String
+    nome: String
+    numero: String
+    status: Float
+    vendaIngresso: Boolean
+}
+
+input CriarIngressoInput {
+    data: DateTime!
+    descricao: String
+    eventoId: Float!
+    limite: Float!
+    limitePorPessoa: Float!
+    local: String!
+    loteId: Float!
+    nome: String!
+    valor: Float!
+}
+
+input CriarNotificationInput {
+    inativo: Float
+    texto: String!
+    titulo: String!
+}
+
+input CriarPessoaInput {
+    bairro: String
+    cep: String
+    cidadeId: ID
+    complemento: String
+    cpf: String
+    email: String
+    estadoId: ID
+    eventoId: ID
+    logradouro: String
+    nickname: String
+    nome: String
+    numero: String
+    pessoaId: ID
+    senha: String
+    telefone: String
+}
+
+input CriarRecebedorInput {
+    accountCheckDigit: String!
+    accountNumber: String!
+    "Faturamento anual (obrigatório quando tipo for igual a 1 – pessoa jurídica)"
+    annualRevenue: Float
+    bairro: String!
+    "Bairro do representante (obrigatório quando tipo for igual a 1 – pessoa jurídica)"
+    bairroRepresentante: String
+    bank: Float!
+    "Data de nascimento (obrigatório quando tipo for igual a 0 – pessoa física)"
+    birthdate: String
+    "Data de nascimento do representante (obrigatório quando tipo for igual a 1 – pessoa jurídica)"
+    birthdateRepresentante: String
+    branchCheckDigit: String!
+    branchNumber: String!
+    cep: String!
+    "CEP do representante (obrigatório quando tipo for igual a 1 – pessoa jurídica)"
+    cepRepresentante: String
+    cidade: Float!
+    "Código da cidade do representante (obrigatório quando tipo for igual a 1 – pessoa jurídica)"
+    cidadeRepresentante: Float
+    "Nome da empresa (obrigatório quando tipo for igual a 1 – pessoa jurídica)"
+    companyName: String
+    complemento: String!
+    "Complemento do representante (obrigatório quando tipo for igual a 1 – pessoa jurídica)"
+    complementoRepresentante: String
+    descricao: String!
+    document: String!
+    "Documento do representante legal (obrigatório quando tipo for igual a 1 – pessoa jurídica)"
+    documentRepresentante: String
+    email: String!
+    "E-mail do representante legal (obrigatório quando tipo for igual a 1 – pessoa jurídica)"
+    emailRepresentante: String
+    estado: Float!
+    "Código do estado do representante (obrigatório quando tipo for igual a 1 – pessoa jurídica)"
+    estadoRepresentante: Float
+    evento: Float!
+    holderDocument: String!
+    holderName: String!
+    holderType: Float!
+    logradouro: String!
+    "Logradouro do representante (obrigatório quando tipo for igual a 1 – pessoa jurídica)"
+    logradouroRepresentante: String
+    "Renda mensal (obrigatório quando tipo for igual a 0 – pessoa física)"
+    monthlyIncome: Float
+    "Renda mensal do representante (obrigatório quando tipo for igual a 1 – pessoa jurídica)"
+    monthlyIncomeRepresentante: Float
+    name: String!
+    "Nome do representante legal (obrigatório quando tipo for igual a 1 – pessoa jurídica)"
+    nameRepresentante: String
+    numero: String!
+    "Número do representante (obrigatório quando tipo for igual a 1 – pessoa jurídica)"
+    numeroRepresentante: String
+    "Ocupação profissional (obrigatório quando tipo for igual a 0 – pessoa física)"
+    professionalOccupation: String
+    "Ocupação profissional do representante (obrigatório quando tipo for igual a 1 – pessoa jurídica)"
+    professionalOccupationRepresentante: String
+    telefone: String!
+    tipo: Float!
+    "Nome fantasia (obrigatório quando tipo for igual a 1 – pessoa jurídica)"
+    tradingName: String
+    transferEnabled: Float!
+    transferInterval: Float!
+    type: Float!
+}
+
+input CriarVendaPosInput {
+    cardapios: [Int!]
+    cpf: String!
+    evento: Int!
+    ingressos: [Int!]
+    status: Int!
+    tipo: Int!
+    tipoPagamento: Int!
+    valor: Float!
+}
+
+input DashHomeInputDto {
+    dataInicio: DateTime!
+    uuid: Float!
+}
+
+input DuplicarEventoInput {
+    duplicarCodigos: Boolean!
+    duplicarCortesias: Boolean!
+    duplicarCupons: Boolean!
+    duplicarEquipe: Boolean!
+    duplicarIngressos: Boolean!
+    duplicarLotes: Boolean!
+    eventoId: Float!
+}
+
+input EditarEventoInput {
+    bairro: String
+    categoriaEventoId: ID
+    cep: String
+    cidadeId: ID
+    comissaoCardapio: Float
+    comissaoIngresso: Float
+    complemento: String
+    data: String
+    dataFim: DateTime
+    descricao: String
+    estadoId: ID
+    horario: String
+    id: Float!
+    imagem: String
+    inativo: Float
+    latitude: String
+    local: String
+    logradouro: String
+    longitude: String
+    mapaEvento: String
+    nome: String
+    numero: String
+    status: Float
+    vendaIngresso: Boolean
+}
+
+input EditarIngressoInput {
+    data: DateTime
+    descricao: String
+    eventoId: Float
+    limite: Float
+    limitePorPessoa: Float
+    local: String
+    loteId: Float
+    nome: String
+    valor: Float
+}
+
+input EditarPessoaInput {
+    bairro: String
+    cep: String
+    cidadeId: ID
+    complemento: String
+    email: String
+    estadoId: ID
+    id: Float!
+    logradouro: String
+    nickname: String
+    nome: String
+    numero: String
+    telefone: String
+}
+
+input EnviarIngressoCortesiaEmailsInput {
+    emails: [String!]
+    ingresso: Float
+    quantidade: Float
+}
+
+input EnviarIngressoCortesiaInput {
+    ingresso: Float
+    pessoa: Float
+    quantidade: Float
+}
+
+input GetBancoInput {
+    createdBy: Int
+    createdOn: DateTime
+    id: Int
+    lastEditBy: Int
+    lastEditOn: DateTime
+    nome: String
+    numBanco: Float
+    site: String
+}
+
+input GetCardapioInput {
+    categoriaCardapio: Int
+    createdBy: Int
+    createdIp: String
+    createdOn: DateTime
+    descricao: String
+    evento: Int
+    id: Int
+    imagem: String
+    inativo: Int
+    lastEditBy: Int
+    lastEditOn: DateTime
+    nome: String
+    quantidade: Int
+    valor: Float
+}
+
+input GetCategoriaCardapioInput {
+    evento: Int
+    id: Int
+    inativo: Int
+    nome: String
+}
+
+input GetCategoriaEventoInput {
+    id: Int
+    inativo: Int
+    nome: String
+}
+
+input GetCidadeInput {
+    createdBy: Int
+    createdOn: DateTime
+    estado: Int
+    id: Int
+    lastEditBy: Int
+    lastEditOn: DateTime
+    nome: String
+    nomeSem: String
+}
+
+input GetCortesiaInput {
+    evento: Int
+    id: Int
+    ingresso: Int
+    pessoaRecebe: Int
+    quantidade: String
+    status: Int
+}
+
+input GetCupomDescontoInput {
+    cupom: String
+    evento: Int
+    id: Int
+    inativo: Int
+    limite: Int
+    tipo: Int
+    valor: Float
+}
+
+input GetCurtiuEventoInput {
+    evento: Int
+    id: Int
+    pessoa: Int
+}
+
+input GetCurtiuStorieInput {
+    id: Int
+    pessoa: Int
+    stories: Int
+}
+
+input GetEquipeEventoInput {
+    evento: Int
+    id: Int
+    pessoa: Int
+    tipo: Int
+}
+
+input GetEstadoInput {
+    id: Int
+    nome: String
+    pais: String
+    sigla: String
+}
+
+input GetEventoInput {
+    bairro: String
+    categoriaEvento: Int
+    cep: String
+    cidade: Int
+    comissaoCardapio: Float
+    comissaoIngresso: Float
+    complemento: String
+    createdBy: Int
+    data: String
+    dataFim: DateTime
+    descricao: String
+    estado: Int
+    horario: String
+    id: Int
+    imagem: String
+    inativo: Int
+    latitude: String
+    local: String
+    logradouro: String
+    longitude: String
+    mapa: String
+    mapaEvento: String
+    nome: String
+    numero: String
+    pessoaEvento: String
+    status: Int
+    totalVisualizacao: Int
+    vendaIngresso: Int
+}
+
+input GetEventoVisualizacaoInput {
+    evento: Int
+    id: Int
+    pessoa: Int
+}
+
+input GetIngressoCodigoInput {
+    evento: Int
+    id: Int
+    inativo: Int
+    ingresso: Int
+    nome: String
+}
+
+input GetIngressoInput {
+    codigo: String
+    data: DateTime
+    descricao: String
+    evento: Int
+    id: Int
+    inativo: Int
+    limite: Int
+    limitePorPessoa: Int
+    loteId: Int
+    nome: String
+    transferencia: Int
+    valor: Float
+}
+
+input GetIngressoPessoaEventoInput {
+    codigo: String
+    cortesia: Int
+    evento: Int
+    id: Int
+    idCortesia: Int
+    ingresso: Int
+    pessoa: Int
+    solicitacaoTransferenciaIngresso: Int
+    transferencia: Int
+    transferidoEm: DateTime
+    transferidoPara: Int
+    utilizado: Int
+    validadoEm: DateTime
+    validadoPor: Int
+    valor: Float
+    valorEvento: Float
+    valorFastPay: Float
+    valorUnitario: Float
+    venda: Int
+}
+
+input GetItemCardapioVendaInput {
+    cardapio: Int
+    cardapioDetalhes: GetCardapioInput
+    codigo: String
+    createdBy: Int
+    createdIp: String
+    createdOn: DateTime
+    evento: Int
+    eventoDetalhes: GetEventoInput
+    id: Int
+    lastEditBy: Int
+    lastEditOn: DateTime
+    pessoa: Int
+    pessoaDetalhes: GetPessoaInput
+    pessoaValidaDetalhes: GetPessoaInput
+    utilizado: Int
+    validadoEm: DateTime
+    validadoPor: Int
+    valorEvento: Float
+    valorFastPay: Float
+    valorTotal: Float
+    valorUnitario: Float
+    venda: Int
+    vendaCardapio: Int
+}
+
+input GetLoteInput {
+    dataFim: DateTime
+    dataInicio: DateTime
+    evento: Int
+    id: Int
+    inativo: Int
+    nome: String
+}
+
+input GetPessoaCartaoInput {
+    brand: String
+    id: Int
+    idPagarme: String
+    inativo: Int
+    lastFourDigits: String
+    pessoa: Int
+}
+
+input GetPessoaInput {
+    backgroundImage: String
+    bairro: String
+    cep: String
+    cidade: Int
+    complemento: String
+    cpf: String
+    descricao: String
+    email: String
+    estado: Int
+    fotoPerfil: String
+    idClientePagarme: String
+    inativo: Int
+    logradouro: String
+    nickname: String
+    numero: String
+    perfilAberto: Int
+    pesId: Int
+    pesLogin: String
+    pesNome: String
+    provider: String
+    telefone: String
+    validado: Int
+}
+
+input GetPessoaPagamentoInput {
+    accountCheckDigit: String
+    accountNumber: String
+    annualRevenue: Float
+    bairro: String
+    bairroRepresentante: String
+    bank: Int
+    birthdate: DateTime
+    birthdateRepresentante: DateTime
+    branchCheckDigit: String
+    branchNumber: String
+    cep: String
+    cepRepresentante: String
+    cidade: Int
+    cidadeRepresentante: Int
+    companyName: String
+    complemento: String
+    complementoRepresentante: String
+    descricao: String
+    document: String
+    documentRepresentante: String
+    email: String
+    emailRepresentante: String
+    estado: Int
+    estadoRepresentante: Int
+    evento: Int
+    holderDocument: String
+    holderName: String
+    holderType: Int
+    id: Int
+    idPagarme: String
+    idPagarmeConta: String
+    logradouro: String
+    logradouroRepresentante: String
+    monthlyIncome: Float
+    monthlyIncomeRepresentante: Float
+    name: String
+    nameRepresentante: String
+    numero: String
+    numeroRepresentante: String
+    professionalOccupation: String
+    professionalOccupationRepresentante: String
+    telefone: String
+    tipo: Float
+    tradingName: String
+    transferEnabled: Int
+    transferInterval: Int
+    type: Int
+}
+
+input GetPreVendaCardapioInput {
+    cardapio: Int
+    evento: Int
+    id: Int
+    preVenda: Int
+    quantidade: Int
+    valorTotal: Float
+    valorUnitario: Float
+}
+
+input GetPreVendaIngressoInput {
+    evento: Int
+    id: Int
+    ingresso: Int
+    preVenda: Int
+    quantidade: Int
+    valorTotal: Float
+    valorUnitario: Float
+}
+
+input GetPreVendaInput {
+    evento: Int
+    id: Int
+    inativo: Int
+    pessoa: Int
+    status: Int
+    tipo: Int
+    valor: Float
+}
+
+input GetPreVendaPessoaInput {
+    id: Int
+    pessoaCartao: Int
+    pessoaEnvia: Int
+    pessoaRecebe: Int
+    preVenda: Int
+    status: Int
+    tipo: Int
+}
+
+input GetSeguindoInput {
+    id: Int
+    pessoa: Int
+    pessoaSeguida: Int
+    status: Int
+}
+
+input GetSolicitacaoTransferenciaIngressoInput {
+    evento: Int
+    id: Int
+    ingresso: Int
+    ingressoPessoaEvento: Int
+    pessoaEnvia: Int
+    pessoaRecebe: Int
+    status: Int
+}
+
+input GetStorieInput {
+    arquivo: String
+    id: Int
+    inativo: Int
+    tempo: Int
+    tipo: Int
+}
+
+input GetVendaCardapioInput {
+    cardapio: Int
+    evento: Int
+    id: Int
+    pessoa: Int
+    quantidade: Int
+    valorEvento: Float
+    valorFastPay: Float
+    valorTotal: Float
+    valorUnitario: Float
+    venda: Int
+}
+
+input GetVendaInput {
+    cortesia: Int
+    cupomDesconto: Int
+    evento: Int
+    id: Int
+    idCortesia: Int
+    idPagarme: String
+    inativo: Int
+    pessoa: Int
+    preVenda: Int
+    qrcode: String
+    qrcodeUrl: String
+    solicitacaoTransferenciaIngresso: Int
+    status: Int
+    tipo: Int
+    tipoPagamento: Int
+    valor: Float
+}
+
+input GetVisualizouStorieInput {
+    id: Int
+    pessoa: Int
+    stories: Int
+}
+
+input ListaEventosCompletosInput {
+    ids: [Int!]
+    lat: String
+    lon: String
+    uuid: Float!
+}
+
+input ListarUsuariosPorEmailInput {
+    emails: [String!]!
+}
+
+input LoginDashInput {
+    email: String!
+    password: String!
+}
+
+input MeusEventosFilterInput {
+    cidade: String
+    dataFim: String
+    dataInicio: String
+    estado: String
+    id: Float
+    inativo: Float
+    nome: String
+}
+
+input PostBancoInput {
+    nome: String!
+    numBanco: Int!
+    site: String!
+}
+
+input PostCardapioInput {
+    categoriaCardapio: Int!
+    descricao: String
+    evento: Int!
+    imagem: String
+    nome: String!
+    quantidade: Int!
+    valor: Float!
+}
+
+input PostCategoriaCardapioInput {
+    evento: Int!
+    id: Int!
+    nome: String!
+}
+
+input PostCategoriaEventoInput {
+    nome: String!
+}
+
+input PostCidadeInput {
+    estado: Int!
+    nome: String!
+    nomeSem: String!
+}
+
+input PostCortesiaInput {
+    evento: Int!
+    ingresso: Int!
+    pessoaRecebe: Int!
+    quantidade: String!
+}
+
+input PostCupomDescontoInput {
+    cupom: String!
+    evento: Int!
+    limite: Int!
+    tipo: Int!
+    valor: Float!
+}
+
+input PostCurtiuEventoInput {
+    evento: Int!
+}
+
+input PostCurtiuStorieInput {
+    pessoa: Int!
+    stories: Int!
+}
+
+input PostEquipeEventoInput {
+    evento: Int!
+    pessoa: Int!
+    tipo: Int!
+}
+
+input PostEstadoInput {
+    id: Int!
+    nome: String!
+    sigla: String!
+}
+
+input PostEventoInput {
+    bairro: String!
+    categoriaEvento: Int!
+    cep: String!
+    cidade: Int!
+    complemento: String!
+    data: DateTime!
+    dataFim: DateTime!
+    descricao: String!
+    estado: Int!
+    horario: String!
+    imagem: String
+    latitude: String!
+    local: String!
+    logradouro: String!
+    longitude: String!
+    mapaEvento: String
+    nome: String!
+    numero: String!
+    vendaIngresso: Int
+}
+
+input PostEventoVisualizacaoInput {
+    evento: Int!
+    pessoa: Int!
+}
+
+input PostIngressoCodigoInput {
+    evento: Int!
+    ingresso: Int!
+    nome: String!
+}
+
+input PostIngressoInput {
+    data: DateTime!
+    descricao: String
+    evento: Int!
+    limite: Int!
+    limitePorPessoa: Int!
+    loteId: Int!
+    nome: String!
+    transferencia: Int!
+    valor: Float!
+}
+
+input PostIngressoPessoaEventoInput {
+    cortesia: Int
+    evento: Int!
+    idCortesia: Int
+    ingresso: Int!
+    pessoa: Int!
+    solicitacaoTransferenciaIngresso: Int
+    transferencia: Int
+    transferidoEm: DateTime
+    transferidoPara: Int
+    venda: Int!
+}
+
+input PostItemCardapioVendaInput {
+    cardapio: Int!
+    codigo: String
+    evento: Int!
+    pessoa: Int!
+    valorEvento: Float!
+    valorFastPay: Float!
+    valorTotal: Float!
+    valorUnitario: Float!
+    venda: Int!
+    vendaCardapio: Int!
+}
+
+input PostLoteInput {
+    dataFim: DateTime!
+    dataInicio: DateTime!
+    evento: Int!
+    nome: String!
+}
+
+input PostPessoaCartaoInput {
+    brand: String
+    idPagarme: String!
+    lastFourDigits: String!
+    pessoa: Int!
+}
+
+input PostPessoaInput {
+    backgroundImage: String
+    cpf: String
+    descricao: String
+    email: String
+    fotoPerfil: String
+    idClientePagarme: String
+    nickname: String
+    perfilAberto: Int
+    pesLogin: String
+    pesNome: String
+    pesSenha: String
+    provider: String
+    telefone: String
+}
+
+input PostPessoaPagamentoInput {
+    accountCheckDigit: String
+    accountNumber: String
+    annualRevenue: Float
+    bairro: String
+    bairroRepresentante: String
+    bank: Int
+    birthdate: DateTime
+    birthdateRepresentante: DateTime
+    branchCheckDigit: String
+    branchNumber: String
+    cep: String
+    cepRepresentante: String
+    cidade: Int
+    cidadeRepresentante: Int
+    companyName: String
+    complemento: String
+    complementoRepresentante: String
+    descricao: String
+    document: String
+    documentRepresentante: String
+    email: String
+    emailRepresentante: String
+    estado: Int
+    estadoRepresentante: Int
+    evento: Int
+    holderDocument: String
+    holderName: String
+    holderType: Int
+    id: Int
+    idPagarme: String
+    idPagarmeConta: String
+    logradouro: String
+    logradouroRepresentante: String
+    monthlyIncome: Float
+    monthlyIncomeRepresentante: Float
+    name: String
+    nameRepresentante: String
+    numero: String
+    numeroRepresentante: String
+    professionalOccupation: String
+    professionalOccupationRepresentante: String
+    telefone: String
+    tipo: Float
+    tradingName: String
+    transferEnabled: Int
+    transferInterval: Int
+    type: Int
+}
+
+input PostPreVendaCardapioInput {
+    cardapio: Int!
+    evento: Int!
+    preVenda: Int!
+    quantidade: Int!
+    valorTotal: Float!
+    valorUnitario: Float!
+}
+
+input PostPreVendaIngressoInput {
+    evento: Int!
+    ingresso: Int!
+    preVenda: Int!
+    quantidade: Int!
+    valorTotal: Float!
+    valorUnitario: Float!
+}
+
+input PostPreVendaInput {
+    evento: Int!
+    inativo: Int!
+    pessoa: Int!
+    status: Int!
+    tipo: Int!
+    valor: Float!
+}
+
+input PostPreVendaPessoaInput {
+    pessoaCartao: Int!
+    pessoaEnvia: Int!
+    pessoaRecebe: Int!
+    preVenda: Int!
+    tipo: Int!
+}
+
+input PostSeguindoInput {
+    pessoa: Int!
+    pessoaSeguida: Int!
+}
+
+input PostSolicitacaoTransferenciaIngressoInput {
+    evento: Int!
+    ingresso: Int!
+    ingressoPessoaEvento: Int!
+    pessoaEnvia: Int!
+    pessoaRecebe: Int!
+    status: Int!
+}
+
+input PostStorieInput {
+    arquivo: String!
+    tempo: Int!
+    tipo: Int
+}
+
+input PostVendaCardapioInput {
+    cardapio: Int!
+    evento: Int!
+    pessoa: Int!
+    quantidade: Int!
+    valorEvento: Float!
+    valorFastPay: Float!
+    valorTotal: Float!
+    valorUnitario: Float!
+    venda: Int!
+}
+
+input PostVendaInput {
+    cortesia: Int
+    cupomDesconto: Int
+    evento: Int!
+    idCortesia: Int
+    idPagarme: String
+    pessoa: Int!
+    preVenda: Int
+    qrcode: String
+    qrcodeUrl: String
+    solicitacaoTransferenciaIngresso: Int
+    tipo: Int!
+    tipoPagamento: Int!
+    valor: Float!
+}
+
+input PostVisualizouStorieInput {
+    pessoa: Int!
+    stories: Int!
+}
+
+input PutBancoInput {
+    id: Int!
+    nome: String
+    numBanco: Float
+    site: String
+}
+
+input PutCardapioInput {
+    categoriaCardapio: Int
+    descricao: String
+    id: Int!
+    imagem: String
+    inativo: Int
+    nome: String
+    quantidade: Int
+    valor: Float
+}
+
+input PutCategoriaCardapioInput {
+    id: Int!
+    inativo: Int
+    nome: String
+}
+
+input PutCategoriaEventoInput {
+    id: Int!
+    inativo: Int
+    nome: String
+}
+
+input PutCidadeInput {
+    estado: Int!
+    id: Int!
+    nome: String!
+    nomeSem: String!
+}
+
+input PutCortesiaInput {
+    evento: Int!
+    id: Int!
+    ingresso: Int!
+    pessoaRecebe: Int!
+    quantidade: String!
+}
+
+input PutCupomDescontoInput {
+    id: Int!
+    inativo: Int
+    limite: Int
+}
+
+input PutCurtiuEventoInput {
+    evento: Int!
+    id: Int!
+    pessoa: Int!
+}
+
+input PutCurtiuStorieInput {
+    id: Int!
+    pessoa: Int!
+    stories: Int
+}
+
+input PutEquipeEventoInput {
+    evento: Int
+    id: Int!
+    pessoa: Int
+    tipo: Int
+}
+
+input PutEstadoInput {
+    id: Int!
+    nome: String
+    sigla: String
+}
+
+input PutEventoInput {
+    bairro: String
+    categoriaEvento: Int
+    cep: String
+    cidade: Int
+    comissaoCardapio: Float
+    comissaoIngresso: Float
+    complemento: String
+    data: DateTime
+    dataFim: DateTime
+    descricao: String
+    estado: Int
+    horario: String
+    id: Int!
+    imagem: String
+    inativo: Int
+    latitude: String
+    local: String
+    logradouro: String
+    longitude: String
+    mapaEvento: String
+    nome: String
+    numero: String
+    status: Int
+    vendaIngresso: Int
+}
+
+input PutEventoVisualizacaoInput {
+    evento: Int
+    id: Int!
+    pessoa: Int
+}
+
+input PutIngressoCodigoInput {
+    id: Int!
+    inativo: Int
+}
+
+input PutIngressoInput {
+    codigo: String
+    data: DateTime
+    descricao: String
+    id: Int!
+    inativo: Int
+    limite: Int
+    limitePorPessoa: Int
+    loteId: Int
+    nome: String
+    transferencia: Int
+    valor: Float
+}
+
+input PutIngressoPessoaEventoInput {
+    codigo: String
+    cortesia: Int
+    id: Int!
+    idCortesia: Int
+    solicitacaoTransferenciaIngresso: Int
+    transferencia: Int
+    transferidoEm: DateTime
+    transferidoPara: Int
+    utilizado: Int
+    validadoEm: DateTime
+    validadoPor: Int
+}
+
+input PutItemCardapioVendaInput {
+    cardapio: Int
+    codigo: String
+    evento: Int
+    id: Int!
+    pessoa: Int
+    valorEvento: Float
+    valorFastPay: Float
+    valorTotal: Float
+    valorUnitario: Float
+    venda: Int
+    vendaCardapio: Int
+}
+
+input PutLoteInput {
+    dataFim: DateTime!
+    dataInicio: DateTime!
+    id: Int!
+    inativo: Int
+    nome: String!
+}
+
+input PutPessoaCartaoInput {
+    id: Int!
+    inativo: Int
+}
+
+input PutPessoaInput {
+    backgroundImage: String
+    cpf: String
+    descricao: String
+    email: String
+    fotoPerfil: String
+    idClientePagarme: String
+    inativo: Int
+    nickname: String
+    perfilAberto: Int
+    pesId: Int!
+    pesNome: String
+    provider: String
+    telefone: String
+}
+
+input PutPessoaPagamentoInput {
+    accountCheckDigit: String
+    accountNumber: String
+    annualRevenue: Float
+    bairro: String
+    bairroRepresentante: String
+    bank: Int
+    birthdate: DateTime
+    birthdateRepresentante: DateTime
+    branchCheckDigit: String
+    branchNumber: String
+    cep: String
+    cepRepresentante: String
+    cidade: Int
+    cidadeRepresentante: Int
+    companyName: String
+    complemento: String
+    complementoRepresentante: String
+    descricao: String
+    document: String
+    documentRepresentante: String
+    email: String
+    emailRepresentante: String
+    estado: Int
+    estadoRepresentante: Int
+    evento: Int
+    holderDocument: String
+    holderName: String
+    holderType: Int
+    id: Int!
+    idPagarme: String
+    idPagarmeConta: String
+    logradouro: String
+    logradouroRepresentante: String
+    monthlyIncome: Float
+    monthlyIncomeRepresentante: Float
+    name: String
+    nameRepresentante: String
+    numero: String
+    numeroRepresentante: String
+    professionalOccupation: String
+    professionalOccupationRepresentante: String
+    telefone: String
+    tipo: Float
+    tradingName: String
+    transferEnabled: Int
+    transferInterval: Int
+    type: Int
+}
+
+input PutPreVendaCardapioInput {
+    cardapio: Int
+    evento: Int
+    id: Int!
+    preVenda: Int
+    quantidade: Int
+    valorTotal: Float
+    valorUnitario: Float
+}
+
+input PutPreVendaIngressoInput {
+    evento: Int
+    id: Int!
+    ingresso: Int
+    preVenda: Int
+    quantidade: Int
+    valorTotal: Float
+    valorUnitario: Float
+}
+
+input PutPreVendaInput {
+    evento: Int
+    id: Int!
+    inativo: Int
+    pessoa: Int
+    status: Int
+    tipo: Int
+    valor: Float
+}
+
+input PutPreVendaPessoaInput {
+    id: Int!
+    pessoaCartao: Int
+    status: Int
+}
+
+input PutSeguindoInput {
+    id: Int!
+    status: Int!
+}
+
+input PutSolicitacaoTransferenciaIngressoInput {
+    id: Int!
+    status: Int
+}
+
+input PutStorieInput {
+    arquivo: String
+    id: Int!
+    inativo: Int
+    tempo: Int
+    tipo: Int
+}
+
+input PutVendaCardapioInput {
+    cardapio: Int!
+    evento: Int!
+    id: Int!
+    pessoa: Int!
+    quantidade: Int!
+    valorEvento: Float!
+    valorFastPay: Float!
+    valorTotal: Float!
+    valorUnitario: Float!
+    venda: Int!
+}
+
+input PutVendaInput {
+    cortesia: Int
+    cupomDesconto: Int
+    id: Int!
+    idCortesia: Int
+    idPagarme: String
+    inativo: Int
+    preVenda: Int
+    qrcode: String
+    qrcodeUrl: String
+    solicitacaoTransferenciaIngresso: Int
+    status: Int
+}
+
+input PutVisualizouStorieInput {
+    id: Int!
+    pessoa: Int
+    stories: Int
+}
+
+input UpdatePasswordEquipeEventoInput {
+    evento: Int!
+    pessoa: Int!
+    senha: String!
+}
+
+input ValidarIngressoInputDto {
+    codigo: String!
+    validadoPor: Int!
+}

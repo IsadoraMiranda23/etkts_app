@@ -1,15 +1,24 @@
+import 'package:etkts_app/app_state.dart';
 import 'package:etkts_app/colors.dart';
 import 'package:etkts_app/components/buttons/button.dart';
 import 'package:etkts_app/components/cards/card_detalhe_produto_evento.component.dart';
 import 'package:etkts_app/components/cards/item_amigo.component.dart';
 import 'package:etkts_app/components/cards/item_cardapio.component.dart';
 import 'package:etkts_app/components/cards/status_detalhe_evento.component.dart';
+import 'package:etkts_app/extensions/string.extension.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:google_static_maps_controller/google_static_maps_controller.dart'
+    as stat;
+
+import '../types.dart';
 
 class DetalheEventoPage extends StatefulWidget {
   const DetalheEventoPage({super.key});
 
-  static const String routeName = '/detalhe-evento';
+  static const String routeName = '/detalhe-evento/:id';
+
+  static String goToRoute(int id) => '/detalhe-evento/$id';
 
   @override
   State<DetalheEventoPage> createState() => _DetalheEventoPageState();
@@ -19,7 +28,7 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
   bool textoExpandido = false;
   double valorTotal = 450.00;
   String abaSelecionada = "Ingressos";
-
+  final EventoHome evento = AppState.eventoSelecionado!;
   final String textoDescricao =
       "Este é um evento incrível com diversas atrações. Venha participar dessa experiência única "
       "com música ao vivo, comida deliciosa e muita diversão. O evento contará com artistas "
@@ -29,6 +38,14 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
     setState(() {
       textoExpandido = !textoExpandido;
     });
+  }
+
+  String sanitizeString(String? str) {
+    if (str == null) return "";
+    return str.replaceAll(
+      RegExp(r'<p>|</p>|<strong>|</strong>|<br>|<ul>|</ul>|<li>|</li>'),
+      '',
+    );
   }
 
   final List<Map<String, dynamic>> itensCardapio = [
@@ -81,10 +98,8 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
     switch (abaSelecionada) {
       case "Cardápio":
         return buildAbaCardapio();
-
       case "Amigos":
         return buildAbaAmigos();
-
       default: // Ingressos
         return buildAbaIngressos();
     }
@@ -103,22 +118,24 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
                   child: GridView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 16,
-                      mainAxisSpacing: 20,
-                      childAspectRatio: 0.75,
-                    ),
-                    itemCount: itensCardapio.length,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 16,
+                          mainAxisSpacing: 20,
+                          childAspectRatio: 0.75,
+                        ),
+                    itemCount: evento.cardapioDetalhes?.length ?? 0,
                     itemBuilder: (context, index) {
-                      final item = itensCardapio[index];
-                      return ItemCardapioComponent(
-                        leftSideRounded: item['leftRounded'],
-                        rightSideRounded: item['rightRounded'],
-                        nomeComida: item['nome'],
-                        descricao: item['descricao'],
-                        valor: item['valor'],
-                      );
+                      if (evento.cardapioDetalhes != null) {
+                        final item = evento.cardapioDetalhes![index];
+                        return ItemCardapioComponent(
+                          leftSideRounded: index % 2 == 0,
+                          rightSideRounded: index % 2 == 1,
+                          item: item,
+                        );
+                      }
+                      return const Center();
                     },
                   ),
                 ),
@@ -129,50 +146,52 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
         ),
 
         // CONTAINER FIXO DO TOTAL E PAGAR
-        Container(
-          width: double.infinity,
-          height: 93,
-          margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
-          padding: const EdgeInsets.all(15),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: Colors.white, width: 1.0),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+        ValueListenableBuilder(
+          valueListenable: AppState.cardapiosSelecionados,
+          builder: (context, value, child) {
+            return Container(
+              width: double.infinity,
+              height: 93,
+              margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+              padding: const EdgeInsets.all(15),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: Colors.white, width: 1.0),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                      "Total",
-                      style: TextStyle(
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "Total",
+                        style: TextStyle(color: Colors.white, fontSize: 16),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        "R\$${value.fold(0.0, (prev, element) => prev + (element.valor ?? 0.0)).toStringAsFixed(2)}",
+                        style: const TextStyle(
                           color: Colors.white,
-                          fontSize: 16
-                      )
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 4),
-                  Text(
-                    "R\$${valorTotal.toStringAsFixed(2)}",
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                    ),
+                  Button(
+                    onPressed: () {},
+                    text: "Pagar",
+                    textColor: Colors.black,
+                    backgroundColor: MyColors.verde,
+                    width: 120,
+                    height: 45,
+                    borderRadius: 12,
                   ),
                 ],
               ),
-              Button(
-                onPressed: () {},
-                text: "Pagar",
-                textColor: Colors.black,
-                backgroundColor: MyColors.verde,
-                width: 120,
-                height: 45,
-                borderRadius: 12,
-              ),
-            ],
-          ),
+            );
+          },
         ),
       ],
     );
@@ -180,20 +199,23 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
 
   Widget buildAbaAmigos() {
     return SingleChildScrollView(
-      padding: const EdgeInsets.symmetric(vertical: 20),
+      padding: const EdgeInsets.only(bottom: 20),
       child: Column(
         children: [
-           StatusDetalheEvento(),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: StatusDetalheEvento(
+              data: evento.data?.formatDateString ?? "01/01/2025",
+              hora: evento.horario?.formatTimeString ?? "00:00",
+              bairro: evento.bairro ?? "",
+            ),
+          ),
           const SizedBox(height: 20),
-
           ...List.generate(3, (index) => ItemAmigoComponent()),
-
         ],
       ),
     );
   }
-
-
 
   Widget buildAbaIngressos() {
     return Column(
@@ -203,7 +225,14 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
             padding: const EdgeInsets.only(bottom: 20),
             child: Column(
               children: [
-               StatusDetalheEvento(),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  child: StatusDetalheEvento(
+                    data: evento.data?.formatDateString ?? "01/01/2025",
+                    hora: evento.horario?.formatTimeString ?? "00:00",
+                    bairro: evento.bairro ?? "",
+                  ),
+                ),
                 const Padding(
                   padding: EdgeInsets.only(left: 24, top: 16, right: 24),
                   child: Align(
@@ -218,16 +247,30 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
                     ),
                   ),
                 ),
-
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-                  child: textoExpandido
-                      ? Text(textoDescricao, style: const TextStyle(color: Colors.white, fontSize: 14))
-                      : Text(
-                    textoDescricao,
-                    style: const TextStyle(color: Colors.white, fontSize: 14),
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
+                SizedBox(
+                  width: double.infinity,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                      vertical: 8,
+                    ),
+                    child: textoExpandido
+                        ? Text(
+                            sanitizeString(evento.descricao),
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                            ),
+                          )
+                        : Text(
+                            sanitizeString(evento.descricao),
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                            ),
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                   ),
                 ),
 
@@ -258,12 +301,17 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
                   ),
 
                 // CARDS DE INGRESSO
-                const CardDetalheEventoComponent(),
-                const SizedBox(height: 16),
-                const CardDetalheEventoComponent(),
-                const SizedBox(height: 16),
-                const CardDetalheEventoComponent(),
-                const SizedBox(height: 24),
+                ...?evento.ingressoDetalhes?.map((ingresso) {
+                  return Column(
+                    children: [
+                      CardDetalheEventoComponent(
+                        ingresso: ingresso,
+                        eventoImagem: evento.imagem,
+                      ),
+                      const SizedBox(height: 16),
+                    ],
+                  );
+                }),
 
                 // ENDEREÇO E MAPA
                 Padding(
@@ -286,9 +334,9 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
                             ),
                             const SizedBox(height: 8),
                             Text(
-                              "Avenida Principal, 1234 - Centro\nSão Paulo - SP, 01234-567",
+                              "${evento.logradouro ?? ""}, ${evento.numero ?? ""} - ${evento.bairro ?? ""}\n${evento.cidadeDetalhes?.nome ?? ""} - ${evento.estadoDetalhes?.sigla ?? ""}, ${evento.cep ?? ""}",
                               style: TextStyle(
-                                color: Colors.white.withOpacity(0.8),
+                                color: Colors.white.withAlpha(204),
                                 fontSize: 14,
                                 height: 1.4,
                               ),
@@ -296,21 +344,40 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
                           ],
                         ),
                       ),
-                      const SizedBox(width: 16),
-                      Expanded(
-                        flex: 1,
-                        child: Container(
-                          height: 100,
-                          decoration: BoxDecoration(
-                            color: MyColors.cinzaMedioEscuro,
-                            borderRadius: BorderRadius.circular(12),
-                            image: const DecorationImage(
-                              image: AssetImage("assets/images/mapa.png"),
-                              fit: BoxFit.cover,
+                      if (evento.latitude != null && evento.longitude != null)
+                        const SizedBox(width: 16),
+                      if (evento.latitude != null && evento.longitude != null)
+                        Expanded(
+                          flex: 1,
+                          child: Container(
+                            height: 100,
+                            decoration: BoxDecoration(
+                              color: MyColors.cinzaMedioEscuro,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: stat.StaticMap(
+                              googleApiKey:
+                                  'AIzaSyBnw0lpqUqMdVh7RL6HXIgdokf-dr-5-3c',
+                              height: 70,
+                              width: 70,
+                              center: stat.GeocodedLocation.latLng(
+                                double.parse(evento.latitude ?? "0"),
+                                double.parse(evento.longitude ?? "0"),
+                              ),
+                              zoom: 15,
+                              markers: [
+                                stat.Marker(
+                                  locations: [
+                                    stat.GeocodedLocation.latLng(
+                                      double.parse(evento.latitude ?? "0"),
+                                      double.parse(evento.longitude ?? "0"),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
                           ),
                         ),
-                      ),
                     ],
                   ),
                 ),
@@ -322,49 +389,52 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
         ),
 
         // CONTAINER FIXO DO TOTAL E PAGAR
-        Container(
-          width: double.infinity,
-          margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
-          padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: Colors.white, width: 1.0),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+        ValueListenableBuilder(
+          valueListenable: AppState.ingressosSelecionados,
+          builder: (context, value, child) {
+            return Container(
+              width: double.infinity,
+              height: 93,
+              margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+              padding: const EdgeInsets.all(15),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: Colors.white, width: 1.0),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                      "Total",
-                      style: TextStyle(
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "Total",
+                        style: TextStyle(color: Colors.white, fontSize: 16),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        "R\$${value.fold(0.0, (prev, element) => prev + (element.valor ?? 0.0)).toStringAsFixed(2)}",
+                        style: const TextStyle(
                           color: Colors.white,
-                          fontSize: 16
-                      )
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 4),
-                  Text(
-                    "R\$${valorTotal.toStringAsFixed(2)}",
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                    ),
+                  Button(
+                    onPressed: () {},
+                    text: "Pagar",
+                    textColor: Colors.black,
+                    backgroundColor: MyColors.verde,
+                    width: 120,
+                    height: 45,
+                    borderRadius: 12,
                   ),
                 ],
               ),
-              Button(
-                onPressed: () {},
-                text: "Pagar",
-                textColor: Colors.black,
-                backgroundColor: MyColors.verde,
-                width: 120,
-                height: 45,
-                borderRadius: 12,
-              ),
-            ],
-          ),
+            );
+          },
         ),
       ],
     );
@@ -377,7 +447,7 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
     return Container(
       width: double.infinity,
       height: 30,
-      margin: const EdgeInsets.only(right:  24, bottom: 20,top: 6,left: 24),
+      margin: const EdgeInsets.only(right: 24, bottom: 20, top: 6, left: 24),
       decoration: BoxDecoration(
         color: MyColors.cinzaMedioEscuro,
         borderRadius: BorderRadius.circular(22),
@@ -388,6 +458,8 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
           return Expanded(
             child: GestureDetector(
               onTap: () {
+                AppState.ingressosSelecionados.value = [];
+                AppState.cardapiosSelecionados.value = [];
                 setState(() {
                   abaSelecionada = aba;
                 });
@@ -395,14 +467,16 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 300),
                 decoration: BoxDecoration(
-                  color: selecionada ? MyColors.cinzaEscuro : Colors.transparent,
+                  color: selecionada
+                      ? MyColors.cinzaEscuro
+                      : Colors.transparent,
                   borderRadius: BorderRadius.circular(22),
                 ),
                 alignment: Alignment.center,
                 child: Text(
                   aba,
                   style: TextStyle(
-                    color: selecionada ? MyColors.verde: Colors.white,
+                    color: selecionada ? MyColors.verde : Colors.white,
                     fontWeight: FontWeight.bold,
                     fontSize: 14,
                   ),
@@ -426,7 +500,12 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
           padding: const EdgeInsets.only(left: 8.0),
           child: IconButton(
             icon: Image.asset("assets/icons/voltarBranco.png"),
-            onPressed: () => Navigator.of(context).pop(),
+            onPressed: () {
+              AppState.eventoSelecionado = null;
+              AppState.ingressosSelecionados.value = [];
+              AppState.cardapiosSelecionados.value = [];
+              context.pop();
+            },
           ),
         ),
         actions: [
@@ -455,7 +534,7 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
               ),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.4),
+                  color: Colors.black.withAlpha(102),
                   blurRadius: 12,
                   offset: const Offset(0, 6),
                 ),
@@ -466,20 +545,35 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
                 topLeft: Radius.circular(32),
                 bottomRight: Radius.circular(32),
               ),
-              child: Image.asset(
-                  "assets/images/imageEvent2.png",
-                  fit: BoxFit.cover
+              child: Container(
+                decoration: BoxDecoration(
+                  image:
+                      evento.imagem != null &&
+                          evento.imagem!.isNotEmpty &&
+                          evento.imagem!.startsWith("http")
+                      ? DecorationImage(
+                          image: NetworkImage(evento.imagem!),
+                          fit: BoxFit.cover,
+                        )
+                      : null,
+                  color: MyColors.cinza,
+                ),
               ),
             ),
           ),
 
           Padding(
-            padding: const EdgeInsets.only(top: 10,right: 24,left: 24,bottom: 2),
+            padding: const EdgeInsets.only(
+              top: 10,
+              right: 24,
+              left: 24,
+              bottom: 2,
+            ),
             child: Row(
               children: [
-                const Expanded(
+                Expanded(
                   child: Text(
-                    "Titulo",
+                    evento.nome!,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 24,
@@ -487,22 +581,14 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
                     ),
                   ),
                 ),
-                Image.asset(
-                  "assets/icons/icon3d.png",
-                  width: 32,
-                  height: 32,
-                ),
+                Image.asset("assets/icons/icon3d.png", width: 32, height: 32),
               ],
             ),
           ),
-
           // MENU DE ABAS
           buildMenuAbas(),
-
           // CONTEÚDO DA ABA
-          Expanded(
-            child: buildConteudoAba(),
-          ),
+          Expanded(child: buildConteudoAba()),
         ],
       ),
     );

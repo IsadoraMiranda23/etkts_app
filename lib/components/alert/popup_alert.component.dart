@@ -48,7 +48,7 @@ class _PopupAlertComponentState extends State<PopupAlertComponent> {
         borderRadius: getBorderRadius(), // Todas as bordas arredondadas
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.5),
+            color: Colors.black.withAlpha(128),
             blurRadius: 15.0,
             offset: const Offset(0, 4),
           )

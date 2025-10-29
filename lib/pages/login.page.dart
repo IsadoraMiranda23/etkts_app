@@ -1,6 +1,6 @@
 import 'package:etkts_app/components/buttons/button.dart';
 import 'package:etkts_app/pages/esqueceu_senha.page.dart';
-import 'package:etkts_app/pages/evento.page.dart';
+import 'package:etkts_app/pages/home.page.dart';
 import 'package:etkts_app/services/snackbar.service.dart';
 import 'package:flutter/material.dart';
 
@@ -189,7 +189,7 @@ class _LoginPageState extends State<LoginPage> {
                           SizedBox(
                             child: Button(
                               onPressed: () {
-                                context.pushReplacement(EventoPage.routeName);
+                                context.pushReplacement(HomePage.routeName);
                               },
                               text: 'Entrar',
                               borderRadius: 18,

@@ -12,7 +12,6 @@ class RodapeNavigation extends StatelessWidget {
     required this.onTap,
   });
 
-
   final List<Map<String, String>> navigationItems = const [
     {'icon': 'assets/icons/homeBottom.png', 'label': 'Home'},
     {'icon': 'assets/icons/friendsBottom.png', 'label': 'Amigos'},
@@ -21,26 +20,16 @@ class RodapeNavigation extends StatelessWidget {
     {'icon': 'assets/icons/perfil.png', 'label': 'Perfil'},
   ];
 
-
   Color getIconColor(int index) {
     return currentIndex == index ? MyColors.verde : Colors.grey;
   }
 
-
   Widget _buildNavigationIcon(int index, String assetPath) {
     return ColorFiltered(
-      colorFilter: ColorFilter.mode(
-        getIconColor(index),
-        BlendMode.srcIn,
-      ),
-      child: Image.asset(
-        assetPath,
-        width: 24,
-        height: 24,
-      ),
+      colorFilter: ColorFilter.mode(getIconColor(index), BlendMode.srcIn),
+      child: Image.asset(assetPath, width: 24, height: 24),
     );
   }
-
 
   List<BottomNavigationBarItem> buildNavigationItems() {
     return List.generate(navigationItems.length, (index) {
@@ -72,7 +61,9 @@ class RodapeNavigation extends StatelessWidget {
             BlendMode.srcOver,
           ),
           child: Container(
-            height: kBottomNavigationBarHeight + MediaQuery.of(context).padding.bottom,
+            height:
+                kBottomNavigationBarHeight +
+                MediaQuery.of(context).padding.bottom + 6,
             decoration: BoxDecoration(
               color: MyColors.preto.withValues(alpha: 0.6),
               border: Border(

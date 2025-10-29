@@ -1,0 +1,15 @@
+schema: ./lib/graphql/schema.graphql
+documents: ./lib/graphql/**/*.graphql
+
+extensions:
+  endpoints:
+    local:
+      url: http://localhost:3000/graphql
+      headers:
+        Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjE4OCwicGVyZmlzIjpbMTAsMTFdLCJpYXQiOjE3NTIwMDUwNTgsImV4cCI6MTc4MzU2MjY1OH0.lCv2qnFxVpV7MadyxN18LnkLIQYLE0H_ok5BGI2lUbE
+    dev:
+      url: https://backend-nestjs-dev.redcoast-df8052c2.brazilsouth.azurecontainerapps.io/graphql
+      headers:
+        Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjE4OCwicGVyZmlzIjpbMTAsMTFdLCJpYXQiOjE3NTIwMDUwNTgsImV4cCI6MTc4MzU2MjY1OH0.lCv2qnFxVpV7MadyxN18LnkLIQYLE0H_ok5BGI2lUbE
+    default:
+      url: https://api.letson.app/graphql

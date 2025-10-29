@@ -1,4 +1,4 @@
-import 'package:etkts_app/pages/login.page.dart';
+import 'package:etkts_app/pages/pages.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -22,7 +22,7 @@ class _LoadingPageState extends State<LoadingPage> {
   void init(Duration _) async {
     await Future.delayed(const Duration(seconds: 3));
     if (!mounted) return;
-    context.push(LoginPage.routeName);
+    context.push(HomePage.routeName);
   }
 
   @override

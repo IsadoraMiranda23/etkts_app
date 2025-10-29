@@ -1,0 +1,5 @@
+{
+  "name": "local",
+  "baseUrl": "http://192.168.0.5:3000",
+  "baseUrlGraphQl": "http://192.168.0.5:3000/graphql"
+}

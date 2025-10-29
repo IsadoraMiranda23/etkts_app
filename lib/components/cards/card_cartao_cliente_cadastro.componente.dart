@@ -1,5 +1,3 @@
-import 'package:etkts_app/components/buttons/button.dart';
-import 'package:etkts_app/colors.dart';
 import 'package:flutter/material.dart';
 
 class CartaoClienteCadastro extends StatefulWidget {

@@ -1,0 +1,12 @@
+targets:
+  $default:
+    builders:
+      graphql_codegen:
+        options:
+          clients:
+            - graphql
+          scopes:
+            - lib/graphql/**
+          disableCopyWithGeneration: true
+          allowMissingNullableKeysInFromJson: false
+          addTypename: false

@@ -26,9 +26,9 @@ final router = GoRouter(
           NoTransitionPage(child: EsqueceuSenhaPage()),
     ),
     GoRoute(
-      path: EventoPage.routeName,
-      name: EventoPage.routeName,
-      pageBuilder: (context, state) => NoTransitionPage(child: EventoPage()),
+      path: HomePage.routeName,
+      name: HomePage.routeName,
+      pageBuilder: (context, state) => NoTransitionPage(child: HomePage()),
     ),
     GoRoute(
       path: LoadingPage.routeName,

@@ -1,61 +1,69 @@
-import 'package:etkts_app/services/snackbar.service.dart';
+import 'package:etkts_app/app_state.dart';
+import 'package:etkts_app/extensions/string.extension.dart';
+import 'package:etkts_app/types.dart';
 import 'package:flutter/material.dart';
 import 'package:etkts_app/colors.dart';
 import 'package:etkts_app/pages/detalhe_evento.page.dart'; // Importe a página
 import 'package:go_router/go_router.dart'; // Importe o go_router
 
-class CardEventoComponente extends StatefulWidget {
+class CardEventoComponente extends StatelessWidget {
   final bool leftSideRounded;
   final bool rightSideRounded;
   final int numeroComprados;
+  final EventoHome evento;
 
   const CardEventoComponente({
     super.key,
     this.leftSideRounded = true,
     this.rightSideRounded = true,
     this.numeroComprados = 0,
+    required this.evento,
   });
 
-  @override
-  State<CardEventoComponente> createState() => _CardEventoComponenteState();
-}
-
-class _CardEventoComponenteState extends State<CardEventoComponente> {
   BorderRadius getBorderRadius() {
     return BorderRadius.only(
-      bottomLeft: widget.leftSideRounded
-          ? const Radius.circular(25)
-          : Radius.circular(25),
-      bottomRight: widget.rightSideRounded
-          ? const Radius.circular(25)
-          : Radius.circular(25),
-      topLeft: widget.leftSideRounded ? const Radius.circular(25) : Radius.zero,
-      topRight: widget.rightSideRounded
-          ? const Radius.circular(25)
-          : Radius.zero,
+      bottomLeft: leftSideRounded ? const Radius.circular(25) : Radius.zero,
+      bottomRight: rightSideRounded ? const Radius.circular(25) : Radius.zero,
+      topLeft: rightSideRounded ? const Radius.circular(25) : Radius.zero,
+      topRight: leftSideRounded ? const Radius.circular(25) : Radius.zero,
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: () {
-        context.go(DetalheEventoPage.routeName);
+        AppState.eventoSelecionado = evento;
+        context.push(DetalheEventoPage.goToRoute(evento.id!));
       },
       child: Column(
         children: [
           Container(
-            width: 155,
+            width: 160,
             height: 133,
             decoration: BoxDecoration(
-              color: Colors.black,
+              image:
+                  evento.imagem != null &&
+                      evento.imagem!.isNotEmpty &&
+                      evento.imagem!.startsWith("http")
+                  ? DecorationImage(
+                      image: NetworkImage(evento.imagem!),
+                      fit: BoxFit.cover,
+                    )
+                  : null,
+              color: MyColors.cinza,
               borderRadius: getBorderRadius(),
             ),
-            child: Image.asset(
-              'assets/images/imageEvent.png',
-              width: 160,
-              height: 133,
-            ),
+            // child: evento.imagem != null && evento.imagem!.isNotEmpty && evento.imagem!.startsWith("http") ? Image.network(
+            //   evento.imagem!,
+            //   width: 160,
+            //   height: 133,
+            //   fit: BoxFit.cover,
+            // ) : Container(
+            //   width: 160,
+            //   height: 133,
+            //   color: MyColors.cinza,
+            // ),
           ),
 
           Center(
@@ -83,7 +91,7 @@ class _CardEventoComponenteState extends State<CardEventoComponente> {
                           child: SizedBox(
                             width: 120 - 12 - 8,
                             child: Text(
-                              "Nome do Evento",
+                              evento.nome!,
                               style: TextStyle(
                                 fontSize: 12,
                                 color: Colors.white,
@@ -114,7 +122,7 @@ class _CardEventoComponenteState extends State<CardEventoComponente> {
                                   left: 4,
                                 ),
                                 child: Text(
-                                  "dd/mm/aa",
+                                  evento.data!.formatDateString,
                                   style: TextStyle(
                                     fontSize: 11,
                                     color: Colors.white,
@@ -150,8 +158,11 @@ class _CardEventoComponenteState extends State<CardEventoComponente> {
                             color: MyColors.verde,
                           ),
                           Text(
-                            widget.numeroComprados.toString(),
-                            style: TextStyle(fontSize: 12, color: MyColors.verde),
+                            numeroComprados.toString(),
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: MyColors.verde,
+                            ),
                           ),
                         ],
                       ),
