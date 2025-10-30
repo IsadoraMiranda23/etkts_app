@@ -23,7 +23,7 @@ class ItemCardapioComponent extends StatefulWidget {
 class _ItemCardapioComponentState extends State<ItemCardapioComponent> {
   int quantidade = 0;
 
-  void _incrementarQuantidade() {
+  void incrementarQuantidade() {
     setState(() {
       quantidade++;
     });
@@ -71,7 +71,7 @@ class _ItemCardapioComponentState extends State<ItemCardapioComponent> {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => DetalhePratoPage()),
+                MaterialPageRoute(builder: (context) => DetalhePratoPage(item: widget.item,)),
               );
             },
             child: Container(
@@ -183,7 +183,7 @@ class _ItemCardapioComponentState extends State<ItemCardapioComponent> {
                           ),
                           // BOTÃO AUMENTAR
                           InkWell(
-                            onTap: _incrementarQuantidade,
+                            onTap: incrementarQuantidade,
                             borderRadius: BorderRadius.circular(15),
                             child: Container(
                               width: 24,
