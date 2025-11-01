@@ -1,9 +1,12 @@
+import 'package:etkts_app/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ItemAmigoComponent extends StatefulWidget {
   final String usuario;
+  final String foto;
 
-  const ItemAmigoComponent({super.key, this.usuario = "Nome do Usuario"});
+  const ItemAmigoComponent({super.key, this.usuario = "Nome do Usuario", required this.foto});
 
   @override
   State<ItemAmigoComponent> createState() => _ItemAmigoComponentState();
@@ -12,27 +15,23 @@ class ItemAmigoComponent extends StatefulWidget {
 class _ItemAmigoComponentState extends State<ItemAmigoComponent> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
-      child: Row(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: CircleAvatar(maxRadius: 30),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              widget.usuario,
-              style: TextStyle(color: Colors.white, fontSize: 14),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(right: 8.0, left: 100),
-            child: Image.asset("assets/icons/okVerdeCardapio.png"),
-          ),
-        ],
-      ),
+    return Row(
+      children: [
+        CircleAvatar(
+            radius: 20,
+          backgroundImage: AssetImage("assets/images/${widget.foto}"),
+        ),
+        SizedBox(width: 15.w),
+        Text(
+          widget.usuario,
+          style: TextStyle(color: Colors.white, fontSize: 13.sp),
+        ),
+        Spacer(),
+        Padding(
+          padding: EdgeInsets.only(right: 50.w,),
+          child: Icon(Icons.check, color: MyColors.verde, size: 20, fontWeight: FontWeight.bold),
+        ),
+      ],
     );
   }
 }

@@ -13,6 +13,7 @@ class HomeService {
           variables: Variables$Query$MobileGetHome(limit: 5),
         ),
       );
+      log(response.data.toString());
       if (response.hasException) {
         return Result.fromGqlErrors(response.exception?.graphqlErrors ?? []);
       }

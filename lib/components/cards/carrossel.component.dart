@@ -5,6 +5,7 @@ import 'package:etkts_app/types.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 class CarrosselComponent extends StatefulWidget {
@@ -46,9 +47,7 @@ class _CarrosselComponentState extends State<CarrosselComponent> {
                 context.push(DetalheEventoPage.goToRoute(evento.id!));
               },
               child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 2.0),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8.0),
                   image: DecorationImage(
                     image: NetworkImage(evento.imagem!),
                     fit: BoxFit.cover,
@@ -58,15 +57,13 @@ class _CarrosselComponentState extends State<CarrosselComponent> {
             );
           }).toList(),
           options: CarouselOptions(
-            height: 387.0,
+            height: double.infinity,
             autoPlay: true,
             viewportFraction: 1.0,
             enableInfiniteScroll: true,
             autoPlayInterval: const Duration(seconds: 10),
             autoPlayAnimationDuration: const Duration(milliseconds: 500),
             autoPlayCurve: Curves.easeInOut,
-            enlargeCenterPage: false,
-            enlargeFactor: 0.0,
             scrollPhysics: const PageScrollPhysics(),
             scrollDirection: Axis.horizontal,
             onPageChanged: (index, reason) {
@@ -77,11 +74,10 @@ class _CarrosselComponentState extends State<CarrosselComponent> {
           ),
         ),
         Positioned(
-          bottom: 52,
+          top: 205.h,
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             decoration: BoxDecoration(
-
               borderRadius: BorderRadius.circular(20),
             ),
             child: DotsIndicator(

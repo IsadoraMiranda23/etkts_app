@@ -2,6 +2,7 @@ import 'package:etkts_app/app_state.dart';
 import 'package:etkts_app/colors.dart';
 import 'package:etkts_app/types.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CardDetalheEventoComponent extends StatefulWidget {
   const CardDetalheEventoComponent({
@@ -44,29 +45,28 @@ class _CardDetalheEventoComponentState
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 372,
-      height: 85,
-      decoration: BoxDecoration(
-        color: MyColors.cinzaEscuro,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(30),
-          topRight: Radius.zero,
-          bottomLeft: Radius.circular(30),
-          bottomRight: Radius.zero,
+    return IntrinsicHeight(
+      child: Container(
+        decoration: BoxDecoration(
+          color: MyColors.cinzaEscuro,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(30),
+            bottomLeft: Radius.circular(30),
+            topRight: Radius.circular(11.r),
+            bottomRight: Radius.circular(11.r),
+          ),
         ),
-      ),
-      child: Row(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30),
-              bottomLeft: Radius.circular(30),
-            ),
-            child: Container(
-              width: 120,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: 100.w,
               height: 85,
               decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(30),
+                  bottomLeft: Radius.circular(30),
+                ),
                 image:
                     widget.eventoImagem != null &&
                         widget.eventoImagem!.isNotEmpty &&
@@ -79,10 +79,8 @@ class _CardDetalheEventoComponentState
                 color: MyColors.cinza,
               ),
             ),
-          ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(left: 12.0),
+            SizedBox(width: 15.w),
+            Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -94,56 +92,55 @@ class _CardDetalheEventoComponentState
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 16,
+                      fontSize: 13.sp,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   SizedBox(height: 4),
                   Text(
                     "R\$ ${widget.ingresso.valor?.toStringAsFixed(2) ?? 0.00}",
-                    style: TextStyle(color: Colors.white, fontSize: 14),
+                    style: TextStyle(color: Colors.white, fontSize: 11.sp),
                   ),
                 ],
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(right: 10.0),
-            child: Container(
-              width: 110,
-              height: 31,
-              decoration: BoxDecoration(
-                color: MyColors.cinza,
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  IconButton(
-                    onPressed: diminuirQuantidade,
-                    icon: Icon(Icons.remove, color: Colors.white, size: 16),
-                    padding: EdgeInsets.zero,
-                    constraints: BoxConstraints(minWidth: 24, minHeight: 24),
-                  ),
-                  Text(
-                    quantidade.toString(),
-                    style: TextStyle(
-                      color: MyColors.verde,
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
+            Center(
+              child: Container(
+                height: 31.h,
+                decoration: BoxDecoration(
+                  color: MyColors.cinza,
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    IconButton(
+                      onPressed: diminuirQuantidade,
+                      icon: Icon(Icons.remove, color: Colors.white, size: 16),
+                      padding: EdgeInsets.zero,
+                      constraints: BoxConstraints(minWidth: 24, minHeight: 24),
                     ),
-                  ),
-                  IconButton(
-                    onPressed: aumentarQuantidade,
-                    icon: Icon(Icons.add, color: Colors.white, size: 16),
-                    padding: EdgeInsets.zero,
-                    constraints: BoxConstraints(minWidth: 24, minHeight: 24),
-                  ),
-                ],
+                    Text(
+                      quantidade.toString(),
+                      style: TextStyle(
+                        color: MyColors.verde,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: aumentarQuantidade,
+                      icon: Icon(Icons.add, color: Colors.white, size: 16),
+                      padding: EdgeInsets.zero,
+                      constraints: BoxConstraints(minWidth: 24, minHeight: 24),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+            SizedBox(width: 20.w),
+          ],
+        ),
       ),
     );
   }

@@ -40,7 +40,7 @@ class CardEventoComponente extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            height: 133,
+            height: 140,
             decoration: BoxDecoration(
               image:
                   evento.imagem != null &&
@@ -91,7 +91,7 @@ class CardEventoComponente extends StatelessWidget {
                             Icon(
                               Icons.calendar_today,
                               size: 14,
-                              color: MyColors.verde,
+                              color: Colors.white,
                             ),
                             Padding(
                               padding: const EdgeInsets.only(top: 2.0, left: 4),
@@ -111,10 +111,10 @@ class CardEventoComponente extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    Icon(Icons.person_outline, size: 18, color: MyColors.verde),
+                    Icon(Icons.person_outline, size: 18, color: Colors.white),
                     Text(
                       numeroComprados.toString(),
-                      style: TextStyle(fontSize: 12, color: MyColors.verde),
+                      style: TextStyle(fontSize: 12, color: Colors.white),
                     ),
                   ],
                 ),
