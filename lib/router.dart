@@ -2,6 +2,7 @@
 import 'package:etkts_app/pages/detalhe_evento.page.dart';
 
 import 'package:etkts_app/pages/pages.dart';
+import 'package:etkts_app/types.dart';
 import 'package:go_router/go_router.dart';
 
 import 'app_state.dart';

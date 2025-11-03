@@ -3,6 +3,7 @@ import 'package:etkts_app/colors.dart';
 import 'package:etkts_app/pages/detalhe_prato.page.dart';
 import 'package:etkts_app/types.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ItemCardapioComponent extends StatefulWidget {
   final bool leftSideRounded;
@@ -143,11 +144,11 @@ class _ItemCardapioComponentState extends State<ItemCardapioComponent> {
                   children: [
                     const SizedBox(width: 4),
                     Container(
-                      width: 100,
-                      height: 28,
+                      width: 100.w,
+                      height: 28.h,
                       decoration: BoxDecoration(
                         color: MyColors.cinzaMedioEscuro,
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius: BorderRadius.circular(20.r),
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,

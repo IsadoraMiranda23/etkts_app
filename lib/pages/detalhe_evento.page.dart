@@ -1,5 +1,6 @@
 import 'package:etkts_app/app_state.dart';
 import 'package:etkts_app/colors.dart';
+import 'package:etkts_app/components/app_bar.component.dart';
 import 'package:etkts_app/components/buttons/button.dart';
 import 'package:etkts_app/components/cards/card_detalhe_produto_evento.component.dart';
 import 'package:etkts_app/components/cards/item_amigo.component.dart';
@@ -492,33 +493,7 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        elevation: 0,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 8.0),
-          child: IconButton(
-            icon: Image.asset("assets/icons/voltarBranco.png"),
-            onPressed: () {
-              AppState.eventoSelecionado = null;
-              AppState.ingressosSelecionados.value = [];
-              AppState.cardapiosSelecionados.value = [];
-              context.pop();
-            },
-          ),
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 8.0),
-            child: IconButton(
-              icon: Image.asset("assets/icons/carrinhoBranco.png"),
-              onPressed: () {
-                // Ação do carrinho
-              },
-            ),
-          ),
-        ],
-      ),
+      appBar: AppBarComponent(),
       body: Column(
         children: [
           // IMAGEM DO EVENTO

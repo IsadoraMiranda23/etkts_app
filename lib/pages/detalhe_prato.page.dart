@@ -1,4 +1,5 @@
 import 'package:etkts_app/colors.dart';
+import 'package:etkts_app/components/app_bar.component.dart';
 import 'package:etkts_app/components/buttons/button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -58,27 +59,7 @@ class _DetalhePratoPageState extends State<DetalhePratoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 8.0),
-          child: IconButton(
-            icon: Image.asset("assets/icons/voltarBranco.png"),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 8.0),
-            child: IconButton(
-              icon: Image.asset("assets/icons/carrinhoBranco.png"),
-              onPressed: () {
-                // Ação do carrinho
-              },
-            ),
-          ),
-        ],
-      ),
+      appBar: AppBarComponent(),
       body: Column(
         children: [
           Padding(
