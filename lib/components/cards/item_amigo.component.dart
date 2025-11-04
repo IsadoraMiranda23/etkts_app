@@ -30,7 +30,7 @@ class _ItemAmigoComponentState extends State<ItemAmigoComponent> {
         Spacer(),
         Padding(
           padding: EdgeInsets.only(right: 42.w,),
-          child: Icon(Icons.check, color: MyColors.verde, size: 20, fontWeight: FontWeight.bold),
+          child: Icon(Icons.check, color: MyColors.verde, size: 20),
         ),
       ],
     );
