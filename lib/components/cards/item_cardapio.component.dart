@@ -26,6 +26,12 @@ class ItemCardapioComponent extends StatefulWidget {
 class _ItemCardapioComponentState extends State<ItemCardapioComponent> {
   int quantidade = 0;
 
+  @override
+  void initState() {
+    super.initState();
+    quantidade = AppState.cardapiosSelecionados.value.where((element) => widget.item.id == element.id).length;
+  }
+
   void incrementarQuantidade() {
     setState(() {
       quantidade++;
@@ -168,11 +174,17 @@ class _ItemCardapioComponentState extends State<ItemCardapioComponent> {
                         ),
                       ),
                       // QUANTIDADE
-                      Text(
-                        quantidade.toString(),
-                        style: MyTypography.poppinsSemiBold13.copyWith(
-                          color: quantidade > 0 ? MyColors.verde : Colors.white
-                        ),
+                      ValueListenableBuilder(
+                        valueListenable: AppState.cardapiosSelecionados,
+                        builder: (context, value, child) {
+                          final q = value.where((element) => element.id == widget.item.id).length;
+                          return Text(
+                            q.toString(),
+                            style: MyTypography.poppinsSemiBold13.copyWith(
+                              color: q > 0 ? MyColors.verde : Colors.white
+                            ),
+                          );
+                        }
                       ),
                       // BOTÃO AUMENTAR
                       InkWell(

@@ -1,3 +1,5 @@
+import 'package:etkts_app/app_state.dart';
+import 'package:etkts_app/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -39,11 +41,20 @@ class EventAppCarComponent extends StatelessWidget
                   context.pop();
                 }
               },
-              child: SvgPicture.asset(
-                'assets/icons/shopping_cart.svg',
-                height: 22.h,
-                width: 22.w,
-                colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
+              child: ValueListenableBuilder(
+                valueListenable: AppState.cardapiosSelecionados,
+                builder: (context, value, child) {
+                  return Badge(
+                    label: Text(value.length.toString()),
+                    backgroundColor: MyColors.roxo,
+                    child: SvgPicture.asset(
+                      'assets/icons/shopping_cart.svg',
+                      height: 22.h,
+                      width: 22.w,
+                      colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                    ),
+                  );
+                }
               ),
             ),
           ],

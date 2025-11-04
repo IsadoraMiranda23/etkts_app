@@ -1,5 +1,4 @@
 import 'package:etkts_app/colors.dart';
-import 'package:etkts_app/components/buttons/button.dart';
 import 'package:etkts_app/components/event_appbar.component.dart';
 import 'package:etkts_app/typography.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +27,7 @@ class _DetalhePratoPageState extends State<DetalhePratoPage> {
   void initState() {
     super.initState();
     item = AppState.cardapioSelecionado;
+    quantidade = AppState.cardapiosSelecionados.value.where((element) => element.id == item.id).length;
   }
 
   double get valorTotal {
@@ -39,9 +39,7 @@ class _DetalhePratoPageState extends State<DetalhePratoPage> {
       quantidade++;
     });
     final cardapios = [...AppState.cardapiosSelecionados.value];
-    for (int i = 0; i < quantidade; i++) {
-      cardapios.add(item);
-    }
+    cardapios.add(item);
     AppState.cardapiosSelecionados.value = cardapios;
   }
 

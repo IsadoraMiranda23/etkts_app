@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:etkts_app/app_state.dart';
 import 'package:etkts_app/colors.dart';
 import 'package:etkts_app/components/cards/card_detalhe_produto_evento.component.dart';
@@ -28,7 +29,7 @@ class DetalheEventoPage extends StatefulWidget {
 
 class _DetalheEventoPageState extends State<DetalheEventoPage> {
   bool textoExpandido = false;
-  String abaSelecionada = "Ingressos";
+  int abaSelecionada = 0;
   final EventoHome evento = AppState.eventoSelecionado!;
   Map<int, List<CardapioHome>> mapaCardapios = {};
   List<String> names = ['Marcio Raimo', 'Isadora Miranda'];
@@ -38,6 +39,8 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
   ScrollController scrollIngresso = ScrollController();
   ScrollController scrollCardapio = ScrollController();
   ScrollController scrollAmigos = ScrollController();
+  CarouselController controller = CarouselController(initialItem: 0);
+  CarouselSliderController controller2 = CarouselSliderController();
 
   @override
   void initState() {
@@ -55,6 +58,15 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
       }
       categoriaSelecionada = mapaCardapios.keys.first;
     }
+    controller.addListener(() {
+      print("opa");
+    });
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 
   void alternarExpansaoTexto() {
@@ -71,18 +83,6 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
     );
   }
 
-  // CONTEÚDO DA ABA SELECIONADA
-  Widget buildConteudoAba() {
-    switch (abaSelecionada) {
-      case "Cardápio":
-        return buildAbaCardapio();
-      case "Amigos":
-        return buildAbaAmigos();
-      default: // Ingressos
-        return buildAbaIngressos();
-    }
-  }
-
   List<Widget> renderCardapio() {
     var ret = <Widget>[];
     assert(mapaCardapios[categoriaSelecionada] != null, "Categoria não existe");
@@ -96,7 +96,7 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
         Padding(
           padding: EdgeInsets.only(bottom: 22.h),
           child: SizedBox(
-            width: (MediaQuery.of(context).size.width/2)-35.w,
+            width: (MediaQuery.of(context).size.width / 2) - 35.w,
             child: ItemCardapioComponent(
               leftSideRounded: index % 2 == 0,
               rightSideRounded: index % 2 == 1,
@@ -272,12 +272,9 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
           ),
         ),
         Positioned(
-          width: MediaQuery.of(context).size.width-22.w,
+          width: MediaQuery.of(context).size.width - 22.w,
           bottom: 0,
-          child: RodapeNavigation(
-            currentIndex: currentIndex,
-            onTap: (_) {}
-          ),
+          child: RodapeNavigation(currentIndex: currentIndex, onTap: (_) {}),
         ),
       ],
     );
@@ -475,7 +472,6 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
     final ret = <Widget>[];
 
     for (var index = 0; index < abas.length; index++) {
-      final aba = abas[index];
       ret.add(
         Expanded(
           child: GestureDetector(
@@ -483,22 +479,23 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
               AppState.ingressosSelecionados.value = [];
               AppState.cardapiosSelecionados.value = [];
               setState(() {
-                abaSelecionada = aba;
+                abaSelecionada = index;
               });
+              controller2.animateToPage(index);
             },
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 300),
               decoration: BoxDecoration(
-                color: abaSelecionada == aba
+                color: abaSelecionada == index
                     ? Colors.black
                     : Colors.transparent,
                 borderRadius: BorderRadius.circular(22),
               ),
               alignment: Alignment.center,
               child: Text(
-                aba,
+                abas[index],
                 style: TextStyle(
-                  color: abaSelecionada == aba ? MyColors.verde : Colors.white,
+                  color: abaSelecionada == index ? MyColors.verde : Colors.white,
                   fontWeight: FontWeight.bold,
                   fontSize: 14,
                 ),
@@ -574,7 +571,6 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
                       child: Text("3D", style: MyTypography.poppinsRegular11),
                     ),
                   ),
-                  // Image.asset("assets/icons/icon3d.png", width: 32, height: 32),
                 ],
               ),
               SizedBox(height: 16.h),
@@ -582,7 +578,30 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
               buildMenuAbas(),
               SizedBox(height: 25.h),
               // CONTEÚDO DA ABA
-              Expanded(child: buildConteudoAba()),
+              Expanded(
+                child: CarouselSlider(
+                  carouselController: controller2,
+                  items: [
+                    buildAbaIngressos(),
+                    buildAbaCardapio(),
+                    buildAbaAmigos(),
+                  ],
+                  options: CarouselOptions(
+                    disableCenter: true,
+                    enlargeCenterPage: false,
+                    viewportFraction: 1,
+                    initialPage: 0,
+                    enableInfiniteScroll: false,
+                    pageSnapping: true,
+                    scrollDirection: Axis.horizontal,
+                    onPageChanged: (index, reason) {
+                      setState(() {
+                        abaSelecionada = index;
+                      });
+                    },
+                  ),
+                ),
+              ),
             ],
           ),
         ),
