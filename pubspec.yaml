@@ -1,7 +1,7 @@
 name: etkts_app
 description:
 
-version: 1.0.1+25103001
+version: 1.0.2+25110401
 
 environment:
   sdk: ^3.8.1

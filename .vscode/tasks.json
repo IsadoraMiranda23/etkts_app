@@ -1,0 +1,25 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build release dev appbundle",
+            "type": "shell",
+            "command": "flutter build appbundle --release --dart-define-from-file=envs/developer.json",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "build release dev ipa",
+            "type": "shell",
+            "command": "flutter build ipa --release --dart-define-from-file=envs/developer.json",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+    ]
+}

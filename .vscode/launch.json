@@ -5,28 +5,28 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "debug local",
+            "name": "run debug local",
             "type": "dart",
             "request": "launch",
             "program": "lib/main.dart",
             "args": ["--dart-define-from-file=envs/local.json"],
         },
         {
-            "name": "debug dev",
+            "name": "run debug dev",
             "type": "dart",
             "request": "launch",
             "program": "lib/main.dart",
             "args": ["--dart-define-from-file=envs/developer.json"]
         },
         {
-            "name": "release local",
+            "name": "run release local",
             "type": "dart",
             "request": "launch",
             "program": "lib/main.dart",
             "args": ["--release --dart-define-from-file=envs/local.json"]
         },
         {
-            "name": "release dev",
+            "name": "run release dev",
             "type": "dart",
             "request": "launch",
             "program": "lib/main.dart",
