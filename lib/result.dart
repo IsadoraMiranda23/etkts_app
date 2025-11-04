@@ -5,11 +5,11 @@ class Result<V> {
   Exception? error;
 
   Result.success(V this.value) {
-    this.error = null;
+    error = null;
   }
 
   Result.error(Exception this.error) {
-    this.value = null;
+    value = null;
   }
 
   Result.fromGqlErrors(List<GraphQLError> errors) {
@@ -18,9 +18,9 @@ class Result<V> {
       for (var error in errors) {
         err.add(error.message);
       }
-      this.error = Exception(err.join('\n'));
+      error = Exception(err.join('\n'));
     } else {
-      this.error = Exception('Erro desconhecido');
+      error = Exception('Erro desconhecido');
     }
   }
 }

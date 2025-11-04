@@ -4,10 +4,12 @@ import 'package:etkts_app/components/cards/card_detalhe_produto_evento.component
 import 'package:etkts_app/components/cards/item_amigo.component.dart';
 import 'package:etkts_app/components/cards/item_cardapio.component.dart';
 import 'package:etkts_app/components/cards/status_detalhe_evento.component.dart';
+import 'package:etkts_app/components/event_appbar.component.dart';
+import 'package:etkts_app/components/rodape/rodape_navigation.component.dart';
 import 'package:etkts_app/extensions/string.extension.dart';
+import 'package:etkts_app/typography.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 import 'package:google_static_maps_controller/google_static_maps_controller.dart'
     as stat;
 
@@ -26,13 +28,16 @@ class DetalheEventoPage extends StatefulWidget {
 
 class _DetalheEventoPageState extends State<DetalheEventoPage> {
   bool textoExpandido = false;
-  double valorTotal = 450.00;
   String abaSelecionada = "Ingressos";
   final EventoHome evento = AppState.eventoSelecionado!;
   Map<int, List<CardapioHome>> mapaCardapios = {};
   List<String> names = ['Marcio Raimo', 'Isadora Miranda'];
   List<String> fotos = ['homem.jpg', 'mulher.jpg'];
   int categoriaSelecionada = 0;
+  int currentIndex = 5;
+  ScrollController scrollIngresso = ScrollController();
+  ScrollController scrollCardapio = ScrollController();
+  ScrollController scrollAmigos = ScrollController();
 
   @override
   void initState() {
@@ -78,6 +83,33 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
     }
   }
 
+  List<Widget> renderCardapio() {
+    var ret = <Widget>[];
+    assert(mapaCardapios[categoriaSelecionada] != null, "Categoria não existe");
+    for (
+      var index = 0;
+      index < mapaCardapios[categoriaSelecionada]!.length;
+      index++
+    ) {
+      final item = mapaCardapios[categoriaSelecionada]![index];
+      ret.add(
+        Padding(
+          padding: EdgeInsets.only(bottom: 22.h),
+          child: SizedBox(
+            width: (MediaQuery.of(context).size.width/2)-35.w,
+            child: ItemCardapioComponent(
+              leftSideRounded: index % 2 == 0,
+              rightSideRounded: index % 2 == 1,
+              item: item,
+              key: ValueKey(item.id),
+            ),
+          ),
+        ),
+      );
+    }
+    return ret;
+  }
+
   Widget buildAbaCardapio() {
     return Column(
       children: [
@@ -88,12 +120,13 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
                 SizedBox(
                   width: double.infinity,
                   child: SingleChildScrollView(
+                    controller: scrollCardapio,
                     scrollDirection: Axis.horizontal,
                     child: Row(
                       children: [
                         ...mapaCardapios.values.map((record) {
                           return Padding(
-                            padding: EdgeInsets.only(right: 12.0),
+                            padding: EdgeInsets.only(right: 17.w),
                             child: SizedBox(
                               height: 25.h,
                               child: InkWell(
@@ -141,36 +174,36 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
                     ),
                   ),
                 ),
-                GridView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 25.w,
-                    mainAxisSpacing: 15.h,
-                    childAspectRatio: .75,
+                SizedBox(height: 30.h),
+                SizedBox(
+                  width: double.infinity,
+                  child: Wrap(
+                    direction: Axis.horizontal,
+                    alignment: WrapAlignment.spaceBetween,
+                    children: renderCardapio(),
                   ),
-                  itemCount: mapaCardapios[categoriaSelecionada]!.length,
-                  itemBuilder: (context, index) {
-                    final item = mapaCardapios[categoriaSelecionada]![index];
-                    return ItemCardapioComponent(
-                      leftSideRounded: index % 2 == 0,
-                      rightSideRounded: index % 2 == 1,
-                      item: item,
-                      key: ValueKey(item.id),
-                    );
-                    // if (evento.cardapioDetalhes != null) {
-                    //   final item = evento.cardapioDetalhes![index];
-                    //   return ItemCardapioComponent(
-                    //     leftSideRounded: index % 2 == 0,
-                    //     rightSideRounded: index % 2 == 1,
-                    //     item: item,
-                    //   );
-                    // }
-                    // return const Center();
-                  },
                 ),
-                const SizedBox(height: 80),
+                // GridView.builder(
+                //   shrinkWrap: true,
+                //   physics: const NeverScrollableScrollPhysics(),
+                //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                //     crossAxisCount: 2,
+                //     crossAxisSpacing: 25.w,
+                //     mainAxisSpacing: 15.h,
+                //     childAspectRatio: .75,
+                //   ),
+                //   itemCount: mapaCardapios[categoriaSelecionada]!.length,
+                //   itemBuilder: (context, index) {
+                //     final item = mapaCardapios[categoriaSelecionada]![index];
+                //     return ItemCardapioComponent(
+                //       leftSideRounded: index % 2 == 0,
+                //       rightSideRounded: index % 2 == 1,
+                //       item: item,
+                //       key: ValueKey(item.id),
+                //     );
+                //   },
+                // ),
+                SizedBox(height: 80.h),
               ],
             ),
           ),
@@ -183,7 +216,7 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
             return Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(11.r),
                 border: Border.all(color: Colors.white, width: 1.0),
               ),
               child: Row(
@@ -192,17 +225,10 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        "Total",
-                        style: TextStyle(color: Colors.white, fontSize: 10.sp),
-                      ),
+                      Text("Total", style: MyTypography.interRegular10),
                       Text(
                         "R\$${value.fold(0.0, (prev, element) => prev + (element.valor ?? 0.0)).toStringAsFixed(2)}",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12.sp,
-                        ),
+                        style: MyTypography.poppinsSemiBold11,
                       ),
                     ],
                   ),
@@ -218,10 +244,8 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
                       ),
                       child: Text(
                         "Pagar",
-                        style: TextStyle(
+                        style: MyTypography.poppinsSemiBold11.copyWith(
                           color: Colors.black,
-                          fontSize: 12.sp,
-                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
@@ -237,32 +261,45 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
   }
 
   Widget buildAbaAmigos() {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          StatusDetalheEvento(
-            data: evento.data?.formatDateString ?? "01/01/2025",
-            hora: evento.horario?.formatTimeString ?? "00:00",
-            bairro: evento.bairro ?? "",
+    return Stack(
+      children: [
+        SingleChildScrollView(
+          child: Column(
+            children: [
+              StatusDetalheEvento(
+                data: evento.data?.formatDateString ?? "01/01/2025",
+                hora: evento.horario?.formatTimeString ?? "00:00",
+                bairro: evento.bairro ?? "",
+              ),
+              SizedBox(height: 45.h),
+              ListView.separated(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (_, index) {
+                  return SizedBox(
+                    width: double.infinity,
+                    child: ItemAmigoComponent(
+                      usuario: names[index],
+                      foto: fotos[index],
+                    ),
+                  );
+                },
+                separatorBuilder: (_, index) => SizedBox(height: 25.h),
+                itemCount: names.length,
+              ),
+              SizedBox(height: 90.h),
+            ],
           ),
-          const SizedBox(height: 20),
-          ListView.separated(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (_, index) {
-              return SizedBox(
-                width: double.infinity,
-                child: ItemAmigoComponent(
-                  usuario: names[index],
-                  foto: fotos[index],
-                ),
-              );
-            },
-            separatorBuilder: (_, index) => SizedBox(height: 25.h),
-            itemCount: 2,
+        ),
+        Positioned(
+          width: MediaQuery.of(context).size.width-22.w,
+          bottom: 0,
+          child: RodapeNavigation(
+            currentIndex: currentIndex,
+            onTap: (_) {}
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -271,6 +308,7 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
       children: [
         Expanded(
           child: SingleChildScrollView(
+            controller: scrollIngresso,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -283,29 +321,19 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
                 Text(
                   "Descrição",
                   textAlign: TextAlign.start,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18.sp,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: MyTypography.poppinsSemiBold18,
                 ),
-                SizedBox(height: 8.h),
+                SizedBox(height: 13.h),
                 SizedBox(
                   width: double.infinity,
                   child: textoExpandido
                       ? Text(
                           sanitizeString(evento.descricao),
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 12.sp,
-                          ),
+                          style: MyTypography.interRegular12,
                         )
                       : Text(
                           sanitizeString(evento.descricao),
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 12.sp,
-                          ),
+                          style: MyTypography.interRegular12,
                           maxLines: 3,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -313,13 +341,13 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
                 if (evento.descricao != null &&
                     evento.descricao!.isNotEmpty &&
                     evento.descricao!.length > 10)
-                  SizedBox(height: 10.h),
+                  SizedBox(height: 19.h),
                 if (evento.descricao != null &&
                     evento.descricao!.isNotEmpty &&
                     evento.descricao!.length > 10)
                   Center(
                     child: SizedBox(
-                      height: 28.h,
+                      height: 17.h,
                       child: FilledButton(
                         onPressed: alternarExpansaoTexto,
                         style: FilledButton.styleFrom(
@@ -331,16 +359,12 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
                         ),
                         child: Text(
                           textoExpandido ? "Ler -" : "Ler +",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 12.sp,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: MyTypography.interRegular10,
                         ),
                       ),
                     ),
                   ),
-                SizedBox(height: 20.h),
+                SizedBox(height: 31.h),
                 // CARDS DE INGRESSO
                 ListView.separated(
                   shrinkWrap: true,
@@ -352,10 +376,10 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
                       eventoImagem: evento.imagem,
                     );
                   },
-                  separatorBuilder: (_, index) => SizedBox(height: 10.h),
+                  separatorBuilder: (_, index) => SizedBox(height: 35.h),
                   itemCount: evento.ingressoDetalhes!.length,
                 ),
-                SizedBox(height: 10.h),
+                SizedBox(height: 45.h),
                 // ENDEREÇO E MAPA
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -367,45 +391,44 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
                           SizedBox(height: 8),
                           Text(
                             "${evento.logradouro ?? ""}, ${evento.numero ?? ""} - ${evento.bairro ?? ""}\n${evento.cidadeDetalhes?.nome ?? ""} - ${evento.estadoDetalhes?.sigla ?? ""}, ${evento.cep ?? ""}",
-                            style: TextStyle(
-                              color: Colors.white.withAlpha(204),
-                              fontSize: 12.sp,
-                            ),
+                            style: MyTypography.interRegular12,
                           ),
                         ],
                       ),
                     ),
                     if (evento.latitude != null && evento.longitude != null)
-                      const SizedBox(width: 16),
+                      SizedBox(width: 16.w),
                     if (evento.latitude != null && evento.longitude != null)
-                      Container(
-                        height: 60.h,
-                        width: 100.w,
-                        decoration: BoxDecoration(
-                          color: MyColors.cinzaMedioEscuro,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: stat.StaticMap(
-                          googleApiKey:
-                              'AIzaSyBnw0lpqUqMdVh7RL6HXIgdokf-dr-5-3c',
-                          height: 70,
-                          width: 70,
-                          center: stat.GeocodedLocation.latLng(
-                            double.parse(evento.latitude ?? "0"),
-                            double.parse(evento.longitude ?? "0"),
-                          ),
-                          zoom: 15,
-                          markers: [
-                            stat.Marker(
-                              locations: [
-                                stat.GeocodedLocation.latLng(
-                                  double.parse(evento.latitude ?? "0"),
-                                  double.parse(evento.longitude ?? "0"),
+                      Stack(
+                        children: [
+                          Container(
+                            height: 60.h,
+                            width: 100.w,
+                            decoration: BoxDecoration(
+                              color: MyColors.cinzaMedioEscuro,
+                              borderRadius: BorderRadius.circular(10.r),
+                            ),
+                            child: stat.StaticMap(
+                              googleApiKey:
+                                  'AIzaSyBnw0lpqUqMdVh7RL6HXIgdokf-dr-5-3c',
+                              center: stat.GeocodedLocation.latLng(
+                                double.parse(evento.latitude ?? "0"),
+                                double.parse(evento.longitude ?? "0"),
+                              ),
+                              zoom: 15,
+                              markers: [
+                                stat.Marker(
+                                  locations: [
+                                    stat.GeocodedLocation.latLng(
+                                      double.parse(evento.latitude ?? "0"),
+                                      double.parse(evento.longitude ?? "0"),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                   ],
                 ),
@@ -413,7 +436,7 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
             ),
           ),
         ),
-        SizedBox(height: 10.h),
+        SizedBox(height: 11.h),
         // CONTAINER FIXO DO TOTAL E PAGAR
         ValueListenableBuilder(
           valueListenable: AppState.ingressosSelecionados,
@@ -421,7 +444,7 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
             return Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(11.r),
                 border: Border.all(color: Colors.white, width: 1.0),
               ),
               child: Row(
@@ -430,17 +453,10 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        "Total",
-                        style: TextStyle(color: Colors.white, fontSize: 10.sp),
-                      ),
+                      Text("Total", style: MyTypography.interRegular10),
                       Text(
                         "R\$${value.fold(0.0, (prev, element) => prev + (element.valor ?? 0.0)).toStringAsFixed(2)}",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12.sp,
-                        ),
+                        style: MyTypography.poppinsSemiBold11,
                       ),
                     ],
                   ),
@@ -456,10 +472,8 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
                       ),
                       child: Text(
                         "Pagar",
-                        style: TextStyle(
+                        style: MyTypography.poppinsSemiBold11.copyWith(
                           color: Colors.black,
-                          fontSize: 12.sp,
-                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
@@ -478,146 +492,119 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
   Widget buildMenuAbas() {
     final List<String> abas = ["Ingressos", "Cardápio", "Amigos"];
 
+    final ret = <Widget>[];
+
+    for (var index = 0; index < abas.length; index++) {
+      final aba = abas[index];
+      ret.add(
+        Expanded(
+          child: GestureDetector(
+            onTap: () {
+              AppState.ingressosSelecionados.value = [];
+              AppState.cardapiosSelecionados.value = [];
+              setState(() {
+                abaSelecionada = aba;
+              });
+            },
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 300),
+              decoration: BoxDecoration(
+                color: abaSelecionada == aba
+                    ? Colors.black
+                    : Colors.transparent,
+                borderRadius: BorderRadius.circular(22),
+              ),
+              alignment: Alignment.center,
+              child: Text(
+                aba,
+                style: TextStyle(
+                  color: abaSelecionada == aba ? MyColors.verde : Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
     return Container(
       width: double.infinity,
-      height: 30,
+      height: 25.h,
       decoration: BoxDecoration(
         color: MyColors.cinzaMedioEscuro,
         borderRadius: BorderRadius.circular(22),
       ),
-      child: Row(
-        children: abas.map((aba) {
-          final bool selecionada = abaSelecionada == aba;
-          return Expanded(
-            child: GestureDetector(
-              onTap: () {
-                AppState.ingressosSelecionados.value = [];
-                AppState.cardapiosSelecionados.value = [];
-                setState(() {
-                  abaSelecionada = aba;
-                });
-              },
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 300),
-                decoration: BoxDecoration(
-                  color: selecionada
-                      ? MyColors.cinzaEscuro
-                      : Colors.transparent,
-                  borderRadius: BorderRadius.circular(22),
-                ),
-                alignment: Alignment.center,
-                child: Text(
-                  aba,
-                  style: TextStyle(
-                    color: selecionada ? MyColors.verde : Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
-                  ),
-                ),
-              ),
-            ),
-          );
-        }).toList(),
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.h),
+        child: Row(children: ret),
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: AppBar(
+    return SafeArea(
+      child: Scaffold(
         backgroundColor: Colors.black,
-        elevation: 0,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 8.0),
-          child: IconButton(
-            icon: Image.asset("assets/icons/voltarBranco.png"),
-            onPressed: () {
-              AppState.eventoSelecionado = null;
-              AppState.ingressosSelecionados.value = [];
-              AppState.cardapiosSelecionados.value = [];
-              context.pop();
-            },
-          ),
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 8.0),
-            child: IconButton(
-              icon: Image.asset("assets/icons/carrinhoBranco.png"),
-              onPressed: () {
-                // Ação do carrinho
-              },
-            ),
-          ),
-        ],
-      ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10.sp),
-        child: Column(
-          children: [
-            // IMAGEM DO EVENTO
-            Container(
-              width: double.infinity,
-              height: 180,
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(32),
-                  bottomRight: Radius.circular(32),
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withAlpha(102),
-                    blurRadius: 12,
-                    offset: const Offset(0, 6),
-                  ),
-                ],
-              ),
-              child: ClipRRect(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(32),
-                  bottomRight: Radius.circular(32),
-                ),
-                child: Container(
-                  decoration: BoxDecoration(
-                    image:
-                        evento.imagem != null &&
-                            evento.imagem!.isNotEmpty &&
-                            evento.imagem!.startsWith("http")
-                        ? DecorationImage(
-                            image: NetworkImage(evento.imagem!),
-                            fit: BoxFit.cover,
-                          )
-                        : null,
-                    color: MyColors.cinza,
+        appBar: EventAppCarComponent(),
+        body: Padding(
+          padding: EdgeInsets.only(top: 15.h, left: 11.w, right: 11.w),
+          child: Column(
+            children: [
+              // IMAGEM DO EVENTO
+              Container(
+                width: double.infinity,
+                height: 190.h,
+                decoration: BoxDecoration(
+                  image:
+                      evento.imagem != null &&
+                          evento.imagem!.isNotEmpty &&
+                          evento.imagem!.startsWith("http")
+                      ? DecorationImage(
+                          image: NetworkImage(evento.imagem!),
+                          fit: BoxFit.cover,
+                        )
+                      : null,
+                  color: MyColors.cinza,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(42.r),
+                    bottomRight: Radius.circular(42.r),
                   ),
                 ),
               ),
-            ),
-            SizedBox(height: 20.h),
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    evento.nome!,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20.sp,
-                      fontWeight: FontWeight.bold,
+              SizedBox(height: 16.h),
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      evento.nome!,
+                      style: MyTypography.poppinsSemiBold20,
                     ),
                   ),
-                ),
-                Image.asset("assets/icons/icon3d.png", width: 32, height: 32),
-              ],
-            ),
-            SizedBox(height: 10.h),
-            // MENU DE ABAS
-            buildMenuAbas(),
-            SizedBox(height: 20.h),
-            // CONTEÚDO DA ABA
-            Expanded(child: buildConteudoAba()),
-          ],
+                  Container(
+                    height: 20.h,
+                    width: 20.w,
+                    decoration: BoxDecoration(
+                      color: MyColors.cinzaEscuro,
+                      borderRadius: BorderRadius.all(Radius.circular(100.r)),
+                    ),
+                    child: Center(
+                      child: Text("3D", style: MyTypography.poppinsRegular11),
+                    ),
+                  ),
+                  // Image.asset("assets/icons/icon3d.png", width: 32, height: 32),
+                ],
+              ),
+              SizedBox(height: 16.h),
+              // MENU DE ABAS
+              buildMenuAbas(),
+              SizedBox(height: 25.h),
+              // CONTEÚDO DA ABA
+              Expanded(child: buildConteudoAba()),
+            ],
+          ),
         ),
       ),
     );

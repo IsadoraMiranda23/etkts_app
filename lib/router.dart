@@ -2,6 +2,7 @@
 import 'package:etkts_app/pages/detalhe_evento.page.dart';
 
 import 'package:etkts_app/pages/pages.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 
 import 'app_state.dart';
@@ -53,7 +54,7 @@ final router = GoRouter(
       path: DetalheEventoPage.routeName,
       name: DetalheEventoPage.routeName,
       pageBuilder: (context, state) =>
-          NoTransitionPage(child: DetalheEventoPage()),
+          CupertinoPage(child: DetalheEventoPage()),
     ),
 
   ],

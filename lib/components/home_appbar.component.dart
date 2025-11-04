@@ -102,7 +102,7 @@ class _HomeAppBarComponentState extends State<HomeAppBarComponent> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       height: widget.preferredSize.height,
       child: Row(

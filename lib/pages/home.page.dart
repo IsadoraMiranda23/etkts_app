@@ -1,4 +1,3 @@
-import 'package:etkts_app/app_state.dart';
 import 'package:etkts_app/components/cards/carrossel.component.dart';
 import 'package:etkts_app/colors.dart';
 import 'package:etkts_app/components/home_appbar.component.dart';
@@ -12,9 +11,6 @@ import 'package:etkts_app/components/drawer/drawer.componente.dart';
 import 'package:etkts_app/components/cards/card_evento.componente.dart';
 import 'package:etkts_app/components/rodape/rodape_navigation.component.dart'; // Importe o rodapé
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:go_router/go_router.dart';
-import 'notificacoes.page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -69,58 +65,6 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    navItems = [
-      RodapeButtonComponentData(
-        text: "Home",
-        svgAsset: "assets/icons/home.svg",
-        onTap: (context) {
-          setState(() {
-            currentIndex = 0;
-          });
-          SnackbarService.showEmConstrucao(context);
-        },
-      ),
-      RodapeButtonComponentData(
-        text: "Amigos",
-        svgAsset: "assets/icons/friend_add.svg",
-        onTap: (context) {
-          setState(() {
-            currentIndex = 1;
-          });
-          SnackbarService.showEmConstrucao(context);
-        },
-      ),
-      RodapeButtonComponentData(
-        text: "Carteira",
-        svgAsset: "assets/icons/carteira.svg",
-        onTap: (context) {
-          setState(() {
-            currentIndex = 2;
-          });
-          SnackbarService.showEmConstrucao(context);
-        },
-      ),
-      RodapeButtonComponentData(
-        text: "Mapa",
-        svgAsset: "assets/icons/pinpoint.svg",
-        onTap: (context) {
-          setState(() {
-            currentIndex = 3;
-          });
-          SnackbarService.showEmConstrucao(context);
-        },
-      ),
-      RodapeButtonComponentData(
-        text: "Perfil",
-        svgAsset: "assets/icons/profile.svg",
-        onTap: (context) {
-          setState(() {
-            currentIndex = 4;
-          });
-          SnackbarService.showEmConstrucao(context);
-        },
-      ),
-    ];
     WidgetsBinding.instance.addPostFrameCallback(init);
   }
 
@@ -249,9 +193,11 @@ class _HomePageState extends State<HomePage> {
             bottom: 0,
             child: RodapeNavigation(
               currentIndex: currentIndex,
-              navItems: navItems,
+              onTap: (index) => setState(() {
+                currentIndex = index;
+              }),
             ),
-          )
+          ),
         ],
       ),
     );
@@ -263,137 +209,6 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
         backgroundColor: Colors.black,
         appBar: HomeAppBarComponent(),
-        // appBar: AppBar(
-        //   toolbarHeight: 49,
-        //   backgroundColor: Colors.amber,
-        //   bottom: PreferredSize(preferredSize: Size(0, 0), child: Center()),
-        //   leading: Builder(
-        //     builder: (context) => IconButton(
-        //       icon: const Icon(Icons.menu, color: Colors.white),
-        //       onPressed: () {
-        //         Scaffold.of(context).openDrawer();
-        //       },
-        //     ),
-        //   ),
-        //   title: AnimatedContainer(
-        //     padding: EdgeInsets.zero,
-        //     duration: const Duration(milliseconds: 300),
-        //     curve: Curves.easeInOut,
-        //     width: searchExpanded ? double.infinity : null,
-        //     child: Row(
-        //       children: [
-        //         if (!searchExpanded) ...[
-        //           const CircleAvatar(
-        //             radius: 15,
-        //             backgroundImage: AssetImage('assets/images/fotoEvento.png'),
-        //           ),
-        //           const SizedBox(width: 12),
-        //           Expanded(
-        //             child: Column(
-        //               crossAxisAlignment: CrossAxisAlignment.start,
-        //               children: [
-        //                 const Text(
-        //                   'User Name',
-        //                   style: TextStyle(color: Colors.white, fontSize: 16),
-        //                 ),
-        //                 Row(
-        //                   children: [
-        //                     Text(
-        //                       balanceVisible
-        //                           ? 'R\$${userBalance.toStringAsFixed(2).replaceAll('.', ',')}'
-        //                           : ' ******',
-        //                       style: const TextStyle(
-        //                         color: Colors.grey,
-        //                         fontSize: 14,
-        //                       ),
-        //                     ),
-        //                     const SizedBox(width: 8),
-        //                     GestureDetector(
-        //                       onTap: () {
-        //                         setState(() {
-        //                           balanceVisible = !balanceVisible;
-        //                         });
-        //                       },
-        //                       child: Icon(
-        //                         balanceVisible
-        //                             ? Icons.visibility
-        //                             : Icons.visibility_off,
-        //                         color: Colors.grey,
-        //                         size: 16,
-        //                       ),
-        //                     ),
-        //                   ],
-        //                 ),
-        //               ],
-        //             ),
-        //           ),
-        //         ],
-        //         if (searchExpanded) ...[
-        //           Expanded(
-        //             child: TextField(
-        //               controller: searchController,
-        //               autofocus: true,
-        //               style: const TextStyle(color: Colors.white, fontSize: 16),
-        //               decoration: const InputDecoration(
-        //                 isDense: true,
-        //                 hintText: 'Pesquisar...',
-        //                 hintStyle: TextStyle(color: Colors.white54),
-        //                 border: InputBorder.none,
-        //                 contentPadding: EdgeInsets.only(bottom: 15),
-        //               ),
-        //               onSubmitted: (value) {
-        //                 debugPrint('Texto pesquisado: $value');
-        //               },
-        //             ),
-        //           ),
-        //           IconButton(
-        //             icon: const Icon(Icons.close, color: Colors.white, size: 20),
-        //             onPressed: () {
-        //               setState(() {
-        //                 searchExpanded = false;
-        //                 searchController.clear();
-        //               });
-        //             },
-        //           ),
-        //         ],
-        //       ],
-        //     ),
-        //   ),
-        //   actions: [
-        //     if (!searchExpanded)
-        //       Padding(
-        //         padding: const EdgeInsets.all(8.0),
-        //         child: InkWell(
-        //           onTap: () {
-        //             setState(() {
-        //               searchExpanded = true;
-        //             });
-        //           },
-        //           child: Image.asset(
-        //             'assets/icons/pesquisa.png',
-        //             width: 23,
-        //             height: 21,
-        //             color: Colors.white,
-        //           ),
-        //         ),
-        //       ),
-        //     if (AppState.isLogged)
-        //       Padding(
-        //         padding: const EdgeInsets.only(right: 14.0),
-        //         child: InkWell(
-        //           onTap: () {
-        //             context.push(NotificacoesPage.routeName);
-        //           },
-        //           child: Image.asset(
-        //             'assets/icons/bell2.png',
-        //             width: 23,
-        //             height: 22,
-        //             color: Colors.white,
-        //           ),
-        //         ),
-        //       ),
-        //   ],
-        // ),
         drawer: const DrawerComponente(),
         body: renderHome(),
       ),

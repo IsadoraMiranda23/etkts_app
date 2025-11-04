@@ -1,4 +1,5 @@
 import 'package:etkts_app/colors.dart';
+import 'package:etkts_app/typography.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -22,10 +23,10 @@ class _StatusDetalheEventoState extends State<StatusDetalheEvento> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 27,
+      height: 27.h,
       decoration: BoxDecoration(
         color: MyColors.cinzaEscuro,
-        borderRadius: BorderRadius.circular(42),
+        borderRadius: BorderRadius.circular(100),
       ),
       child: Row(
         children: [
@@ -33,11 +34,7 @@ class _StatusDetalheEventoState extends State<StatusDetalheEvento> {
             child: Text(
               widget.hora,
               textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 12.sp,
-                fontFamily: "Inter",
-              ),
+              style: MyTypography.interRegular10
             ),
           ),
           VerticalDivider(color: Colors.white, thickness: 1, width: 1, indent: 2, endIndent: 2),
@@ -45,11 +42,7 @@ class _StatusDetalheEventoState extends State<StatusDetalheEvento> {
             child: Text(
               widget.data,
               textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 12.sp,
-                fontFamily: "Inter",
-              ),
+              style: MyTypography.interRegular10
             ),
           ),
           VerticalDivider(color: Colors.white, thickness: 1, width: 1, indent: 2, endIndent: 2),
@@ -57,11 +50,7 @@ class _StatusDetalheEventoState extends State<StatusDetalheEvento> {
             child: Text(
               widget.bairro,
               textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 12.sp,
-                fontFamily: "Inter",
-              ),
+              style: MyTypography.interRegular10,
             ),
           ),
         ],
