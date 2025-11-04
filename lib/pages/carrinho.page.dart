@@ -3,54 +3,55 @@ import 'package:etkts_app/components/app_bar.component.dart';
 import 'package:etkts_app/components/buttons/button.dart';
 import 'package:etkts_app/components/cards/card_cartao_cliente_cadastro.componente.dart';
 import 'package:etkts_app/components/cards/card_produto_carrinho.component.dart';
+import 'package:etkts_app/components/cards/card_selecionar_amigo.component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-// WIDGET PARA OPÇÃO DE PAGAMENTO
+// OPÇÃO DE PAGAMENTO
 Widget buildOpcaoPagamento(
-  String titulo,
-  IconData icone,
-  Function(String) onTap,
-  String? formaPagamentoEscolhida,
-) {
+    String titulo,
+    IconData icone,
+    Function(String) onTap,
+    String? formaPagamentoEscolhida,
+    ) {
   return GestureDetector(
     onTap: () => onTap(titulo),
     child: Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(12),
-      margin: const EdgeInsets.only(bottom: 4),
+      padding: EdgeInsets.all(12.w),
+      margin: EdgeInsets.only(bottom: 4.h),
       decoration: BoxDecoration(
         color: Colors.black,
-        borderRadius: BorderRadius.circular(38),
+        borderRadius: BorderRadius.circular(38.r),
         border: Border.all(color: Colors.white30),
       ),
       child: Row(
         children: [
-          Icon(icone, color: Colors.white, size: 20),
-          const SizedBox(width: 12),
+          Icon(icone, color: Colors.white, size: 20.w),
+          SizedBox(width: 12.w),
           Text(
             titulo,
             style: TextStyle(color: Colors.white, fontSize: 14.sp),
           ),
           const Spacer(),
           if (formaPagamentoEscolhida == titulo)
-            Icon(Icons.check, color: MyColors.roxo, size: 20),
+            Icon(Icons.check, color: MyColors.roxo, size: 20.w),
         ],
       ),
     ),
   );
 }
 
-// ✅ WIDGET PARA MENU DE FORMA DE PAGAMENTO
+// MENU DE FORMA DE PAGAMENTO
 Widget buildMenuFormaPagamento(
-  String formaPagamentoSelecionada,
-  Function(String) onTap,
-) {
+    String formaPagamentoSelecionada,
+    Function(String) onTap,
+    ) {
   final List<String> opcoes = ["Pagar Sozinho", "Dividir Conta"];
 
   return Container(
     width: double.infinity,
-    height: 40,
+    height: 40.h,
     decoration: BoxDecoration(
       color: MyColors.cinzaMedio,
       borderRadius: BorderRadius.circular(16.r),
@@ -63,7 +64,7 @@ Widget buildMenuFormaPagamento(
             onTap: () => onTap(opcao),
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 300),
-              height: 33,
+              height: 33.h,
               decoration: BoxDecoration(
                 color: selecionada ? MyColors.cinzaEscuro : Colors.transparent,
                 borderRadius: BorderRadius.circular(16.r),
@@ -74,7 +75,7 @@ Widget buildMenuFormaPagamento(
                 style: TextStyle(
                   color: selecionada ? MyColors.roxo : Colors.white54,
                   fontWeight: FontWeight.w600,
-                  fontSize: 14,
+                  fontSize: 14.sp,
                 ),
               ),
             ),
@@ -85,7 +86,66 @@ Widget buildMenuFormaPagamento(
   );
 }
 
-//  PAGAR SOZINHO
+//  CONTAINER DE PAGAMENTO
+Widget buildContainerPagamento({
+  required double valorTotal,
+  required String textoBotao,
+  required VoidCallback onPressed,
+  double? larguraBotao,
+}) {
+  return Container(
+    width: double.infinity,
+    height: 46.h,
+    decoration: BoxDecoration(
+      border: Border.all(color: Colors.white70),
+      borderRadius: BorderRadius.circular(11.r),
+    ),
+    child: Row(
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.only(left: 12.w, top: 6.h),
+              child: Text(
+                "Total R\$",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'inter',
+                  fontSize: 11.sp,
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 12.w),
+              child: Text(
+                'R\$ ${valorTotal.toStringAsFixed(2)}',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          ],
+        ),
+        const Spacer(),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
+          child: Button(
+            onPressed: onPressed,
+            text: textoBotao,
+            borderRadius: 12.r,
+            width: larguraBotao ?? (textoBotao == "Pagar" ? 86.w : 120.w),
+            height: 37.h,
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+// PAGAR SOZINHO
 Widget buildPagarSozinhoContent({
   required bool mostrarOpcoesPagamento,
   required Function() onToggleOpcoes,
@@ -99,17 +159,17 @@ Widget buildPagarSozinhoContent({
         onTap: onToggleOpcoes,
         child: Container(
           width: double.infinity,
-          height: 50,
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          height: 50.h,
+          padding: EdgeInsets.symmetric(horizontal: 16.w),
           decoration: BoxDecoration(
             color: Colors.black,
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(8.r),
             border: Border.all(color: Colors.white30),
           ),
           child: Row(
             children: [
-              Icon(Icons.credit_card, color: Colors.white54, size: 20),
-              const SizedBox(width: 12),
+              Icon(Icons.credit_card, color: Colors.white54, size: 20.w),
+              SizedBox(width: 12.w),
               Expanded(
                 child: Text(
                   formaPagamentoEscolhida ?? "Selecionar forma de pagamento",
@@ -126,7 +186,7 @@ Widget buildPagarSozinhoContent({
                     ? Icons.keyboard_arrow_up
                     : Icons.keyboard_arrow_down,
                 color: Colors.white54,
-                size: 20,
+                size: 20.w,
               ),
             ],
           ),
@@ -135,7 +195,7 @@ Widget buildPagarSozinhoContent({
 
       // OPÇÕES DE PAGAMENTO
       if (mostrarOpcoesPagamento) ...[
-        const SizedBox(height: 8),
+        SizedBox(height: 8.h),
         buildOpcaoPagamento(
           "Cartão de Crédito",
           Icons.credit_card,
@@ -155,7 +215,7 @@ Widget buildPagarSozinhoContent({
           formaPagamentoEscolhida,
         ),
       ],
-      const SizedBox(height: 16),
+      SizedBox(height: 16.h),
       Row(
         children: [
           CartaoClienteCadastro(),
@@ -178,62 +238,23 @@ Widget buildPagarSozinhoContent({
 
       SizedBox(height: 80.h),
 
-      Container(
-        width: double.infinity,
-        height: 46.h,
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.white70),
-          borderRadius: BorderRadius.circular(11.r),
-        ),
-        child: Row(
-          children: [
-            Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 12.0, top: 6),
-                  child: Text(
-                    "Total R\$",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontFamily: 'inter',
-                      fontSize: 11.sp,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                  child: Text(
-                    'R\$ ${valorTotal.toStringAsFixed(2)}',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Spacer(),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2),
-              child: Button(
-                onPressed: () {},
-                text: "Pagar",
-                borderRadius: 12.r,
-                width: 86.w,
-                height: 37.h,
-              ),
-            ),
-          ],
-        ),
+      buildContainerPagamento(
+        valorTotal: valorTotal,
+        textoBotao: "Pagar",
+        onPressed: () {
+
+        },
+        larguraBotao: 86.w,
       ),
       SizedBox(height: 20.h),
     ],
   );
 }
 
-//  DIVIDIR CONTA
-Widget buildDividirContaContent() {
+// DIVIDIR CONTA
+Widget buildDividirContaContent({
+  required double valorTotal,
+}) {
   return Column(
     children: [
       Container(
@@ -247,7 +268,7 @@ Widget buildDividirContaContent() {
         child: Row(
           children: [
             SizedBox(width: 12.w),
-            Icon(Icons.search, color: Colors.white54, size: 20),
+            Icon(Icons.search, color: Colors.white54, size: 20.w),
             SizedBox(width: 12.w),
             Expanded(
               child: TextField(
@@ -267,72 +288,78 @@ Widget buildDividirContaContent() {
         ),
       ),
 
-      const SizedBox(height: 16),
+      SizedBox(height: 16.h),
 
-      Row(
-        children: [
-          Expanded(
-            child: Text(
-              "Dividir Conta",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 16.sp,
-                fontWeight: FontWeight.bold,
+      Padding(
+        padding: EdgeInsets.all(10.w),
+        child: Row(
+          children: [
+            Expanded(
+              child: Text(
+                "Dividir Conta",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
-          ),
 
-          const SizedBox(width: 12),
+            SizedBox(width: 5.w),
 
-          // CONTADOR DE PESSOAS
-          Container(
-            width: 70.w,
-            height: 30.h,
-            decoration: BoxDecoration(
-              border: Border.all(color: MyColors.verde),
-              borderRadius: BorderRadius.circular(38),
-              color: MyColors.verde,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.people, color: MyColors.preto, size: 28),
-                Text(
-                  "0",
-                  style: TextStyle(
-                    color: MyColors.preto,
-                    fontSize: 19.sp,
-                    fontWeight: FontWeight.bold,
+            Container(
+              width: 70.w,
+              height: 30.h,
+              decoration: BoxDecoration(
+                border: Border.all(color: MyColors.verde),
+                borderRadius: BorderRadius.circular(38.r),
+                color: MyColors.verde,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.people, color: MyColors.preto, size: 20.w),
+                  Text(
+                    "0",
+                    style: TextStyle(
+                      color: MyColors.preto,
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
-      ),
-
-      const SizedBox(height: 16),
-
-      // ESPAÇO PARA O COMPONENTE FUTURO
-      Container(
-        width: double.infinity,
-        height: 100.h,
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.white30),
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: Center(
-          child: Text(
-            "Componente em desenvolvimento...",
-            style: TextStyle(color: Colors.white54, fontSize: 14.sp),
-          ),
+          ],
         ),
       ),
+
+      SizedBox(height: 16.h),
+
+
+      CardSelecionarAmigo(),
+      SizedBox(height: 8.h),
+      CardSelecionarAmigo(),
+      SizedBox(height: 8.h),
+      CardSelecionarAmigo(),
+
+      SizedBox(height: 18.h),
+
+      // CONTAINER DE PAGAMENTO
+      buildContainerPagamento(
+        valorTotal: valorTotal,
+        textoBotao: "Pagar Dividido",
+        onPressed: () {
+
+        },
+        larguraBotao: 120.w,
+      ),
+      SizedBox(height: 20.h),
     ],
   );
 }
 
-//  FORMA DE PAGAMENTO
+
 Widget buildFormaPagamentoSection({
   required String formaPagamentoSelecionada,
   required Function(String) onMudarFormaPagamento,
@@ -343,12 +370,12 @@ Widget buildFormaPagamentoSection({
   required double valorTotal,
 }) {
   return Padding(
-    padding: const EdgeInsets.all(20),
+    padding: EdgeInsets.all(20.w),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(bottom: 12.0),
+          padding: EdgeInsets.only(bottom: 12.h),
           child: Text(
             "Formas de pagamento",
             style: TextStyle(
@@ -365,7 +392,7 @@ Widget buildFormaPagamentoSection({
           onMudarFormaPagamento,
         ),
 
-        const SizedBox(height: 16),
+        SizedBox(height: 16.h),
 
         if (formaPagamentoSelecionada == "Pagar Sozinho")
           buildPagarSozinhoContent(
@@ -376,7 +403,9 @@ Widget buildFormaPagamentoSection({
             valorTotal: valorTotal,
           )
         else
-          buildDividirContaContent(),
+          buildDividirContaContent(
+            valorTotal: valorTotal,
+          ),
       ],
     ),
   );
@@ -423,7 +452,7 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 19.0, top: 10),
+            padding: EdgeInsets.only(left: 19.w, top: 10.h),
             child: Text(
               "Carrinho",
               style: TextStyle(
@@ -434,7 +463,7 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: EdgeInsets.all(26.w),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -448,16 +477,20 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
                         fontFamily: "inter",
                       ),
                     ),
-                    SizedBox(height: 10.h),
+                    SizedBox(height: 8.h),
                     CircleAvatar(
-                      maxRadius: 9.w,
+                      radius: 9.w,
                       backgroundColor: MyColors.roxo,
                     ),
                   ],
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 28.0),
-                  child: Container(width: 110, height: 2, color: MyColors.roxo),
+                  padding: EdgeInsets.only(top: 28.h),
+                  child: Container(
+                      width: 105.w,
+                      height: 2.h,
+                      color: MyColors.roxo
+                  ),
                 ),
                 Column(
                   children: [
@@ -469,16 +502,20 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
                         fontFamily: "inter",
                       ),
                     ),
-                    SizedBox(height: 10.h),
+                    SizedBox(height: 8.h),
                     CircleAvatar(
-                      maxRadius: 9.w,
+                      radius: 9.w,
                       backgroundColor: MyColors.roxo,
                     ),
                   ],
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 28.0),
-                  child: Container(width: 110, height: 2, color: MyColors.roxo),
+                  padding: EdgeInsets.only(top: 28.h),
+                  child: Container(
+                      width: 105.w,
+                      height: 2.h,
+                      color: MyColors.roxo
+                  ),
                 ),
                 Column(
                   children: [
@@ -492,7 +529,7 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
                     ),
                     SizedBox(height: 10.h),
                     CircleAvatar(
-                      maxRadius: 9.w,
+                      radius: 9.w,
                       backgroundColor: MyColors.roxo,
                     ),
                   ],
@@ -501,13 +538,12 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
             ),
           ),
 
-          // LISTA DE PRODUTOS NO CARRINHO
           Expanded(
             child: SingleChildScrollView(
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(22.0),
+                    padding: EdgeInsets.all(22.w),
                     child: CardProdutoCarrinhoComponent(
                       nomePrato: "Pizza Margherita",
                       valorPrato: 45.90,
@@ -515,7 +551,7 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(22.0),
+                    padding: EdgeInsets.all(22.w),
                     child: CardProdutoCarrinhoComponent(
                       nomePrato: "Refrigerante Lata",
                       valorPrato: 8.00,
@@ -534,7 +570,7 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
             onToggleOpcoes: toggleOpcoesPagamento,
             formaPagamentoEscolhida: formaPagamentoEscolhida,
             onSelecionarPagamento: selecionarPagamento,
-            valorTotal: widget.valorTotal,
+            valorTotal: widget.valorTotal > 0 ? widget.valorTotal : 53.90,
           ),
         ],
       ),

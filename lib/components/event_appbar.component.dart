@@ -5,6 +5,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
+import '../pages/carrinho.page.dart';
+
 class EventAppCarComponent extends StatelessWidget
     implements PreferredSizeWidget {
   const EventAppCarComponent({super.key});
@@ -37,9 +39,9 @@ class EventAppCarComponent extends StatelessWidget
             ),
             InkWell(
               onTap: () {
-                if (context.canPop()) {
-                  context.pop();
-                }
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => CarrinhoPage()),);
               },
               child: ValueListenableBuilder(
                 valueListenable: AppState.cardapiosSelecionados,
