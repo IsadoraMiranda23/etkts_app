@@ -5,6 +5,7 @@ import 'package:etkts_app/types.dart';
 import 'package:etkts_app/typography.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 class ItemCardapioComponent extends StatefulWidget {
   final bool leftSideRounded;
@@ -81,10 +82,8 @@ class _ItemCardapioComponentState extends State<ItemCardapioComponent> {
         // IMAGEM DO ITEM
         GestureDetector(
           onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => DetalhePratoPage(item: widget.item,)),
-            );
+            AppState.cardapioSelecionado = widget.item;
+            context.push(DetalhePratoPage.goToRoute(widget.item.id.toInt()));
           },
           child: Container(
             // width: 160.w,

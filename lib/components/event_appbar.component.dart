@@ -15,7 +15,7 @@ class EventAppCarComponent extends StatelessWidget
     return SizedBox(
       height: preferredSize.height,
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 11.w),
+        padding: EdgeInsets.symmetric(horizontal: 14.w),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,

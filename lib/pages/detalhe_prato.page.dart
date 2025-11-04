@@ -1,6 +1,7 @@
 import 'package:etkts_app/colors.dart';
-import 'package:etkts_app/components/app_bar.component.dart';
 import 'package:etkts_app/components/buttons/button.dart';
+import 'package:etkts_app/components/event_appbar.component.dart';
+import 'package:etkts_app/typography.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -8,13 +9,11 @@ import '../app_state.dart';
 import '../types.dart';
 
 class DetalhePratoPage extends StatefulWidget {
-  final CardapioHome item;
-  final String nomeComida;
-  const DetalhePratoPage({
-    super.key,
-    required this.item,
-    this.nomeComida = "nomeComida",
-  });
+  const DetalhePratoPage({super.key});
+
+  static const routeName = "/detalhe-prato/:id";
+
+  static String goToRoute(int id) => '/detalhe-prato/$id';
 
   @override
   State<DetalhePratoPage> createState() => _DetalhePratoPageState();
@@ -23,10 +22,16 @@ class DetalhePratoPage extends StatefulWidget {
 class _DetalhePratoPageState extends State<DetalhePratoPage> {
   int quantidade = 0;
   TextEditingController observacaoController = TextEditingController();
+  CardapioHome item = CardapioHome(id: 0);
 
-  //  CALCULA O VALOR TOTAL
+  @override
+  void initState() {
+    super.initState();
+    item = AppState.cardapioSelecionado;
+  }
+
   double get valorTotal {
-    return (widget.item.valor ?? 0.0) * quantidade;
+    return (item.valor ?? 0.0) * quantidade;
   }
 
   void incrementarQuantidade() {
@@ -34,9 +39,8 @@ class _DetalhePratoPageState extends State<DetalhePratoPage> {
       quantidade++;
     });
     final cardapios = [...AppState.cardapiosSelecionados.value];
-    //  ADICIONA O ITEM MULTIPLAS VEZES CONFORME A QUANTIDADE
     for (int i = 0; i < quantidade; i++) {
-      cardapios.add(widget.item);
+      cardapios.add(item);
     }
     AppState.cardapiosSelecionados.value = cardapios;
   }
@@ -47,7 +51,7 @@ class _DetalhePratoPageState extends State<DetalhePratoPage> {
         quantidade--;
       });
       final cardapios = [...AppState.cardapiosSelecionados.value];
-      final index = cardapios.lastIndexOf(widget.item);
+      final index = cardapios.lastIndexOf(item);
       if (index != -1) {
         cardapios.removeAt(index);
       }
@@ -57,164 +61,132 @@ class _DetalhePratoPageState extends State<DetalhePratoPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: AppBarComponent(),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 20, bottom: 12, left: 26),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                "Cardápio",
-                style: TextStyle(
-                  fontSize: 20.sp,
-                  color: Colors.white,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-          ),
-          Expanded(
-            child: Stack(
+    return SafeArea(
+      child: GestureDetector(
+        onTap: () {
+          // FocusManager.instance.primaryFocus?.unfocus();
+        },
+        child: Scaffold(
+          backgroundColor: Colors.black,
+          appBar: EventAppCarComponent(),
+          body: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 14.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Container(
-                    width: double.infinity,
-                    height: 207.h,
-                    decoration: BoxDecoration(
-                      color: Colors.grey[800],
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(22.r),
-                        topRight: Radius.circular(22.r),
-                      ),
-                      image:
-                      widget.item.imagem != null &&
-                          widget.item.imagem!.isNotEmpty &&
-                          widget.item.imagem!.startsWith("http")
-                          ? DecorationImage(
-                        image: NetworkImage(widget.item.imagem ?? ""),
-                        fit: BoxFit.cover,
-                      )
-                          : null,
-                    ),
+                SizedBox(height: 17.h),
+                Text(
+                  "Cardápio",
+                  style: TextStyle(
+                    fontSize: 20.sp,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
-                Positioned(
-                  top: 150.h,
-                  left: 0,
-                  right: 0,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Container(
-                      width: 362.w,
-                      height: 444.h, //
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(43.r),
-                          topRight: Radius.zero,
-                          bottomLeft: Radius.circular(43.r),
-                          bottomRight: Radius.circular(43.r),
+                SizedBox(height: 17.h),
+                Expanded(
+                  child: Stack(
+                    children: [
+                      Container(
+                        height: 207.h,
+                        decoration: BoxDecoration(
+                          color: Colors.grey[800],
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(42.r),
+                            topRight: Radius.circular(42.r),
+                          ),
+                          image:
+                              item.imagem != null &&
+                                  item.imagem!.isNotEmpty &&
+                                  item.imagem!.startsWith("http")
+                              ? DecorationImage(
+                                  image: NetworkImage(item.imagem ?? ""),
+                                  fit: BoxFit.cover,
+                                )
+                              : null,
                         ),
-
-                        color: MyColors.cinzaEscuroTransparente,
                       ),
-
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              left: 30.0,
-                              top: 70,
-                              right: 28.0,
+                      Positioned.fill(
+                        top: 165.h,
+                        left: 0,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(43.r),
+                              bottomLeft: Radius.circular(43.r),
+                              bottomRight: Radius.circular(43.r),
                             ),
-                            child: Row(
+                            color: MyColors.cinzaEscuroTransparente,
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 24.w),
+                            child: Column(
                               children: [
-                                Expanded(
-                                  child: Text(
-                                    widget.item.nome ?? widget.nomeComida,
-                                    style: TextStyle(
-                                      fontSize: 18.sp,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.white,
+                                SizedBox(height: 50.h),
+                                Stack(
+                                  children: [
+                                    Positioned(
+                                      bottom: -8,
+                                      left: 0,
+                                      right: 0,
+                                      child: Divider(
+                                        thickness: 2,
+                                        endIndent: 10,
+                                        color: MyColors.verde,
+                                      ),
                                     ),
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
+                                    Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            item.nome ?? "",
+                                            style:
+                                                MyTypography.poppinsSemiBold15,
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                        SizedBox(width: 8.w),
+                                        Container(
+                                          padding: EdgeInsets.symmetric(
+                                            vertical: 2.h,
+                                            horizontal: 10.w,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(10.r),
+                                              bottomRight: Radius.circular(
+                                                10.r,
+                                              ),
+                                              bottomLeft: Radius.circular(10.r),
+                                            ),
+                                            border: Border.all(
+                                              color: MyColors.verde,
+                                            ),
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              "R\$${(item.valor ?? 0.0).toStringAsFixed(2)}",
+                                              style: MyTypography
+                                                  .poppinsSemiBold15,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 21.h),
+                                Text(
+                                  item.descricao ?? "",
+                                  style: MyTypography.interRegular10,
                                 ),
                                 Spacer(),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 8.0),
-                                  child: Container(
-                                    width: 76.w,
-                                    height: 29.h,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(10.r),
-                                        bottomRight: Radius.circular(10.r),
-                                        bottomLeft: Radius.circular(10.r),
-                                      ),
-                                      border: Border.all(color: MyColors.verde),
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        "R\$${(widget.item.valor ?? 0.0).toStringAsFixed(2)}",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 15.sp,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Divider(
-                            height: 2,
-                            indent: 25,
-                            endIndent: 100,
-                            color: MyColors.verde,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 16.0,
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                left: 8.0,
-                                right: 8.0,
-                                top: 20,
-                              ),
-                              child: Text(
-                                // widget.item.descricao ?? "Descrição",
-                                "Descrição do prato, aushduashds, ahygfja, dduaha auhhejfiao ajfgeybf ia7667ha ahsuduaf, iainfeyhbf.a dbffiojsodjfiosdjfnsd0fsdnjud9ifsd , kajnd heh hhy ju audhgasufs",
-                                style: TextStyle(
-                                  fontSize: 13.sp,
-                                  color: Colors.white70,
-                                ),
-                                maxLines: 8,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 16.h),
-
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              right: 25.0,
-                              left: 25,
-                              top: 30.0,
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
                                 Row(
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       "Alguma observação?",
@@ -226,151 +198,142 @@ class _DetalhePratoPageState extends State<DetalhePratoPage> {
                                     ),
                                     Text(
                                       "${observacaoController.text.length}/100",
-                                      style: TextStyle(
-                                        color: Colors.white70,
-                                        fontSize: 10.sp,
+                                      style: MyTypography.interRegular10,
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 6.h),
+                                TextField(
+                                  buildCounter:
+                                      (
+                                        context, {
+                                        required currentLength,
+                                        required isFocused,
+                                        required maxLength,
+                                      }) => Center(),
+                                  onTapOutside: (event) => FocusManager
+                                      .instance
+                                      .primaryFocus
+                                      ?.unfocus(),
+                                  controller: observacaoController,
+                                  maxLength: 100,
+                                  style: MyTypography.interRegular9,
+                                  decoration: InputDecoration(
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(11.r),
+                                      ),
+                                      borderSide: BorderSide(
+                                        color: MyColors.verde,
+                                        width: 1,
+                                      ),
+                                    ),
+                                    fillColor: Colors.black,
+                                    hintText:
+                                        "Ex: tirar cebola, sem pimenta...",
+                                    hintStyle: MyTypography.interRegular9,
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(11.r),
+                                      ),
+                                      borderSide: BorderSide(
+                                        color: Colors.white,
+                                        width: 1,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(height: 33.h),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Container(
+                                      // width: 102.w,
+                                      height: 36.h,
+                                      decoration: BoxDecoration(
+                                        color: MyColors.preto,
+                                        borderRadius: BorderRadius.circular(
+                                          11.r,
+                                        ),
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          IconButton(
+                                            onPressed: decrementarQuantidade,
+                                            icon: Icon(
+                                              Icons.remove,
+                                              color: Colors.white,
+                                              size: 16,
+                                            ),
+                                            padding: EdgeInsets.zero,
+                                            constraints: BoxConstraints(
+                                              minWidth: 24,
+                                              minHeight: 24,
+                                            ),
+                                          ),
+                                          // QUANTIDADE
+                                          Text(
+                                            quantidade.toString(),
+                                            style: TextStyle(
+                                              color: quantidade > 0
+                                                  ? MyColors.verde
+                                                  : Colors.white,
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 14.sp,
+                                            ),
+                                          ),
+
+                                          IconButton(
+                                            onPressed: incrementarQuantidade,
+                                            icon: Icon(
+                                              Icons.remove,
+                                              color: Colors.white,
+                                              size: 16,
+                                            ),
+                                            padding: EdgeInsets.zero,
+                                            constraints: BoxConstraints(
+                                              minWidth: 24,
+                                              minHeight: 24,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 31.h,
+                                      child: FilledButton(
+                                        onPressed: () => {},
+                                        style: FilledButton.styleFrom(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.all(Radius.circular(11.r)),
+                                          ),
+                                          backgroundColor: MyColors.verde,
+                                        ),
+                                        child: Text(
+                                          "Adicionar R\$ ${valorTotal.toStringAsFixed(2)}",
+                                          style: MyTypography.poppinsSemiBold11
+                                              .copyWith(color: Colors.black),
+                                        ),
                                       ),
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: 26.h),
-                                Container(
-                                  height: 33.h,
-                                  decoration: BoxDecoration(
-                                    color: MyColors.preto,
-                                    borderRadius: BorderRadius.circular(12.r),
-                                    border: Border.all(
-                                      color: Colors.white,
-                                      width: 1,
-                                    ),
-                                  ),
-                                  child: TextField(
-                                    controller: observacaoController,
-                                    maxLength: 100,
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 12.sp,
-                                      height: 1.2,
-                                    ),
-                                    decoration: InputDecoration(
-                                      labelText:
-                                      "Ex: tirar cebola, sem pimenta...",
-                                      labelStyle: TextStyle(
-                                        color: Colors.white60,
-                                        fontSize: 12.sp,
-                                      ),
-                                      alignLabelWithHint: true,
-                                      border: InputBorder.none,
-                                      contentPadding: EdgeInsets.symmetric(
-                                        horizontal: 10.r,
-                                        vertical: 4.r,
-                                      ),
-                                    ),
-                                    onChanged: (value) {
-                                      setState(() {});
-                                    },
-                                  ),
-                                ),
+                                SizedBox(height: 42.h,),
                               ],
                             ),
                           ),
-
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 25.0,
-                              vertical: 30,
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  width: 102.w,
-                                  height: 31.h,
-                                  decoration: BoxDecoration(
-                                    color: MyColors.preto,
-                                    borderRadius: BorderRadius.circular(11.r),
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      InkWell(
-                                        onTap: decrementarQuantidade,
-                                        borderRadius: BorderRadius.circular(15),
-                                        child: Container(
-                                          width: 24.w,
-                                          height: 24.h,
-                                          alignment: Alignment.center,
-                                          child: Text(
-                                            "-",
-                                            style: TextStyle(
-                                              color: quantidade > 0
-                                                  ? Colors.white
-                                                  : Colors.white54,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 16.sp,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      // QUANTIDADE
-                                      Text(
-                                        quantidade.toString(),
-                                        style: TextStyle(
-                                          color: quantidade > 0
-                                              ? MyColors.verde
-                                              : Colors.white,
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 14.sp,
-                                        ),
-                                      ),
-
-                                      InkWell(
-                                        onTap: incrementarQuantidade,
-                                        borderRadius: BorderRadius.circular(15),
-                                        child: Container(
-                                          width: 24.w,
-                                          height: 24.h,
-                                          alignment: Alignment.center,
-                                          child: Text(
-                                            "+",
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 16.sp,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-
-
-                                Button(
-                                  onPressed: () {},
-                                  backgroundColor: MyColors.verde,
-                                  borderRadius: 11.r,
-                                  width: 130.w,
-                                  height: 31.h,
-                                  textColor: Colors.black,
-                                  fontSize: 12.sp,
-                                  fontWeight: FontWeight.bold,
-                                  text:
-                                  "Adicionar R\$${valorTotal.toStringAsFixed(2)}",
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
+                    ],
                   ),
                 ),
               ],
             ),
           ),
-        ],
+        ),
       ),
     );
   }

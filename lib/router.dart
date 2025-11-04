@@ -56,6 +56,11 @@ final router = GoRouter(
       pageBuilder: (context, state) =>
           CupertinoPage(child: DetalheEventoPage()),
     ),
-
+    GoRoute(
+      path: DetalhePratoPage.routeName,
+      name: DetalhePratoPage.routeName,
+      pageBuilder: (context, state) =>
+          CupertinoPage(child: DetalhePratoPage()),
+    ),
   ],
 );

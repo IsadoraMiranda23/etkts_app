@@ -7,4 +7,5 @@ class AppState {
   static EventoHome? eventoSelecionado;
   static ValueNotifier<List<IngressoHome>> ingressosSelecionados = ValueNotifier([]);
   static ValueNotifier<List<CardapioHome>> cardapiosSelecionados = ValueNotifier([]);
+  static CardapioHome cardapioSelecionado = CardapioHome(id: 0);
 }

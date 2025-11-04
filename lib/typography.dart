@@ -15,6 +15,7 @@ class MyTypography {
   static final poppinsSemiBold13 = GoogleFonts.poppins().copyWith(fontSize: 13.sp, fontWeight: FontWeight.w600, color: Colors.white);
   static final poppinsSemiBold12 = GoogleFonts.poppins().copyWith(fontSize: 12.sp, fontWeight: FontWeight.w600, color: Colors.white);
   static final poppinsSemiBold11 = GoogleFonts.poppins().copyWith(fontSize: 11.sp, fontWeight: FontWeight.w600, color: Colors.white);
+  static final poppinsSemiBold10 = GoogleFonts.poppins().copyWith(fontSize: 10.sp, fontWeight: FontWeight.w600, color: Colors.white);
   static final poppinsSemiBold9 = GoogleFonts.poppins().copyWith(fontSize: 9.sp, fontWeight: FontWeight.w600, color: Colors.white);
   static final poppinsSemiBold8 = GoogleFonts.poppins().copyWith(fontSize: 8.sp, fontWeight: FontWeight.w600, color: Colors.white);
 

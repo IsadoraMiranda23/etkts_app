@@ -183,26 +183,6 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
                     children: renderCardapio(),
                   ),
                 ),
-                // GridView.builder(
-                //   shrinkWrap: true,
-                //   physics: const NeverScrollableScrollPhysics(),
-                //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                //     crossAxisCount: 2,
-                //     crossAxisSpacing: 25.w,
-                //     mainAxisSpacing: 15.h,
-                //     childAspectRatio: .75,
-                //   ),
-                //   itemCount: mapaCardapios[categoriaSelecionada]!.length,
-                //   itemBuilder: (context, index) {
-                //     final item = mapaCardapios[categoriaSelecionada]![index];
-                //     return ItemCardapioComponent(
-                //       leftSideRounded: index % 2 == 0,
-                //       rightSideRounded: index % 2 == 1,
-                //       item: item,
-                //       key: ValueKey(item.id),
-                //     );
-                //   },
-                // ),
                 SizedBox(height: 80.h),
               ],
             ),
@@ -550,7 +530,7 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
         backgroundColor: Colors.black,
         appBar: EventAppCarComponent(),
         body: Padding(
-          padding: EdgeInsets.only(top: 15.h, left: 11.w, right: 11.w),
+          padding: EdgeInsets.only(top: 15.h, left: 14.w, right: 14.w),
           child: Column(
             children: [
               // IMAGEM DO EVENTO
