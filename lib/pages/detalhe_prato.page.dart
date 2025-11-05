@@ -1,11 +1,12 @@
 import 'package:etkts_app/colors.dart';
+import 'package:etkts_app/components/cards/card_produto_carrinho.component.dart';
 import 'package:etkts_app/components/event_appbar.component.dart';
 import 'package:etkts_app/typography.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 import '../app_state.dart';
-import '../types.dart';
 
 class DetalhePratoPage extends StatefulWidget {
   const DetalhePratoPage({super.key});
@@ -19,42 +20,59 @@ class DetalhePratoPage extends StatefulWidget {
 }
 
 class _DetalhePratoPageState extends State<DetalhePratoPage> {
-  int quantidade = 0;
   TextEditingController observacaoController = TextEditingController();
-  CardapioHome item = CardapioHome(id: 0);
+  CardProdutoCarrinhoData item = CardProdutoCarrinhoData(
+    id: 0,
+    nome: "",
+    imagem: "",
+    valor: 0,
+    data: "",
+    quantidade: 0,
+    isIngresso: false,
+    descricao: "",
+  );
 
   @override
   void initState() {
     super.initState();
-    item = AppState.cardapioSelecionado;
-    quantidade = AppState.cardapiosSelecionados.value.where((element) => element.id == item.id).length;
+    if (AppState.itemsSelecionados.value.isNotEmpty) {
+      item = AppState.itemsSelecionados.value[AppState.itemSelecionado.id]!;
+    } else {
+      item = AppState.itemSelecionado;
+    }
   }
 
   double get valorTotal {
-    return (item.valor ?? 0.0) * quantidade;
+    return (item.valor) * item.quantidade;
   }
 
-  void incrementarQuantidade() {
+  void aumentarQuantidade() {
     setState(() {
-      quantidade++;
+      item.quantidade++;
     });
-    final cardapios = [...AppState.cardapiosSelecionados.value];
-    cardapios.add(item);
-    AppState.cardapiosSelecionados.value = cardapios;
+    final temp = {...AppState.itemsSelecionados.value};
+    if (!temp.containsKey(item.id)) {
+      temp.putIfAbsent(item.id, () => item);
+    } else {
+      temp.update(item.id, (_) => item);
+    }
+    AppState.itemsSelecionados.value = temp;
   }
 
-  void decrementarQuantidade() {
-    if (quantidade > 0) {
-      setState(() {
-        quantidade--;
-      });
-      final cardapios = [...AppState.cardapiosSelecionados.value];
-      final index = cardapios.lastIndexOf(item);
-      if (index != -1) {
-        cardapios.removeAt(index);
+  void diminuirQuantidade() {
+    setState(() {
+      if (item.quantidade > 0) {
+        item.quantidade--;
       }
-      AppState.cardapiosSelecionados.value = cardapios;
+    });
+    final temp = {...AppState.itemsSelecionados.value};
+    if (item.quantidade > 0) {
+      assert(temp.containsKey(item.id), "itemsSelecionados não tem id");
+      temp.update(item.id, (_) => item);
+    } else {
+      temp.removeWhere((key, _) => key == item.id);
     }
+    AppState.itemsSelecionados.value = temp;
   }
 
   @override
@@ -94,11 +112,10 @@ class _DetalhePratoPageState extends State<DetalhePratoPage> {
                             topRight: Radius.circular(42.r),
                           ),
                           image:
-                              item.imagem != null &&
-                                  item.imagem!.isNotEmpty &&
-                                  item.imagem!.startsWith("http")
+                              item.imagem.isNotEmpty &&
+                                  item.imagem.startsWith("http")
                               ? DecorationImage(
-                                  image: NetworkImage(item.imagem ?? ""),
+                                  image: NetworkImage(item.imagem),
                                   fit: BoxFit.cover,
                                 )
                               : null,
@@ -139,7 +156,7 @@ class _DetalhePratoPageState extends State<DetalhePratoPage> {
                                       children: [
                                         Expanded(
                                           child: Text(
-                                            item.nome ?? "",
+                                            item.nome,
                                             style:
                                                 MyTypography.poppinsSemiBold15,
                                             maxLines: 1,
@@ -166,7 +183,7 @@ class _DetalhePratoPageState extends State<DetalhePratoPage> {
                                           ),
                                           child: Center(
                                             child: Text(
-                                              "R\$${(item.valor ?? 0.0).toStringAsFixed(2)}",
+                                              "R\$${(item.valor).toStringAsFixed(2)}",
                                               style: MyTypography
                                                   .poppinsSemiBold15,
                                             ),
@@ -178,7 +195,7 @@ class _DetalhePratoPageState extends State<DetalhePratoPage> {
                                 ),
                                 SizedBox(height: 21.h),
                                 Text(
-                                  item.descricao ?? "",
+                                  item.descricao,
                                   style: MyTypography.interRegular10,
                                 ),
                                 Spacer(),
@@ -260,7 +277,7 @@ class _DetalhePratoPageState extends State<DetalhePratoPage> {
                                             MainAxisAlignment.spaceEvenly,
                                         children: [
                                           IconButton(
-                                            onPressed: decrementarQuantidade,
+                                            onPressed: diminuirQuantidade,
                                             icon: Icon(
                                               Icons.remove,
                                               color: Colors.white,
@@ -274,9 +291,9 @@ class _DetalhePratoPageState extends State<DetalhePratoPage> {
                                           ),
                                           // QUANTIDADE
                                           Text(
-                                            quantidade.toString(),
+                                            item.quantidade.toString(),
                                             style: TextStyle(
-                                              color: quantidade > 0
+                                              color: item.quantidade > 0
                                                   ? MyColors.verde
                                                   : Colors.white,
                                               fontWeight: FontWeight.w600,
@@ -285,9 +302,9 @@ class _DetalhePratoPageState extends State<DetalhePratoPage> {
                                           ),
 
                                           IconButton(
-                                            onPressed: incrementarQuantidade,
+                                            onPressed: aumentarQuantidade,
                                             icon: Icon(
-                                              Icons.remove,
+                                              Icons.add,
                                               color: Colors.white,
                                               size: 16,
                                             ),
@@ -303,10 +320,14 @@ class _DetalhePratoPageState extends State<DetalhePratoPage> {
                                     SizedBox(
                                       height: 31.h,
                                       child: FilledButton(
-                                        onPressed: () => {},
+                                        onPressed: () {
+                                          context.pop();
+                                        },
                                         style: FilledButton.styleFrom(
                                           shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.all(Radius.circular(11.r)),
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(11.r),
+                                            ),
                                           ),
                                           backgroundColor: MyColors.verde,
                                         ),
@@ -319,7 +340,7 @@ class _DetalhePratoPageState extends State<DetalhePratoPage> {
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: 42.h,),
+                                SizedBox(height: 42.h),
                               ],
                             ),
                           ),

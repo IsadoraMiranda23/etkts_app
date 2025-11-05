@@ -9,7 +9,7 @@ import 'package:etkts_app/colors.dart';
 class EfetuarPagamentoPage extends StatefulWidget {
   const EfetuarPagamentoPage({super.key});
 
-  static const routeName = '/efetuarPagamento';
+  static const routeName = '/efetuar_pagamento';
 
   @override
   State<EfetuarPagamentoPage> createState() => _EfetuarPagamentoPageState();

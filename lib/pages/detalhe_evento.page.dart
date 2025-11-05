@@ -2,15 +2,18 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:etkts_app/app_state.dart';
 import 'package:etkts_app/colors.dart';
 import 'package:etkts_app/components/cards/card_detalhe_produto_evento.component.dart';
+import 'package:etkts_app/components/cards/card_produto_carrinho.component.dart';
 import 'package:etkts_app/components/cards/item_amigo.component.dart';
 import 'package:etkts_app/components/cards/item_cardapio.component.dart';
 import 'package:etkts_app/components/cards/status_detalhe_evento.component.dart';
 import 'package:etkts_app/components/event_appbar.component.dart';
 import 'package:etkts_app/components/rodape/rodape_navigation.component.dart';
 import 'package:etkts_app/extensions/string.extension.dart';
+import 'package:etkts_app/pages/carrinho.page.dart';
 import 'package:etkts_app/typography.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_static_maps_controller/google_static_maps_controller.dart'
     as stat;
 
@@ -39,7 +42,6 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
   ScrollController scrollIngresso = ScrollController();
   ScrollController scrollCardapio = ScrollController();
   ScrollController scrollAmigos = ScrollController();
-  CarouselController controller = CarouselController(initialItem: 0);
   CarouselSliderController controller2 = CarouselSliderController();
 
   @override
@@ -58,14 +60,10 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
       }
       categoriaSelecionada = mapaCardapios.keys.first;
     }
-    controller.addListener(() {
-      print("opa");
-    });
   }
 
   @override
   void dispose() {
-    controller.dispose();
     super.dispose();
   }
 
@@ -100,7 +98,16 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
             child: ItemCardapioComponent(
               leftSideRounded: index % 2 == 0,
               rightSideRounded: index % 2 == 1,
-              item: item,
+              item: CardProdutoCarrinhoData(
+                id: item.id.toInt(),
+                nome: item.nome ?? "",
+                imagem: item.imagem ?? "",
+                valor: item.valor ?? 0,
+                data: "",
+                quantidade: AppState.itemsSelecionados.value[item.id]?.quantidade ?? 0,
+                isIngresso: false,
+                descricao: item.descricao ?? "",
+              ),
               key: ValueKey(item.id),
             ),
           ),
@@ -191,7 +198,7 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
         SizedBox(height: 10.h),
         // CONTAINER FIXO DO TOTAL E PAGAR
         ValueListenableBuilder(
-          valueListenable: AppState.cardapiosSelecionados,
+          valueListenable: AppState.itemsSelecionados,
           builder: (context, value, child) {
             return Container(
               padding: const EdgeInsets.all(8),
@@ -207,7 +214,7 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
                     children: [
                       Text("Total", style: MyTypography.interRegular10),
                       Text(
-                        "R\$${value.fold(0.0, (prev, element) => prev + (element.valor ?? 0.0)).toStringAsFixed(2)}",
+                        "R\$${value.values.fold(0.0, (prev, element) => prev + (element.valor * element.quantidade)).toStringAsFixed(2)}",
                         style: MyTypography.poppinsSemiBold11,
                       ),
                     ],
@@ -215,7 +222,7 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
                   SizedBox(
                     height: 30.h,
                     child: FilledButton(
-                      onPressed: () {},
+                      onPressed: () => context.push(CarrinhoPage.routeName),
                       style: FilledButton.styleFrom(
                         backgroundColor: MyColors.verde,
                         shape: RoundedRectangleBorder(
@@ -349,8 +356,16 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
                   itemBuilder: (_, index) {
                     final ingresso = evento.ingressoDetalhes![index];
                     return CardDetalheEventoComponent(
-                      ingresso: ingresso,
-                      eventoImagem: evento.imagem,
+                      item: CardProdutoCarrinhoData(
+                        id: ingresso.id.toInt(),
+                        nome: ingresso.nome ?? "",
+                        imagem: evento.imagem ?? "",
+                        valor: ingresso.valor ?? 0,
+                        data: ingresso.data ?? "",
+                        quantidade: AppState.itemsSelecionados.value[ingresso.id]?.quantidade ?? 0,
+                        isIngresso: true,
+                        descricao: "",
+                      ),
                     );
                   },
                   separatorBuilder: (_, index) => SizedBox(height: 35.h),
@@ -416,7 +431,7 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
         SizedBox(height: 11.h),
         // CONTAINER FIXO DO TOTAL E PAGAR
         ValueListenableBuilder(
-          valueListenable: AppState.ingressosSelecionados,
+          valueListenable: AppState.itemsSelecionados,
           builder: (context, value, child) {
             return Container(
               padding: const EdgeInsets.all(8),
@@ -432,7 +447,7 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
                     children: [
                       Text("Total", style: MyTypography.interRegular10),
                       Text(
-                        "R\$${value.fold(0.0, (prev, element) => prev + (element.valor ?? 0.0)).toStringAsFixed(2)}",
+                        "R\$${value.values.fold(0.0, (prev, element) => prev + (element.valor * element.quantidade)).toStringAsFixed(2)}",
                         style: MyTypography.poppinsSemiBold11,
                       ),
                     ],
@@ -440,7 +455,7 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
                   SizedBox(
                     height: 30.h,
                     child: FilledButton(
-                      onPressed: () {},
+                      onPressed: () => context.push(CarrinhoPage.routeName),
                       style: FilledButton.styleFrom(
                         backgroundColor: MyColors.verde,
                         shape: RoundedRectangleBorder(
@@ -476,8 +491,7 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
         Expanded(
           child: GestureDetector(
             onTap: () {
-              AppState.ingressosSelecionados.value = [];
-              AppState.cardapiosSelecionados.value = [];
+              AppState.itemsSelecionados.value = {};
               setState(() {
                 abaSelecionada = index;
               });
@@ -495,7 +509,9 @@ class _DetalheEventoPageState extends State<DetalheEventoPage> {
               child: Text(
                 abas[index],
                 style: TextStyle(
-                  color: abaSelecionada == index ? MyColors.verde : Colors.white,
+                  color: abaSelecionada == index
+                      ? MyColors.verde
+                      : Colors.white,
                   fontWeight: FontWeight.bold,
                   fontSize: 14,
                 ),

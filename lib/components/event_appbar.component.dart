@@ -39,24 +39,25 @@ class EventAppCarComponent extends StatelessWidget
             ),
             InkWell(
               onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => CarrinhoPage()),);
+                context.push(CarrinhoPage.routeName);
               },
               child: ValueListenableBuilder(
-                valueListenable: AppState.cardapiosSelecionados,
+                valueListenable: AppState.itemsSelecionados,
                 builder: (context, value, child) {
                   return Badge(
-                    label: Text(value.length.toString()),
+                    label: Text(value.values.fold(0, (prev, curr) => prev + curr.quantidade).toString()),
                     backgroundColor: MyColors.roxo,
                     child: SvgPicture.asset(
                       'assets/icons/shopping_cart.svg',
                       height: 22.h,
                       width: 22.w,
-                      colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                      colorFilter: ColorFilter.mode(
+                        Colors.white,
+                        BlendMode.srcIn,
+                      ),
                     ),
                   );
-                }
+                },
               ),
             ),
           ],

@@ -21,8 +21,7 @@ class AppBarComponent extends StatelessWidget implements PreferredSizeWidget {
           icon: Image.asset("assets/icons/voltarBranco.png"),
           onPressed: () {
             AppState.eventoSelecionado = null;
-            AppState.ingressosSelecionados.value = [];
-            AppState.cardapiosSelecionados.value = [];
+            AppState.itemsSelecionados.value = {};
             context.pop();
           },
         ),

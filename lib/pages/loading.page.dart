@@ -1,5 +1,6 @@
 import 'package:etkts_app/pages/pages.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
 class LoadingPage extends StatefulWidget {
@@ -37,8 +38,8 @@ class _LoadingPageState extends State<LoadingPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Image.asset(
-              'assets/logos/logoBrancoCompleto.png',
+            SvgPicture.asset(
+              'assets/icons/logo_branco.svg',
               width: 156,
               height: 128,
             ),

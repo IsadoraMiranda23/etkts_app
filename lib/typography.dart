@@ -21,6 +21,7 @@ class MyTypography {
 
   static final interRegular13 = GoogleFonts.inter().copyWith(fontSize: 13.sp, fontWeight: FontWeight.w400, color: Colors.white);
   static final interRegular12 = GoogleFonts.inter().copyWith(fontSize: 12.sp, fontWeight: FontWeight.w400, color: Colors.white);
+  static final interRegular11 = GoogleFonts.inter().copyWith(fontSize: 11.sp, fontWeight: FontWeight.w400, color: Colors.white);
   static final interRegular10 = GoogleFonts.inter().copyWith(fontSize: 10.sp, fontWeight: FontWeight.w400, color: Colors.white);
   static final interRegular9 = GoogleFonts.inter().copyWith(fontSize: 9.sp, fontWeight: FontWeight.w400, color: Colors.white);
   static final interRegular8 = GoogleFonts.inter().copyWith(fontSize: 8.sp, fontWeight: FontWeight.w400, color: Colors.white);

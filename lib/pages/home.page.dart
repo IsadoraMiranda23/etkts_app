@@ -1,5 +1,7 @@
+import 'package:etkts_app/app_state.dart';
 import 'package:etkts_app/components/cards/carrossel.component.dart';
 import 'package:etkts_app/colors.dart';
+import 'package:etkts_app/components/drawer/login.componente.dart';
 import 'package:etkts_app/components/home_appbar.component.dart';
 import 'package:etkts_app/components/home_button.component.dart';
 import 'package:etkts_app/components/rodape_button.component.dart';
@@ -209,7 +211,15 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
         backgroundColor: Colors.black,
         appBar: HomeAppBarComponent(),
-        drawer: const DrawerComponente(),
+        drawer: ValueListenableBuilder(
+          valueListenable: AppState.isLogged,
+          builder: (context, value, child) {
+            if (value) {
+              return DrawerComponente();
+            }
+            return LoginComponent();
+          }
+        ),
         body: renderHome(),
       ),
     );

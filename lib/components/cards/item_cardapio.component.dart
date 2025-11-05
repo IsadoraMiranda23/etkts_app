@@ -1,7 +1,7 @@
 import 'package:etkts_app/app_state.dart';
 import 'package:etkts_app/colors.dart';
+import 'package:etkts_app/components/cards/card_produto_carrinho.component.dart';
 import 'package:etkts_app/pages/detalhe_prato.page.dart';
-import 'package:etkts_app/types.dart';
 import 'package:etkts_app/typography.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,7 +10,7 @@ import 'package:go_router/go_router.dart';
 class ItemCardapioComponent extends StatefulWidget {
   final bool leftSideRounded;
   final bool rightSideRounded;
-  final CardapioHome item;
+  final CardProdutoCarrinhoData item;
 
   const ItemCardapioComponent({
     super.key,
@@ -24,37 +24,48 @@ class ItemCardapioComponent extends StatefulWidget {
 }
 
 class _ItemCardapioComponentState extends State<ItemCardapioComponent> {
-  int quantidade = 0;
+  late CardProdutoCarrinhoData item;
 
   @override
   void initState() {
     super.initState();
-    quantidade = AppState.cardapiosSelecionados.value.where((element) => widget.item.id == element.id).length;
+    item = widget.item;
   }
 
-  void incrementarQuantidade() {
+  void aumentarQuantidade() {
     setState(() {
-      quantidade++;
+      item.quantidade++;
     });
-    final cardapios = [...AppState.cardapiosSelecionados.value];
-    cardapios.add(widget.item);
-    AppState.cardapiosSelecionados.value = cardapios;
+    final temp = {...AppState.itemsSelecionados.value};
+    if (!temp.containsKey(item.id)) {
+      temp.putIfAbsent(item.id, () => item);
+    } else {
+      temp.update(item.id, (_) => item);
+    }
+    AppState.itemsSelecionados.value = temp;
   }
 
-  void decrementarQuantidade() {
-    if (quantidade > 0) {
-      setState(() {
-        quantidade--;
-      });
-      final cardapios = [...AppState.cardapiosSelecionados.value];
-      cardapios.remove(widget.item);
-      AppState.cardapiosSelecionados.value = cardapios;
+  void diminuirQuantidade() {
+    setState(() {
+      if (item.quantidade > 0) {
+        item.quantidade--;
+      }
+    });
+    final temp = {...AppState.itemsSelecionados.value};
+    if (item.quantidade > 0) {
+      assert(temp.containsKey(widget.item.id), "itemsSelecionados não tem id");
+      temp.update(item.id, (_) => item);
+    } else {
+      temp.removeWhere((key, _) => key == item.id);
     }
+    AppState.itemsSelecionados.value = temp;
   }
 
   BorderRadius getBorderRadius() {
     return BorderRadius.only(
-      topLeft: widget.rightSideRounded ? const Radius.circular(25) : Radius.zero,
+      topLeft: widget.rightSideRounded
+          ? const Radius.circular(25)
+          : Radius.zero,
       topRight: widget.leftSideRounded
           ? const Radius.circular(25)
           : Radius.zero,
@@ -69,8 +80,8 @@ class _ItemCardapioComponentState extends State<ItemCardapioComponent> {
 
   String renderItemDescription() {
     var ret = "";
-    if (widget.item.descricao != null) {
-      var split = widget.item.descricao!.split(" ");
+    if (item.descricao.isNotEmpty) {
+      var split = item.descricao.split(" ");
       for (var index = 0; index < split.length; index++) {
         ret += '${split[index]} ';
         if (index == 1) break;
@@ -88,8 +99,8 @@ class _ItemCardapioComponentState extends State<ItemCardapioComponent> {
         // IMAGEM DO ITEM
         GestureDetector(
           onTap: () {
-            AppState.cardapioSelecionado = widget.item;
-            context.push(DetalhePratoPage.goToRoute(widget.item.id.toInt()));
+            AppState.itemSelecionado = item;
+            context.push(DetalhePratoPage.goToRoute(item.id.toInt()));
           },
           child: Container(
             // width: 160.w,
@@ -97,10 +108,14 @@ class _ItemCardapioComponentState extends State<ItemCardapioComponent> {
             decoration: BoxDecoration(
               color: Colors.grey[800],
               borderRadius: getBorderRadius(),
-              image: widget.item.imagem != null && widget.item.imagem!.isNotEmpty && widget.item.imagem!.startsWith("http") ? DecorationImage(
-                image: NetworkImage(widget.item.imagem ?? ""),
-                fit: BoxFit.cover,
-              ) : null,
+              image:
+                  item.imagem.isNotEmpty &&
+                      item.imagem.startsWith("http")
+                  ? DecorationImage(
+                      image: NetworkImage(item.imagem),
+                      fit: BoxFit.cover,
+                    )
+                  : null,
             ),
           ),
         ),
@@ -115,7 +130,7 @@ class _ItemCardapioComponentState extends State<ItemCardapioComponent> {
               children: [
                 Expanded(
                   child: Text(
-                    widget.item.nome ?? "",
+                    item.nome,
                     style: MyTypography.poppinsSemiBold9,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
@@ -123,7 +138,7 @@ class _ItemCardapioComponentState extends State<ItemCardapioComponent> {
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  "R\$${(widget.item.valor ?? 0.0).toStringAsFixed(2)}",
+                  "R\$${(item.valor).toStringAsFixed(2)}",
                   style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -155,7 +170,7 @@ class _ItemCardapioComponentState extends State<ItemCardapioComponent> {
                     children: [
                       // BOTÃO DIMINUIR
                       InkWell(
-                        onTap: decrementarQuantidade,
+                        onTap: diminuirQuantidade,
                         borderRadius: BorderRadius.circular(15.r),
                         child: Container(
                           width: 24.w,
@@ -164,7 +179,7 @@ class _ItemCardapioComponentState extends State<ItemCardapioComponent> {
                           child: Text(
                             "-",
                             style: TextStyle(
-                              color: quantidade > 0
+                              color: item.quantidade > 0
                                   ? Colors.white
                                   : Colors.white54,
                               fontWeight: FontWeight.bold,
@@ -174,21 +189,17 @@ class _ItemCardapioComponentState extends State<ItemCardapioComponent> {
                         ),
                       ),
                       // QUANTIDADE
-                      ValueListenableBuilder(
-                        valueListenable: AppState.cardapiosSelecionados,
-                        builder: (context, value, child) {
-                          final q = value.where((element) => element.id == widget.item.id).length;
-                          return Text(
-                            q.toString(),
-                            style: MyTypography.poppinsSemiBold13.copyWith(
-                              color: q > 0 ? MyColors.verde : Colors.white
-                            ),
-                          );
-                        }
+                      Text(
+                        item.quantidade.toString(),
+                        style: MyTypography.poppinsSemiBold13.copyWith(
+                          color: item.quantidade > 0
+                              ? MyColors.verde
+                              : Colors.white,
+                        ),
                       ),
                       // BOTÃO AUMENTAR
                       InkWell(
-                        onTap: incrementarQuantidade,
+                        onTap: aumentarQuantidade,
                         borderRadius: BorderRadius.circular(15),
                         child: Container(
                           width: 24.w,

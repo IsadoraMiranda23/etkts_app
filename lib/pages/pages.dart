@@ -1,4 +1,7 @@
 export 'cadastro.page.dart';
+export 'carrinho.page.dart';
+export 'detalhe_evento.page.dart';
+export 'detalhe_prato.page.dart';
 export 'efetuar_pagamento.page.dart';
 export 'esqueceu_senha.page.dart';
 export 'home.page.dart';
@@ -6,4 +9,3 @@ export 'loading.page.dart';
 export 'login.page.dart';
 export 'notificacoes.page.dart';
 export 'termos_e_condicoes.page.dart';
-export 'detalhe_prato.page.dart';

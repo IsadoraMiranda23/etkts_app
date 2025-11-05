@@ -54,16 +54,6 @@ class CardEventoComponente extends StatelessWidget {
               color: MyColors.cinza,
               borderRadius: getBorderRadius(),
             ),
-            // child: evento.imagem != null && evento.imagem!.isNotEmpty && evento.imagem!.startsWith("http") ? Image.network(
-            //   evento.imagem!,
-            //   width: 160,
-            //   height: 133,
-            //   fit: BoxFit.cover,
-            // ) : Container(
-            //   width: 160,
-            //   height: 133,
-            //   color: MyColors.cinza,
-            // ),
           ),
           Padding(
             padding: EdgeInsets.only(left: 11.w, top: 15.h),

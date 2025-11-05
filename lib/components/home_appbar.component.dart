@@ -1,3 +1,4 @@
+import 'package:etkts_app/app_state.dart';
 import 'package:etkts_app/typography.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -18,15 +19,18 @@ class _HomeAppBarComponentState extends State<HomeAppBarComponent> {
   bool searchExpanded = false;
   TextEditingController searchController = TextEditingController();
 
-  List<Widget> renderBalance() {
+  List<Widget> renderBalance(bool isLogged) {
     return [
+      if (isLogged)
       Image.asset(
         'assets/images/userAvatar.png',
         width: 39.w,
         height: 39.h,
         fit: BoxFit.contain,
       ),
+      if (isLogged)
       SizedBox(width: 9.w),
+      if (isLogged)
       Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -38,7 +42,9 @@ class _HomeAppBarComponentState extends State<HomeAppBarComponent> {
           ),
         ],
       ),
+      if (isLogged)
       SizedBox(width: 8.w),
+      if (isLogged)
       Align(
         alignment: Alignment.bottomCenter,
         child: Padding(
@@ -102,27 +108,32 @@ class _HomeAppBarComponentState extends State<HomeAppBarComponent> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      height: widget.preferredSize.height,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          GestureDetector(
-            onTap: () {
-              Scaffold.of(context).openDrawer();
-            },
-            behavior: HitTestBehavior.translucent,
-            child: SizedBox(
-              width: 43.w,
-              height: double.infinity,
-              child: Icon(Icons.menu, color: Colors.white),
-            ),
+    return ValueListenableBuilder(
+      valueListenable: AppState.isLogged,
+      builder: (context, value, child) {
+        return SizedBox(
+          width: double.infinity,
+          height: widget.preferredSize.height,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  Scaffold.of(context).openDrawer();
+                },
+                behavior: HitTestBehavior.translucent,
+                child: SizedBox(
+                  width: 43.w,
+                  height: double.infinity,
+                  child: Icon(Icons.menu, color: Colors.white),
+                ),
+              ),
+              if (!searchExpanded) ...renderBalance(value),
+              if (searchExpanded) ...renderSearch(),
+            ],
           ),
-          if (!searchExpanded) ...renderBalance(),
-          if (searchExpanded) ...renderSearch(),
-        ],
-      ),
+        );
+      }
     );
   }
 }

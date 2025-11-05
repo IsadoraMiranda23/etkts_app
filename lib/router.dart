@@ -1,6 +1,3 @@
-
-import 'package:etkts_app/pages/detalhe_evento.page.dart';
-
 import 'package:etkts_app/pages/pages.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
@@ -61,6 +58,12 @@ final router = GoRouter(
       name: DetalhePratoPage.routeName,
       pageBuilder: (context, state) =>
           CupertinoPage(child: DetalhePratoPage()),
+    ),
+    GoRoute(
+      path: CarrinhoPage.routeName,
+      name: CarrinhoPage.routeName,
+      pageBuilder: (context, state) =>
+          CupertinoPage(child: CarrinhoPage()),
     ),
   ],
 );

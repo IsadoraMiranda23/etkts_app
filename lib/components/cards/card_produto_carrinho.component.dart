@@ -1,166 +1,205 @@
 import 'package:etkts_app/colors.dart';
+import 'package:etkts_app/extensions/string.extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:etkts_app/app_state.dart';
+import 'package:etkts_app/typography.dart';
+import 'package:stroke_text/stroke_text.dart';
 
 String formatarData(DateTime data) {
   return '${data.day.toString().padLeft(2, '0')}/${data.month.toString().padLeft(2, '0')}/${data.year}';
 }
 
-class CardProdutoCarrinhoComponent extends StatefulWidget {
-  final String nomePrato;
-  final double valorPrato;
-  final DateTime dataEvento;
+class CardProdutoCarrinhoData {
+  final int id;
+  final String nome;
+  final String imagem;
+  final double valor;
+  final String data;
+  final String descricao;
+  int quantidade;
+  final bool isIngresso;
 
-  const CardProdutoCarrinhoComponent({
-    super.key,
-    this.nomePrato = "Nome Prato",
-    this.valorPrato = 0.0,
-    required this.dataEvento,
+  CardProdutoCarrinhoData({
+    required this.id,
+    required this.nome,
+    required this.imagem,
+    required this.valor,
+    required this.data,
+    required this.quantidade,
+    required this.isIngresso,
+    required this.descricao,
   });
+}
+
+class CardProdutoCarrinhoComponent extends StatefulWidget {
+  const CardProdutoCarrinhoComponent({super.key, required this.item});
+
+  final CardProdutoCarrinhoData item;
 
   @override
   State<CardProdutoCarrinhoComponent> createState() =>
-      _CardProdutoCarrinhoComponentState();
+      CardProdutoCarrinhoComponentState();
 }
 
-class _CardProdutoCarrinhoComponentState
+class CardProdutoCarrinhoComponentState
     extends State<CardProdutoCarrinhoComponent> {
-  int quantidade = 0;
-  void incrementarQuantidade() {
-    setState(() {
-      quantidade++;
-    });
+  late CardProdutoCarrinhoData item;
+
+  @override
+  void initState() {
+    super.initState();
+    item = widget.item;
   }
 
-  void decrementarQuantidade() {
-    if (quantidade > 0) {
-      setState(() {
-        quantidade--;
-      });
+  void aumentarQuantidade() {
+    setState(() {
+      item.quantidade++;
+    });
+    final temp = {...AppState.itemsSelecionados.value};
+    if (!temp.containsKey(item.id)) {
+      temp.putIfAbsent(item.id, () => item);
+    } else {
+      temp.update(item.id, (_) => item);
     }
+    AppState.itemsSelecionados.value = temp;
+  }
+
+  void diminuirQuantidade() {
+    setState(() {
+      if (item.quantidade > 0) {
+        item.quantidade--;
+      }
+    });
+    final temp = {...AppState.itemsSelecionados.value};
+    if (item.quantidade > 0) {
+      assert(temp.containsKey(widget.item.id), "itemsSelecionados não tem id");
+      temp.update(item.id, (_) => item);
+    } else {
+      temp.removeWhere((key, _) => key == item.id);
+    }
+    AppState.itemsSelecionados.value = temp;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 367.w,
-      height: 70.h,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(30.r),
-          bottomLeft: Radius.circular(30.r),
-          topRight: Radius.circular(11.r),
-          bottomRight: Radius.circular(11.r),
-        ),
-        border: Border.all(color: MyColors.cinzaEscuro,width: 2.50),
-      ),
-      child: Row(
+    return SizedBox(
+      width: double.infinity,
+      height: 69.h,
+      child: Stack(
         children: [
           Container(
+            width: double.infinity,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30.r),
-                bottomLeft: Radius.circular(30.r),
-                topRight: Radius.zero,
-                bottomRight: Radius.zero,
-              )
+                topLeft: Radius.circular(100),
+                bottomLeft: Radius.circular(100),
+                topRight: Radius.circular(11.r),
+                bottomRight: Radius.circular(11.r),
+              ),
+              border: Border.all(color: MyColors.cinzaEscuro, width: 2),
             ),
-            child: Image.asset("assets/images/fotoCardapio2.png",
+            child: Row(
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsetsGeometry.only(left: 105.w),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        StrokeText(
+                          text: widget.item.nome,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          textStyle: MyTypography.poppinsSemiBold13,
+                          strokeColor: MyColors.cinzaEscuro,
+                          strokeWidth: 1,
+                        ),
+                        StrokeText(
+                          text: "R\$ ${widget.item.valor.toStringAsFixed(2)}",
+                          textStyle: MyTypography.interSemiBold9,
+                          strokeColor: MyColors.cinzaEscuro,
+                          strokeWidth: 1,
+                        ),
+                        StrokeText(
+                          text: widget.item.data.isNotEmpty
+                              ? widget.item.data.formatDateString
+                              : "",
+                          textStyle: MyTypography.interRegular8,
+                          strokeColor: MyColors.cinzaEscuro,
+                          strokeWidth: 1,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(width: 17.w),
+                Center(
+                  child: Container(
+                    height: 31.h,
+                    decoration: BoxDecoration(
+                      color: MyColors.cinzaEscuro,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        IconButton(
+                          onPressed: diminuirQuantidade,
+                          icon: Icon(
+                            Icons.remove,
+                            color: Colors.white,
+                            size: 16,
+                          ),
+                          padding: EdgeInsets.zero,
+                          constraints: BoxConstraints(
+                            minWidth: 24,
+                            minHeight: 24,
+                          ),
+                        ),
+                        Text(
+                          item.quantidade.toString(),
+                          style: TextStyle(
+                            color: item.quantidade == 0
+                                ? Colors.white
+                                : MyColors.verde,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: aumentarQuantidade,
+                          icon: Icon(Icons.add, color: Colors.white, size: 16),
+                          padding: EdgeInsets.zero,
+                          constraints: BoxConstraints(
+                            minWidth: 24,
+                            minHeight: 24,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(width: 21.w),
+              ],
             ),
           ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(left: 18.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    widget.nomePrato,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  SizedBox(height: 4.h),
-                  Text(
-                    'R\$ ${widget.valorPrato.toStringAsFixed(2)}',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  SizedBox(height: 4.h),
-                  Text(
-                    formatarData(widget.dataEvento),
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ],
+          Container(
+            width: 89.w,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.elliptical(26.r, 13.r),
+                bottomLeft: Radius.elliptical(26.r, 13.r),
               ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(right: 8.0),
-            child: Container(
-              width: 106.w,
-              height: 31.h,
-              decoration: BoxDecoration(
-                color: MyColors.cinzaEscuro,
-                borderRadius: BorderRadius.circular(11.r),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  InkWell(
-                    onTap: decrementarQuantidade,
-                    borderRadius: BorderRadius.circular(15),
-                    child: Container(
-                      width: 24,
-                      height: 24,
-                      alignment: Alignment.center,
-                      child: Text(
-                        "-",
-                        style: TextStyle(
-                          color: quantidade > 0 ? Colors.white : Colors.white54,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Text(
-                    quantidade.toString(),
-                    style: TextStyle(
-                      color: quantidade > 0 ? MyColors.verde : Colors.white54,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 16,
-                    ),
-                  ),
-                  InkWell(
-                    onTap: incrementarQuantidade,
-                    borderRadius: BorderRadius.circular(15),
-                    child: Container(
-                      width: 24,
-                      height: 24,
-                      alignment: Alignment.center,
-                      child: const Text(
-                        "+",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              image:
+                  widget.item.imagem.isNotEmpty &&
+                      widget.item.imagem.startsWith("http")
+                  ? DecorationImage(
+                      image: NetworkImage(widget.item.imagem),
+                      fit: BoxFit.cover,
+                    )
+                  : null,
+              color: MyColors.cinza,
             ),
           ),
         ],

@@ -1,21 +1,16 @@
 import 'package:etkts_app/app_state.dart';
 import 'package:etkts_app/colors.dart';
+import 'package:etkts_app/components/cards/card_produto_carrinho.component.dart';
 import 'package:etkts_app/extensions/string.extension.dart';
-import 'package:etkts_app/types.dart';
 import 'package:etkts_app/typography.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stroke_text/stroke_text.dart';
 
 class CardDetalheEventoComponent extends StatefulWidget {
-  const CardDetalheEventoComponent({
-    super.key,
-    required this.ingresso,
-    required this.eventoImagem,
-  });
+  const CardDetalheEventoComponent({super.key, required this.item});
 
-  final IngressoHome ingresso;
-  final String? eventoImagem;
+  final CardProdutoCarrinhoData item;
 
   @override
   State<CardDetalheEventoComponent> createState() =>
@@ -24,26 +19,41 @@ class CardDetalheEventoComponent extends StatefulWidget {
 
 class _CardDetalheEventoComponentState
     extends State<CardDetalheEventoComponent> {
-  int quantidade = 0;
+  late CardProdutoCarrinhoData item;
+
+  @override
+  void initState() {
+    super.initState();
+    item = widget.item;
+  }
 
   void aumentarQuantidade() {
     setState(() {
-      quantidade++;
+      item.quantidade++;
     });
-    final ingressos = [...AppState.ingressosSelecionados.value];
-    ingressos.add(widget.ingresso);
-    AppState.ingressosSelecionados.value = ingressos;
+    final temp = {...AppState.itemsSelecionados.value};
+    if (!temp.containsKey(item.id)) {
+      temp.putIfAbsent(item.id, () => item);
+    } else {
+      temp.update(item.id, (_) => item);
+    }
+    AppState.itemsSelecionados.value = temp;
   }
 
   void diminuirQuantidade() {
     setState(() {
-      if (quantidade > 0) {
-        quantidade--;
+      if (item.quantidade > 0) {
+        item.quantidade--;
       }
     });
-    final ingressos = [...AppState.ingressosSelecionados.value];
-    ingressos.remove(widget.ingresso);
-    AppState.ingressosSelecionados.value = ingressos;
+    final temp = {...AppState.itemsSelecionados.value};
+    if (item.quantidade > 0) {
+      assert(temp.containsKey(widget.item.id), "itemsSelecionados não tem id");
+      temp.update(item.id, (_) => item);
+    } else {
+      temp.removeWhere((key, _) => key == item.id);
+    }
+    AppState.itemsSelecionados.value = temp;
   }
 
   @override
@@ -73,23 +83,22 @@ class _CardDetalheEventoComponentState
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         StrokeText(
-                          text: widget.ingresso.nome ?? "",
-                          maxLines: 2,
+                          text: widget.item.nome,
+                          maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           textStyle: MyTypography.poppinsSemiBold13,
                           strokeColor: MyColors.cinzaEscuro,
                           strokeWidth: 1,
                         ),
                         StrokeText(
-                          text:
-                              "R\$ ${widget.ingresso.valor?.toStringAsFixed(2) ?? 0.00}",
+                          text: "R\$ ${widget.item.valor.toStringAsFixed(2)}",
                           textStyle: MyTypography.interSemiBold9,
                           strokeColor: MyColors.cinzaEscuro,
                           strokeWidth: 1,
                         ),
                         StrokeText(
-                          text: widget.ingresso.data != null
-                              ? widget.ingresso.data!.formatDateString
+                          text: widget.item.data.isNotEmpty
+                              ? widget.item.data.formatDateString
                               : "",
                           textStyle: MyTypography.interRegular8,
                           strokeColor: MyColors.cinzaEscuro,
@@ -124,9 +133,11 @@ class _CardDetalheEventoComponentState
                           ),
                         ),
                         Text(
-                          quantidade.toString(),
+                          item.quantidade.toString(),
                           style: TextStyle(
-                            color: quantidade == 0 ? Colors.white : MyColors.verde,
+                            color: item.quantidade == 0
+                                ? Colors.white
+                                : MyColors.verde,
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
                           ),
@@ -156,11 +167,10 @@ class _CardDetalheEventoComponentState
                 bottomLeft: Radius.elliptical(26.r, 13.r),
               ),
               image:
-                  widget.eventoImagem != null &&
-                      widget.eventoImagem!.isNotEmpty &&
-                      widget.eventoImagem!.startsWith("http")
+                  widget.item.imagem.isNotEmpty &&
+                      widget.item.imagem.startsWith("http")
                   ? DecorationImage(
-                      image: NetworkImage(widget.eventoImagem!),
+                      image: NetworkImage(widget.item.imagem),
                       fit: BoxFit.cover,
                     )
                   : null,

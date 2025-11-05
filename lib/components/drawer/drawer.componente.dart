@@ -1,7 +1,10 @@
+import 'package:etkts_app/app_state.dart';
 import 'package:etkts_app/pages/login.page.dart';
 import 'package:etkts_app/services/snackbar.service.dart';
 import 'package:flutter/material.dart';
 import 'package:etkts_app/colors.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
 class DrawerComponente extends StatefulWidget {
@@ -14,18 +17,14 @@ class DrawerComponente extends StatefulWidget {
 class _DrawerComponenteState extends State<DrawerComponente> {
   @override
   Widget build(BuildContext context) {
-    return Drawer(
-      width: MediaQuery.of(context).size.width * .8,
-      backgroundColor: Colors.transparent,
-      child: GestureDetector(
-        onTap: () {
-          Navigator.pop(context);
-        },
-        child: Align(
-          alignment: Alignment.centerLeft,
+    return SizedBox(
+      height: double.infinity,
+      width: double.infinity,
+      child: Padding(
+        padding: EdgeInsets.only(bottom: 84.h),
+        child: Drawer(
+          backgroundColor: Colors.transparent,
           child: Container(
-            width: 370,
-            height: 690,
             decoration: const BoxDecoration(
               color: MyColors.cinzaMedioEscuroTransparente,
               borderRadius: BorderRadius.only(
@@ -36,279 +35,172 @@ class _DrawerComponenteState extends State<DrawerComponente> {
             ),
             child: Column(
               children: [
-
-                Container(
-                  height: 100, // Altura reduzida do header
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(20),
-                    ),
-                  ),
+                SizedBox(
+                  width: double.infinity,
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 23.w,
+                      vertical: 29.h,
+                    ),
+                    child: Stack(
+                      alignment: AlignmentGeometry.center,
                       children: [
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: Image.asset("assets/icons/voltarBranco.png"),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 85.0),
-                          child: Image.asset(
-                            "assets/logos/logoCompletoBranco.png",
-                            width: 55,
-                            height: 44,
-                            fit: BoxFit.contain,
+                        Positioned(
+                          left: 0,
+                          child: GestureDetector(
+                            onTap: () {
+                              context.pop();
+                            },
+                            child: SvgPicture.asset("assets/icons/back_button.svg", width: 30.w, height: 30.h, colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),),
                           ),
+                        ),
+                        SvgPicture.asset(
+                          'assets/icons/logo_branco.svg',
+                          width: 47.w,
+                          height: 38.h,
                         ),
                       ],
                     ),
                   ),
                 ),
-                // Linha divisória
-                 Divider(color: Colors.white, height: 3, thickness: 3),
-                // Lista de itens
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ListView(
-                      padding: EdgeInsets.zero,
-                      children: [
-
-                        Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: ListTile(
-                            leading: SizedBox(
-                              width: 30,
-                              height: 30,
-                              child: Image.asset(
-                                "assets/icons/carteiraVerde.png",
-                              ),
-                            ),
-                            title: Padding(
-                              padding: const EdgeInsets.only(top: 10.0),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "Adicionar crédito",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                  Spacer(),
-                                  Image.asset(
-                                    "assets/icons/setaDrawer.png",
-                                  ),
-                                ],
-                              ),
-                            ),
-                            onTap: () {
-                              SnackbarService.showEmConstrucao(context);
-                            },
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: ListTile(
-                            leading: SizedBox(
-                              width: 30,
-                              height: 30,
-                              child: Image.asset(
-                                "assets/icons/cartaoCreditoVerde.png",
-                              ),
-                            ),
-                            title: Padding(
-                              padding: const EdgeInsets.only(top: 10.0),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "Meus Cartões",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                  Spacer(),
-                                  Image.asset(
-                                    "assets/icons/setaDrawer.png",
-                                  ),
-                                ],
-                              ),
-                            ),
-                            onTap: () {
-                              SnackbarService.showEmConstrucao(context);
-                            },
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: ListTile(
-                            leading: SizedBox(
-                              width: 30,
-                              height: 30,
-                              child: Image.asset(
-                                "assets/icons/voucherVerde.png",
-                              ),
-                            ),
-                            title: Padding(
-                              padding: const EdgeInsets.only(top: 10.0),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "Ingressos",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                  Spacer(),
-                                  Image.asset(
-                                    "assets/icons/setaDrawer.png",
-                                  ),
-                                ],
-                              ),
-                            ),
-                            onTap: () {
-                              SnackbarService.showEmConstrucao(context);
-                            },
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: ListTile(
-                            leading: SizedBox(
-                              width: 30,
-                              height: 30,
-                              child: Image.asset(
-                                "assets/icons/transfVerde.png",
-                              ),
-                            ),
-                            title: Padding(
-                              padding: const EdgeInsets.only(top: 10.0),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "Transferências",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                  Spacer(),
-                                  Image.asset(
-                                    "assets/icons/setaDrawer.png",
-                                  ),
-                                ],
-                              ),
-                            ),
-                            onTap: () {
-                              SnackbarService.showEmConstrucao(context);
-                            },
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: ListTile(
-                            leading: SizedBox(
-                              width: 30,
-                              height: 30,
-                              child: Image.asset(
-                                "assets/icons/perfilDrawerVerde.png",
-                              ),
-                            ),
-                            title: Padding(
-                              padding: const EdgeInsets.only(top: 10.0),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "Perfil",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                  Spacer(),
-                                  Image.asset(
-                                    "assets/icons/setaDrawer.png",
-                                  ),
-                                ],
-                              ),
-                            ),
-                            onTap: () {
-                              SnackbarService.showEmConstrucao(context);
-                            },
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: ListTile(
-                            leading: SizedBox(
-                              width: 30,
-                              height: 30,
-                              child: Image.asset(
-                                "assets/icons/configVerde.png",
-                              ),
-                            ),
-                            title: Padding(
-                              padding: const EdgeInsets.only(top: 10.0),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    "Configurações",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                  Spacer(),
-                                  Image.asset(
-                                    "assets/icons/setaDrawer.png",
-                                  ),
-                                ],
-                              ),
-                            ),
-                            onTap: () {
-                              SnackbarService.showEmConstrucao(context);
-                            },
-                          ),
-                        ),
-                        const SizedBox(height: 120),
-                        const Divider(
-                          color: Colors.white,
-                          height: 2,
-                          thickness: 3,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: ListTile(
-                            leading: SizedBox(
-                              width: 30,
-                              height: 30,
-                              child: Image.asset(
-                                "assets/icons/sairVerde.png",
-                              ),
-                            ),
-                            title: Padding(
-                              padding: const EdgeInsets.only(top: 10.0),
-                              child: Text(
-                                "Sair",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ),
-                            onTap: () {
-                              context.pushReplacement(LoginPage.routeName);
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
+                Divider(color: Colors.white, height: 3, thickness: 3),
+                SizedBox(height: 43.h),
+                ListTile(
+                  leading: SizedBox(
+                    width: 30.w,
+                    height: 30.h,
+                    child: SvgPicture.asset("assets/icons/money_bill.svg", width: 18.w, height: 18.h, colorFilter: ColorFilter.mode(MyColors.verde, BlendMode.srcIn)),
                   ),
+                  title: Row(
+                    children: [
+                      Text(
+                        "Adicionar crédito",
+                        style: TextStyle(color: Colors.white, fontSize: 16),
+                      ),
+                      Spacer(),
+                      SvgPicture.asset("assets/icons/arrow.svg", width: 18.w, height: 18.h, colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn)),
+                    ],
+                  ),
+                  onTap: () {
+                    SnackbarService.showEmConstrucao(context);
+                  },
+                ),
+                ListTile(
+                  leading: SizedBox(
+                    width: 30.w,
+                    height: 30.h,
+                    child: SvgPicture.asset("assets/icons/card.svg", width: 18.w, height: 18.h, colorFilter: ColorFilter.mode(MyColors.verde, BlendMode.srcIn)),
+                  ),
+                  title: Row(
+                    children: [
+                      Text(
+                        "Meus Cartões",
+                        style: TextStyle(color: Colors.white, fontSize: 16),
+                      ),
+                      Spacer(),
+                      SvgPicture.asset("assets/icons/arrow.svg", width: 18.w, height: 18.h, colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn)),
+                    ],
+                  ),
+                  onTap: () {
+                    SnackbarService.showEmConstrucao(context);
+                  },
+                ),
+                ListTile(
+                  leading: SizedBox(
+                    width: 30.w,
+                    height: 30.h,
+                    child: SvgPicture.asset("assets/icons/ticket.svg", width: 18.w, height: 18.h, colorFilter: ColorFilter.mode(MyColors.verde, BlendMode.srcIn)),
+                  ),
+                  title: Row(
+                    children: [
+                      Text(
+                        "Ingressos",
+                        style: TextStyle(color: Colors.white, fontSize: 16),
+                      ),
+                      Spacer(),
+                      SvgPicture.asset("assets/icons/arrow.svg", width: 18.w, height: 18.h, colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn)),
+                    ],
+                  ),
+                  onTap: () {
+                    SnackbarService.showEmConstrucao(context);
+                  },
+                ),
+                ListTile(
+                  leading: SizedBox(
+                    width: 30.w,
+                    height: 30.h,
+                    child: SvgPicture.asset("assets/icons/transfer.svg", width: 18.w, height: 18.h, colorFilter: ColorFilter.mode(MyColors.verde, BlendMode.srcIn)),
+                  ),
+                  title: Row(
+                    children: [
+                      Text(
+                        "Transferências",
+                        style: TextStyle(color: Colors.white, fontSize: 16),
+                      ),
+                      Spacer(),
+                      SvgPicture.asset("assets/icons/arrow.svg", width: 18.w, height: 18.h, colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn)),
+                    ],
+                  ),
+                  onTap: () {
+                    SnackbarService.showEmConstrucao(context);
+                  },
+                ),
+                ListTile(
+                  leading: SizedBox(
+                    width: 30.w,
+                    height: 30.h,
+                    child: SvgPicture.asset("assets/icons/profile1.svg", width: 18.w, height: 18.h, colorFilter: ColorFilter.mode(MyColors.verde, BlendMode.srcIn)),
+                  ),
+                  title: Row(
+                    children: [
+                      Text(
+                        "Perfil",
+                        style: TextStyle(color: Colors.white, fontSize: 16),
+                      ),
+                      Spacer(),
+                      SvgPicture.asset("assets/icons/arrow.svg", width: 18.w, height: 18.h, colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn)),
+                    ],
+                  ),
+                  onTap: () {
+                    SnackbarService.showEmConstrucao(context);
+                  },
+                ),
+                ListTile(
+                  leading: SizedBox(
+                    width: 30.w,
+                    height: 30.h,
+                    child: SvgPicture.asset("assets/icons/cog.svg", width: 18.w, height: 18.h, colorFilter: ColorFilter.mode(MyColors.verde, BlendMode.srcIn)),
+                  ),
+                  title: Row(
+                    children: [
+                      Text(
+                        "Configurações",
+                        style: TextStyle(color: Colors.white, fontSize: 16),
+                      ),
+                      Spacer(),
+                      SvgPicture.asset("assets/icons/arrow.svg", width: 18.w, height: 18.h, colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn)),
+                    ],
+                  ),
+                  onTap: () {
+                    SnackbarService.showEmConstrucao(context);
+                  },
+                ),
+                Spacer(),
+                const Divider(color: Colors.white, height: 2, thickness: 3),
+                ListTile(
+                  leading: SizedBox(
+                    width: 29.w,
+                    height: 34.h,
+                    child: SvgPicture.asset("assets/icons/exit.svg", width: 18.w, height: 18.h, colorFilter: ColorFilter.mode(MyColors.verde, BlendMode.srcIn)),
+                  ),
+                  title: Text(
+                    "Sair",
+                    style: TextStyle(color: Colors.white, fontSize: 16),
+                  ),
+                  onTap: () {
+                    context.pop();
+                    AppState.isLogged.value = false;
+                  },
                 ),
               ],
             ),
