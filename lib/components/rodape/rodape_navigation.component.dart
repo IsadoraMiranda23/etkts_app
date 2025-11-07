@@ -4,6 +4,8 @@ import 'package:etkts_app/services/snackbar.service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../colors.dart';
+import '../../pages/carteira.page.dart';
+// Importe sua CarteiraPage aqui
 
 class RodapeNavigationItemData {
   final String text;
@@ -41,6 +43,7 @@ class RodapeNavigation extends StatelessWidget {
         avgAsset: "assets/icons/profile.svg",
       ),
     ];
+
     for (var index = 0; index < items.length; index++) {
       final element = items[index];
       navItems.add(
@@ -49,11 +52,26 @@ class RodapeNavigation extends StatelessWidget {
           svgAsset: element.avgAsset,
           onTap: (context) {
             onTap(index);
-            SnackbarService.showEmConstrucao(context);
+
+            // Navegação específica para Carteira
+            if (index == 2) { // Índice 2 = Carteira
+              _navigateToCarteiraPage(context);
+            } else {
+              // Para os outros itens, mantém o comportamento original
+              SnackbarService.showEmConstrucao(context);
+            }
           },
         ),
       );
     }
+  }
+
+  // Método para navegar para a página da Carteira
+  void _navigateToCarteiraPage(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => CarteiraPage()), // Use sua página real
+    );
   }
 
   List<Widget> buildNavigationItems() {
